@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot（系列二）、SpringBoot自动配置原理 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="1 SpringBoot运作原理上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下： 123456789101112131415161718192021222324252627282930313233343536373839@Target(&amp;#123;ElementType.TYPE&amp;#125;)@Retention(RetentionPo">
+<meta name="keywords" content="SpringBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot（系列二）、SpringBoot自动配置原理">
+<meta property="og:url" content="https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="1 SpringBoot运作原理上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下： 123456789101112131415161718192021222324252627282930313233343536373839@Target(&amp;#123;ElementType.TYPE&amp;#125;)@Retention(RetentionPo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/2/1.jpg">
+<meta property="og:updated_time" content="2019-06-12T09:14:30.585Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot（系列二）、SpringBoot自动配置原理">
+<meta name="twitter:description" content="1 SpringBoot运作原理上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下： 123456789101112131415161718192021222324252627282930313233343536373839@Target(&amp;#123;ElementType.TYPE&amp;#125;)@Retention(RetentionPo">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/springboot/2/1.jpg">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot（系列二）、SpringBoot自动配置原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot（系列二）、SpringBoot自动配置原理
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-06-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="1-SpringBoot运作原理"><a href="#1-SpringBoot运作原理" class="headerlink" title="1 SpringBoot运作原理"></a>1 SpringBoot运作原理</h1><p>上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@SpringBootConfiguration</span></span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="meta">@ComponentScan</span>(excludeFilters = &#123;</span><br><span class="line">           <span class="meta">@Filter</span>(</span><br><span class="line">             type = FilterType.CUSTOM,</span><br><span class="line">             classes = &#123;TypeExcludeFilter.class&#125;</span><br><span class="line">           ), </span><br><span class="line">           <span class="meta">@Filter</span>(</span><br><span class="line">              type = FilterType.CUSTOM,</span><br><span class="line">              classes = &#123;AutoConfigurationExcludeFilter.class&#125;</span><br><span class="line">           )&#125;</span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootApplication &#123;</span><br><span class="line">    <span class="meta">@AliasFor</span>(</span><br><span class="line">        annotation = EnableAutoConfiguration.class</span><br><span class="line">    )</span><br><span class="line">    Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor</span>(</span><br><span class="line">        annotation = EnableAutoConfiguration.class</span><br><span class="line">    )</span><br><span class="line">    String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor</span>(</span><br><span class="line">        annotation = ComponentScan.class,</span><br><span class="line">        attribute = <span class="string">"basePackages"</span></span><br><span class="line">    )</span><br><span class="line">    String[] scanBasePackages() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@AliasFor</span>(</span><br><span class="line">        annotation = ComponentScan.class,</span><br><span class="line">        attribute = <span class="string">"basePackageClasses"</span></span><br><span class="line">    )</span><br><span class="line">    Class&lt;?&gt;[] scanBasePackageClasses() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        最主要的还是三个配置@SpringBootConfiguration、@EnableAutoConfigration、@ComponentScan三个注解，下面我们来一一分析。</p>
+<h2 id="1-1-SpringBootConfiguration"><a href="#1-1-SpringBootConfiguration" class="headerlink" title="1.1 @SpringBootConfiguration"></a>1.1 @SpringBootConfiguration</h2><p>查看@SpringBootConfiguration源码，其实它也就是@Configuration注解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> SpringBootConfiguration &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        对于@Configuration，我们并不陌生，它就是JavaConfig形式的SpringIOC容器的配置类，也是SpringBoot推荐使用配置形式，所以主程序类标注了@SpringBootConfiguration注解，其本身也就是一个配置类。更多有关JavaConfig形式的配置以及有关它和xml形式的配置的区别与联系，请参考后续有关Spring注解版相关文章。</p>
+<h2 id="1-2-ComponentScan"><a href="#1-2-ComponentScan" class="headerlink" title="1.2 @ComponentScan"></a>1.2 @ComponentScan</h2><p>@ComponentScan注解在Spring的注解中也起到到相当重要的作用，它可以自定义Spring扫描的包，也就是它默认会扫描标注了@Controller、@Service、@Component以及@Repository注解的类，并实例化这些组件到SpringIOC容器中，它有个配置属性：basePackages，也就是指定扫描的包，如果不知道，它会默认扫描配置了该注解的类的包所在的路径（包括子包）。我们看@SpringBootConfiguration注解的源码中有段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AliasFor</span>(</span><br><span class="line">  annotation = ComponentScan.class,</span><br><span class="line">  attribute = <span class="string">"basePackages"</span></span><br><span class="line">)</span><br><span class="line">String[] scanBasePackages() <span class="keyword">default</span> &#123;&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>scanBasePackages属性，指定到了@ComponentScan注解的basePackages属性，所有在SpringBoot中，我们同样可以通过scanBasePackages属性指定包扫描的路径（如部指定，会默认扫描主程序类所在的包路径以及子包下的类）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span>(scanBasePackages = <span class="string">"com.seagetech.springbootdemo"</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-EnableAutoConfigration"><a href="#1-3-EnableAutoConfigration" class="headerlink" title="1.3 @EnableAutoConfigration"></a>1.3 @EnableAutoConfigration</h2><p>关于SpringBoot的运作原理，它的核心功能还是由@EnableAutoConfigration注解提供，所有把它放到最后来讲，我们来看下它的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Inherited</span></span><br><span class="line"><span class="meta">@AutoConfigurationPackage</span></span><br><span class="line"><span class="meta">@Import</span>(&#123;AutoConfigurationImportSelector.class&#125;)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableAutoConfiguration &#123;</span><br><span class="line">    String ENABLED_OVERRIDE_PROPERTY = <span class="string">"spring.boot.enableautoconfiguration"</span>;</span><br><span class="line"></span><br><span class="line">    Class&lt;?&gt;[] exclude() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line"></span><br><span class="line">    String[] excludeName() <span class="keyword">default</span> &#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="1-3-1-AutoConfigurationPackage"><a href="#1-3-1-AutoConfigurationPackage" class="headerlink" title="1.3.1 @AutoConfigurationPackage"></a>1.3.1 @AutoConfigurationPackage</h3><p>这个注解的主要功能自动配置包，它会获取主程序类所在的包路径，并将包路径（包括子包）下的所有组件注册到SpringIOC容器中。</p>
+<h3 id="1-3-2-Import-AutoConfigurationImportSelector-class"><a href="#1-3-2-Import-AutoConfigurationImportSelector-class" class="headerlink" title="1.3.2 @Import({AutoConfigurationImportSelector.class})"></a>1.3.2 @Import({AutoConfigurationImportSelector.class})</h3><p>@EnableAutoConfiguration 的关键功能也是这个@Import导入的配置功能，使用SpringFactoriesLoader.loadFactoryNames方法来扫描具有META-INF/spring.factories文件的jar包，我们看看在spring-boot-autoconfigure-2.10.RELEASE.jar包的META-INF下正好有个spring.factories文件：</p>
+<p><img src="/images/springboot/2/1.jpg" alt="图片"></p>
+<p>打开spring.factories文件，找到org.springframework.boot.autoconfigure.EnableAutoConfiguration指定的自动配置类：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"># Auto Configure</span><br><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.aop.AopAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,\</span><br><span class="line"></span><br><span class="line">......</span><br><span class="line">......</span><br><span class="line"></span><br><span class="line">org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.reactive.HttpHandlerAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.reactive.ReactiveWebServerFactoryAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.reactive.function.client.ClientHttpConnectorAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.servlet.DispatcherServletAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.servlet.ServletWebServerFactoryAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.servlet.HttpEncodingAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.servlet.MultipartAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration,\</span><br><span class="line">org.springframework.boot.autoconfigure.websocket.reactive.WebSocketReactiveAutoConfiguration,\</span><br></pre></td></tr></table></figure>
+
+<p>每一个xxxAutoConfiguration类都是容器中的一个组件，都加入到容器中，用它们来做自动配置。</p>
+<h1 id="2-自动配置分析"><a href="#2-自动配置分析" class="headerlink" title="2 自动配置分析"></a>2 自动配置分析</h1><p>在上一节基础上，我们知道每一个自动配置类进行自动配置功能，下面我们以HttpEncodingAutoConfiguration为例来分析：</p>
+<h2 id="2-1-配置参数"><a href="#2-1-配置参数" class="headerlink" title="2.1 配置参数"></a>2.1 配置参数</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(</span><br><span class="line">    prefix = <span class="string">"spring.http"</span><span class="comment">//①</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpProperties</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> logRequestDetails;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> HttpProperties.Encoding encoding = <span class="keyword">new</span> HttpProperties.Encoding();<span class="comment">//②</span></span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Encoding</span> </span>&#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> Charset DEFAULT_CHARSET;</span><br><span class="line">        <span class="keyword">private</span> Charset charset;</span><br><span class="line">        <span class="keyword">private</span> Boolean force;</span><br><span class="line">        <span class="keyword">private</span> Boolean forceRequest;</span><br><span class="line">        <span class="keyword">private</span> Boolean forceResponse;</span><br><span class="line">        <span class="keyword">private</span> Map&lt;Locale, Charset&gt; mapping;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">Encoding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.charset = DEFAULT_CHARSET;<span class="comment">//②</span></span><br><span class="line">        &#125;</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">static</span> &#123;</span><br><span class="line">            DEFAULT_CHARSET = StandardCharsets.UTF_8;<span class="comment">//②</span></span><br><span class="line">        &#125;</span><br><span class="line">        ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码解析：<br>   ①、在application.properties文件中配置的时候指定前缀是spring.http；<br>   ②、指定默认的编码方式是UTF-8，如果需要修改，可使用spring.http.encoding.charset=编码。</p>
+<h2 id="2-2-自动配置类"><a href="#2-2-自动配置类" class="headerlink" title="2.2 自动配置类"></a>2.2 自动配置类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span><span class="comment">//①</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span>(&#123;HttpProperties.class&#125;)<span class="comment">//②</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication</span>(</span><br><span class="line">    type = Type.SERVLET</span><br><span class="line">)<span class="comment">//③</span></span><br><span class="line"><span class="meta">@ConditionalOnClass</span>(&#123;CharacterEncodingFilter.class&#125;)<span class="comment">//④</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty</span>(</span><br><span class="line">    prefix = <span class="string">"spring.http.encoding"</span>,</span><br><span class="line">    value = &#123;<span class="string">"enabled"</span>&#125;,</span><br><span class="line">    matchIfMissing = <span class="keyword">true</span></span><br><span class="line">)<span class="comment">//⑤</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HttpEncodingAutoConfiguration</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Encoding properties;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HttpEncodingAutoConfiguration</span><span class="params">(HttpProperties properties)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.properties = properties.getEncoding();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CharacterEncodingFilter <span class="title">characterEncodingFilter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125;</span><br><span class="line">    .......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>源码解析：<br>   ①、表示这是一个配置类，以前编写的配置文件一样，也可以给容器中添加组件<br>   ②、启动指定类的ConfigurationProperties功能，将配置文件中对应的值和HttpEncodingProperties绑定起来；并把HttpEncodingProperties加入到ioc容器中；<br>   ③、Spring底层@Conditional注解（有关@Conditional注解的详解请参考后续Spring注解相关文章），根据不同的条件，如果满足指定的条件，整个配置类里面的配置就会生效，该注解是判断当前应用是否是web应用，如果是，HttpEncodingAutoConfiguration 配置类生效；<br>   ④、判断当前项目有没有这个类CharacterEncodingFilter；SpringMVC中进行乱码解决的过滤器，如果有则HttpEncodingAutoConfiguration 配置生效；<br>   ⑤、判断application.properties配置文件中是否存在spring.http.encoding.enabled，如果不存在，判断也是成立的，因为matchIfMissing=true，即缺省时默认为true。<br>   根据当前不同的条件判断，决定HttpEncodingAutoConfiguration 这个配置类是否生效？一但这个配置类生效；这个配置类就会给容器中添加各种组件，这些组件的属性是从对应的HttpEncodingProperties类中获取的，这些类里面的每一个属性又是和配置文件绑定的。</p>
+<h2 id="2-3-Conditional扩展注解"><a href="#2-3-Conditional扩展注解" class="headerlink" title="2.3 @Conditional扩展注解"></a>2.3 <strong>@Conditional扩展注解</strong></h2><p>除了以上解析到的注解，SpringBoot还为我们提供了更多的有关@Conditional的派生注解。它们的作用：必须是@Conditional指定的条件成立，才给容器中添加组件，配置配里面的所有内容才生效：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>@Conditional扩展注解</strong></th>
+<th align="left"><strong>作用（判断是否满足指定的条件）</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">@ConditionalOnBean</td>
+<td align="left">当容器里有指定的Bean的条件下</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnClass</td>
+<td align="left">当类路径下有指定的类的条件下</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnJava</td>
+<td align="left">基于JVM版本作为判断条件</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnMissingBean</td>
+<td align="left">当容器里没有指定的Bean的情况下</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnMissingClass</td>
+<td align="left">当类路径下没有指定的类的条件下</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnWebApplication</td>
+<td align="left">当前项目是Web项目的条件下</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnNotWebApplication</td>
+<td align="left">当前项目不是Web项目的条件下</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnProperty</td>
+<td align="left">指定的属性是否有指定的值</td>
+</tr>
+<tr>
+<td align="left">@ConditionalOnResource</td>
+<td align="left">类路径下是否有指定的值</td>
+</tr>
+</tbody></table>
+<p># </p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年06月12日 17:14</p>
+        <p>原始链接： <a class="post-url" href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" title="SpringBoot（系列二）、SpringBoot自动配置原理">https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/&title=《SpringBoot（系列二）、SpringBoot自动配置原理》 — 晴枫慕竹&pic=/images/springboot.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/&title=《SpringBoot（系列二）、SpringBoot自动配置原理》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot（系列二）、SpringBoot自动配置原理》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-SpringBoot运作原理"><span class="post-toc-text">1 SpringBoot运作原理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-SpringBootConfiguration"><span class="post-toc-text">1.1 @SpringBootConfiguration</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-ComponentScan"><span class="post-toc-text">1.2 @ComponentScan</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-EnableAutoConfigration"><span class="post-toc-text">1.3 @EnableAutoConfigration</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-1-AutoConfigurationPackage"><span class="post-toc-text">1.3.1 @AutoConfigurationPackage</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-2-Import-AutoConfigurationImportSelector-class"><span class="post-toc-text">1.3.2 @Import({AutoConfigurationImportSelector.class})</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-自动配置分析"><span class="post-toc-text">2 自动配置分析</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1-配置参数"><span class="post-toc-text">2.1 配置参数</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2-自动配置类"><span class="post-toc-text">2.2 自动配置类</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3-Conditional扩展注解"><span class="post-toc-text">2.3 @Conditional扩展注解</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          SpringBoot（系列一）、SpringBoot入门
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringBoot（系列三）、SpringBoot自定义Starter</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

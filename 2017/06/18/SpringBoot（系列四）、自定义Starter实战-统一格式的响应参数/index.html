@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="有时候有这样的需求，接口需要返回统一格式的响应参数，如下： 123456&amp;#123;  &quot;status&quot;:200,  &quot;message&quot;:&quot;请求成功！&quot;,  &quot;result&quot;：&quot;响应参数对象&quot;,  &quot;timestamp&quot;:1559815994252 &amp;#125;  所有的响应结果对象都封装在result对象中，或许我们会在每个controller层接口都类似这样操作： 12345678910@Ge">
+<meta name="keywords" content="SpringBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数">
+<meta property="og:url" content="https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="有时候有这样的需求，接口需要返回统一格式的响应参数，如下： 123456&amp;#123;  &quot;status&quot;:200,  &quot;message&quot;:&quot;请求成功！&quot;,  &quot;result&quot;：&quot;响应参数对象&quot;,  &quot;timestamp&quot;:1559815994252 &amp;#125;  所有的响应结果对象都封装在result对象中，或许我们会在每个controller层接口都类似这样操作： 12345678910@Ge">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/4/1.jpg">
+<meta property="og:updated_time" content="2019-06-12T08:18:00.363Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数">
+<meta name="twitter:description" content="有时候有这样的需求，接口需要返回统一格式的响应参数，如下： 123456&amp;#123;  &quot;status&quot;:200,  &quot;message&quot;:&quot;请求成功！&quot;,  &quot;result&quot;：&quot;响应参数对象&quot;,  &quot;timestamp&quot;:1559815994252 &amp;#125;  所有的响应结果对象都封装在result对象中，或许我们会在每个controller层接口都类似这样操作： 12345678910@Ge">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/springboot/4/1.jpg">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-06-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>有时候有这样的需求，接口需要返回统一格式的响应参数，如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"status"</span>:<span class="number">200</span>,</span><br><span class="line">  <span class="attr">"message"</span>:<span class="string">"请求成功！"</span>,</span><br><span class="line">  "result"："响应参数对象",</span><br><span class="line">  "timestamp":1559815994252</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>所有的响应结果对象都封装在result对象中，或许我们会在每个controller层接口都类似这样操作：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping</span>(value = <span class="string">"test"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> JSONObject <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">  Person person = <span class="keyword">new</span> Person(<span class="string">"张三"</span>,<span class="number">23</span>,<span class="string">"男"</span>);</span><br><span class="line">  JSONObject jsonObject = <span class="keyword">new</span> JSONObject();</span><br><span class="line">  jsonObject.put(<span class="string">"status"</span>,<span class="number">200</span>);</span><br><span class="line">  jsonObject.put(<span class="string">"message"</span>,<span class="string">"请求成功！"</span>);</span><br><span class="line">  jsonObject.put(<span class="string">"result"</span>,person);</span><br><span class="line">  jsonObject.put(<span class="string">"timestamp"</span>,System.currentTimeMillis());</span><br><span class="line">  <span class="keyword">return</span> jsonObject;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        可想而知，这样造成巨大工作量且不说，而且和代码耦合度太高，不利于项目的维护，可能大家会想到使用AOP，对，也是可以解决，但是如果多个项目都使用这种统一的响应参数，那是否可以利用springboot的starter功能，做个插拔式的，可以供多个项目使用？<br>   显而易见，使用springboot的starter更好，下面我们就开始来创建这样的一个starter，源码下载地址<a href="https://github.com/sunnymaple/rest-spring-boot-starter.git" target="_blank" rel="noopener">https://github.com/sunnymaple/rest-spring-boot-starter.git</a>。</p>
+<h1 id="1、项目工程的创建"><a href="#1、项目工程的创建" class="headerlink" title="1、项目工程的创建"></a>1、项目工程的创建</h1><p>①、创建rest-spring-boot-startar空的工程<br>②、在该工程下分别创建<br>     <strong>startar：</strong>rest-spring-boot-startar，pom如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.sunnymaple<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>rest-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.sunnymaple<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>rest-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>autoconfigure：</strong>rest-spring-boot-starter-autoconfigure，pom如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.sunnymaple<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>rest-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>rest-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.4<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.51<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">source</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">source</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">target</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">target</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-source-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">id</span>&gt;</span>attach-sources<span class="tag">&lt;/<span class="name">id</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">goal</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>​        其中startar模块用于引autoconfigure模块的包，而在autoconfigure模块里实现具体的功能，创建过程请参考文章<a href="https://www.sunnymaple.cn/2017/06/18/%E4%B8%89%E3%80%81SpringBoot%E8%87%AA%E5%AE%9A%E4%B9%89Starter/">《三、SpringBoot自定义Starter》</a>，项目结构如下：</p>
+<p><img src="/images/springboot/4/1.jpg" alt="图片"></p>
+<h1 id="2、功能的实现"><a href="#2、功能的实现" class="headerlink" title="2、功能的实现"></a>2、功能的实现</h1><p>主要列入一些主要的类</p>
+<h1 id="2-1、创建HttpStatusEnum"><a href="#2-1、创建HttpStatusEnum" class="headerlink" title="2.1、创建HttpStatusEnum"></a>2.1、创建HttpStatusEnum</h1><p>  定义响应状态码status，以及状态码对应的message信息：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">enum</span> HttpStatusEnum &#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Http请求状态码 - 请求成功 200</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    OK(HttpStatus.OK.value(),<span class="string">"请求成功！"</span>),</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 404</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    NOT_FOUND(HttpStatus.NOT_FOUND.value(), <span class="string">"资源未找到！"</span>),</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Http请求状态码 - 请求失败 500</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(),<span class="string">"系统繁忙，请稍后重试！"</span>);</span><br><span class="line">    <span class="comment">//TODO 可以根据需求定义更多的状态码</span></span><br><span class="line"></span><br><span class="line">    HttpStatusEnum(<span class="keyword">int</span> status, String message) &#123;</span><br><span class="line">        <span class="keyword">this</span>.status = status;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 状态码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> status;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 状态码对应的信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String message;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getStatus</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> status;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-2、创建RestResult"><a href="#2-2、创建RestResult" class="headerlink" title="2.2、创建RestResult"></a>2.2、创建RestResult</h1><p>用于封装接口的响应参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RestResult</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 响应结果的状态码,默认为200,200表示请求成功，其他为异常</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Integer status = HttpStatusEnum.OK.getStatus();</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 响应结果信息</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String message = HttpStatusEnum.OK.getMessage();</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 响应结果对象，所有接口返回的对象都存放在result对象中</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> Object result;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 时间戳</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> timestamp = System.currentTimeMillis();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RestResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RestResult</span><span class="params">(Integer status, String message, Object result)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.status = status;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">        <span class="keyword">this</span>.result = result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RestResult</span><span class="params">(Integer status, String message)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.status = status;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RestResult</span><span class="params">(String message, Object result)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.message = message;</span><br><span class="line">        <span class="keyword">this</span>.result = result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">RestResult</span><span class="params">(Object result)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.result = result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * result为null</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RestResult <span class="title">factory</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestResult(HttpStatusEnum.OK.getMessage(),<span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * result为null</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> RestResult <span class="title">factory</span><span class="params">(Object result)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> RestResult(HttpStatusEnum.OK.getMessage(),result);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//省略Geter/Seter</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-3、创建AppResponseHandlerProperties"><a href="#2-3、创建AppResponseHandlerProperties" class="headerlink" title="2.3、创建AppResponseHandlerProperties"></a>2.3、创建AppResponseHandlerProperties</h1><p>该对象是配置类，定义了开启与关闭响应统一格式的响应参数的功能，其中：<br>①、？   匹配单个字符，如/demo?  则/demo1、/demo2会被匹配  而/demo12则不被匹配<br>②、*     除/外的任意字符  如：/demo* 则 /demo1、/demo2、/demo12会被匹配 而/demo/1不会被匹配，如：/demo/* 可以匹配/demo/1 /demo/2  /demo/12<br>③、/**  匹配任意的多个目录  如：/demo/** 可以匹配/demo/1 /demo/2  /demo/12 /demo/1/2等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"response.handler"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppResponseHandlerProperties</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 是否启用AppResponseHandler处理器</span></span><br><span class="line"><span class="comment">     * true 启用</span></span><br><span class="line"><span class="comment">     * false 停用</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> enabled;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 定义不需要使用AppResponseHandler的接口</span></span><br><span class="line"><span class="comment">     * 支持通配符：? /* /**</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String[] nonResponseHandler;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-4、创建NonResponseHandler"><a href="#2-4、创建NonResponseHandler" class="headerlink" title="2.4、创建NonResponseHandler"></a>2.4、创建NonResponseHandler</h1><p>​       它是一个注解，可以加在controller层的类和方法上，加在类上表示该controller的所有接口都不使用统一格式的响应参数，加在方法上表示该方法（接口）不使用统一格式的响应参数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> NonResponseHandler &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-5、创建AppResponseHandler"><a href="#2-5、创建AppResponseHandler" class="headerlink" title="2.5、创建AppResponseHandler"></a>2.5、创建AppResponseHandler</h1><p>​       该类是响应统一格式的参数功能实现的主角，它实现ResponseBodyAdvice接口，并在该类上加上@ControllerAdvice注解。它们的作用分别是:<br>   <strong>@ControllerAdvice</strong>：在spring 3.2中，新增了@ControllerAdvice 注解，可以用于定义@ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有@RequestMapping中，参考<a href="http://docs.spring.io/spring-framework/docs/5.0.0.M1/javadoc-api/org/springframework/web/bind/annotation/ControllerAdvice.html" target="_blank" rel="noopener">@ControllerAdvice 文档</a><br>  ** ResponseBodyAdvice：**ResponseBodyAdvice是一个接口，它的源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ResponseBodyAdvice</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(MethodParameter returnType, Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; converterType)</span></span>;</span><br><span class="line"></span><br><span class="line">   <span class="meta">@Nullable</span></span><br><span class="line">   <span class="function">T <span class="title">beforeBodyWrite</span><span class="params">(@Nullable T body, MethodParameter returnType, MediaType selectedContentType,</span></span></span><br><span class="line"><span class="function"><span class="params">         Class&lt;? extends HttpMessageConverter&lt;?&gt;&gt; selectedConverterType,</span></span></span><br><span class="line"><span class="function"><span class="params">         ServerHttpRequest request, ServerHttpResponse response)</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        其中supports这个方法返回true时会调用beforeBodyWrite方法，返回false则不会执行beforeBodyWrite，所有我们可以在supports方法中定义响应统一格式的参数的规则，而在beforeBodyWrite方法中将响应参数进行封装成我们想要的格式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppResponseHandler</span> <span class="keyword">implements</span> <span class="title">ResponseBodyAdvice</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HttpServletRequest request;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AppResponseHandlerProperties properties;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(MethodParameter methodParameter,</span></span></span><br><span class="line"><span class="function"><span class="params">     Class aClass)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//判断类是否加上了NoResponseHandler注解，如果是则返回false</span></span><br><span class="line">        NonResponseHandler classNoResponseHandler = </span><br><span class="line">                      methodParameter.getDeclaringClass()</span><br><span class="line">                      .getAnnotation(NonResponseHandler.class);</span><br><span class="line">        <span class="keyword">if</span> (!Utils.isEmpty(classNoResponseHandler))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//判断方法（接口）是否加上了NoResponseHandler注解，如果是则返回false</span></span><br><span class="line">        NonResponseHandler noResponseHandler = </span><br><span class="line">        methodParameter.getMethodAnnotation(NonResponseHandler.class);</span><br><span class="line">        <span class="keyword">if</span> (!Utils.isEmpty(noResponseHandler))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//从配置文件中获取过滤的接口</span></span><br><span class="line">        String[] nrhs = properties.getNonResponseHandler();</span><br><span class="line">        <span class="keyword">if</span> (!Utils.isEmpty(nrhs))&#123;</span><br><span class="line">            String path = request.getServletPath();</span><br><span class="line">            <span class="keyword">for</span> (String nrh : nrhs)&#123;</span><br><span class="line">                AntPathMatcher matcher = <span class="keyword">new</span> AntPathMatcher();</span><br><span class="line">                <span class="keyword">boolean</span> match = matcher.match(nrh, path);</span><br><span class="line">                <span class="keyword">if</span> (match)&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">beforeBodyWrite</span><span class="params">(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse)</span> </span>&#123;</span><br><span class="line">        Object result = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//封装统一格式的响应参数</span></span><br><span class="line">            result = restResult(o,mediaType,serverHttpRequest,serverHttpResponse,aClass);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            log.info(<span class="string">"创建统一格式的响应数据异常！"</span>,e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">   <span class="comment">//省略一些方法</span></span><br><span class="line">   </span><br><span class="line">    <span class="function"><span class="keyword">private</span> Object <span class="title">restResult</span><span class="params">(Object o,MediaType mediaType,ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse,Class aClass)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 1:判断是否为null</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (o == <span class="keyword">null</span>)&#123;</span><br><span class="line">            RestResult restResult = RestResult.factory();</span><br><span class="line">            <span class="keyword">if</span> (isJsonResponse(mediaType) &amp;&amp; </span><br><span class="line">            StringHttpMessageConverter.class == aClass)&#123;</span><br><span class="line">                <span class="keyword">return</span> JSONObject.toJSONString(restResult, </span><br><span class="line">                SerializerFeature.WriteMapNullValue);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> restResult;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 2、对于响应的是Resource资源对象（如：文件下载），则直接返回Object对象</span></span><br><span class="line"><span class="comment">         * 对于响应对象本身就是RestResult对象，则不再次封装，直接返回</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Resource || o <span class="keyword">instanceof</span> RestResult)&#123;</span><br><span class="line">            <span class="keyword">return</span> o;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">/*</span></span><br><span class="line"><span class="comment">         * 3、判断是否返回的是Map</span></span><br><span class="line"><span class="comment">         *   如果是：判断请求状态码，如果状态码为非200,则说明请求失败，则获取错误信息RestResult</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="keyword">int</span> successCode = HttpStatusEnum.OK.getStatus();</span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> Map)&#123;</span><br><span class="line">            HttpServletResponse response =  ((ServletServerHttpResponse) serverHttpResponse).getServletResponse();</span><br><span class="line">            Integer status = response.getStatus();</span><br><span class="line">            <span class="keyword">if</span> (!Objects.equals(status, successCode))&#123;</span><br><span class="line">                HttpServletRequest request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();</span><br><span class="line">                RestResult restResult = (RestResult) request.getAttribute(<span class="string">"result"</span>);</span><br><span class="line">                <span class="keyword">if</span> (!Utils.isEmpty(restResult))&#123;</span><br><span class="line">                    <span class="keyword">return</span> restResult;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    Map&lt;String,Object&gt; error = (Map&lt;String, Object&gt;) o;</span><br><span class="line">                    <span class="keyword">return</span> Utils.map2Object(error, RestResult.class);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> RestResult.factory(o);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (o <span class="keyword">instanceof</span> String)&#123;</span><br><span class="line">            <span class="comment">/* 按道理 只要API 返回值是 String / byte[]等</span></span><br><span class="line"><span class="comment">             *  不会由MappingJackson2HttpMessageConverter处理的返回值</span></span><br><span class="line"><span class="comment">             * 都有可能出错，抛出ClassCastException...</span></span><br><span class="line"><span class="comment">             * 目前API 出现的比较多的是String，所以只处理String情况</span></span><br><span class="line"><span class="comment">             * 如果 API返回的是 String，</span></span><br><span class="line"><span class="comment">             */</span></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">/*</span></span><br><span class="line"><span class="comment">                 *  String返回值 将被StringHttpMessageConverter处理，</span></span><br><span class="line"><span class="comment">                 *  所以此时应该返回RestResult的json序列化后的字符串</span></span><br><span class="line"><span class="comment">                 *  如果此时还是返回RestResult对象，会抛出ClassCastException</span></span><br><span class="line"><span class="comment">                 *  因为StringHttpMessageConverter会把RestResult对象当做String处理</span></span><br><span class="line"><span class="comment">                 */</span></span><br><span class="line">                <span class="keyword">return</span> writeValueAsString(RestResult.factory(o));</span><br><span class="line">            &#125;<span class="keyword">catch</span> (JsonProcessingException e) &#123;</span><br><span class="line">                log.warn(<span class="string">"json serialize error"</span>, e);</span><br><span class="line">                <span class="keyword">return</span> o;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> RestResult.factory(o);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-6、创建AppResponseHandlerAutoConfiguration"><a href="#2-6、创建AppResponseHandlerAutoConfiguration" class="headerlink" title="2.6、创建AppResponseHandlerAutoConfiguration"></a>2.6、创建AppResponseHandlerAutoConfiguration</h1><p>该类是一个自定配置类，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//在web条件下才自定配置</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication</span></span><br><span class="line"><span class="comment">//且response.handler.enabled=true时，默认也是true</span></span><br><span class="line"><span class="meta">@ConditionalOnProperty</span>(name = <span class="string">"response.handler.enabled"</span>,havingValue = <span class="string">"true"</span>,matchIfMissing = <span class="keyword">true</span>)</span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span>(&#123;AppResponseHandlerProperties.class&#125;)</span><br><span class="line"><span class="comment">//导入2.5中的类AppResponseHandler，并注入到springAOP中</span></span><br><span class="line"><span class="meta">@Import</span>(AppResponseHandler.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppResponseHandlerAutoConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-7、配置spring-factories以及元数据"><a href="#2-7、配置spring-factories以及元数据" class="headerlink" title="2.7、配置spring.factories以及元数据"></a>2.7、配置spring.factories以及元数据</h1><p>spring.factories：</p>
+<blockquote>
+<p>org.springframework.boot.autoconfigure.EnableAutoConfiguration=<br>cn.sunnymaple.rest.response.AppResponseHandlerAutoConfiguration</p>
+</blockquote>
+<p>spring-configuration-metadata.json：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"hints"</span>:[&#123;</span><br><span class="line">    <span class="attr">"name"</span>:<span class="string">"response.handler.enabled"</span>,</span><br><span class="line">    <span class="attr">"values"</span>:[&#123;</span><br><span class="line">      <span class="attr">"value"</span>:<span class="literal">true</span>,</span><br><span class="line">      <span class="attr">"description"</span>:<span class="string">"启用，默认值"</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">      <span class="attr">"value"</span>:<span class="literal">false</span>,</span><br><span class="line">      <span class="attr">"description"</span>:<span class="string">"禁用"</span></span><br><span class="line">    &#125;]</span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"groups"</span>:[&#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"cn.sunnymaple.rest.response.AppResponseHandlerProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"response.handler"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"cn.sunnymaple.rest.response.AppResponseHandlerProperties"</span></span><br><span class="line">    &#125;],</span><br><span class="line">  <span class="attr">"properties"</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"cn.sunnymaple.rest.response.AppResponseHandlerProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"response.handler.enabled"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"java.lang.Boolean"</span>,</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"是否启用统一格式的响应参数"</span>,</span><br><span class="line">      <span class="attr">"defaultValue"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"cn.sunnymaple.rest.response.AppResponseHandlerProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"response.handler.non-response-handler"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"java.lang.String[]"</span>,</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"定义响应参数不封装成固定格式的接口"</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        到目前为止，响应统一格式的自定义Startar就创建成功了，接下来就是使用install进行打包，之后就可以在其他项目中使用。</p>
+<h1 id="3、自定义starter的使用"><a href="#3、自定义starter的使用" class="headerlink" title="3、自定义starter的使用"></a>3、自定义starter的使用</h1><p>新建一个项目，在pom中引入包：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>cn.sunnymaple<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>rest-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>①、可以使用response.handler.enabled直接关闭该功能；<br>②、在properties或者yml文件中使用response.handler.non-response-handler指定那些接口不使用该功能；<br>③、可以使用@NonResponseHandler 注解指定哪些Controller层接口不使用该功能。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年06月12日 16:18</p>
+        <p>原始链接： <a class="post-url" href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" title="SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数">https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/&title=《SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数》 — 晴枫慕竹&pic=/images/springboot.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/&title=《SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、项目工程的创建"><span class="post-toc-text">1、项目工程的创建</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、功能的实现"><span class="post-toc-text">2、功能的实现</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-1、创建HttpStatusEnum"><span class="post-toc-text">2.1、创建HttpStatusEnum</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-2、创建RestResult"><span class="post-toc-text">2.2、创建RestResult</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-3、创建AppResponseHandlerProperties"><span class="post-toc-text">2.3、创建AppResponseHandlerProperties</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-4、创建NonResponseHandler"><span class="post-toc-text">2.4、创建NonResponseHandler</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-5、创建AppResponseHandler"><span class="post-toc-text">2.5、创建AppResponseHandler</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-6、创建AppResponseHandlerAutoConfiguration"><span class="post-toc-text">2.6、创建AppResponseHandlerAutoConfiguration</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-7、配置spring-factories以及元数据"><span class="post-toc-text">2.7、配置spring.factories以及元数据</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、自定义starter的使用"><span class="post-toc-text">3、自定义starter的使用</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          SpringBoot（系列三）、SpringBoot自定义Starter
+        
+      </span>
+    </a>
+  
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

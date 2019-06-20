@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot（系列五）、自定义Starter实战-统一异常处理 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="​        该部分讲解的源码已发布到git，下载地址：https://github.com/sunnymaple/rest-spring-boot-starter ​       上一片文章我们对响应参数做了统一的封装，看是功能已经完成，但是还是有一点欠缺，因为这些都是在程序正常返回响应值得理想情况下，我们的程序不可能没有bug，亦或是客户端提交了不合法的参数导致程序无法正常运行，如果是后者">
+<meta name="keywords" content="SpringBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot（系列五）、自定义Starter实战-统一异常处理">
+<meta property="og:url" content="https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="​        该部分讲解的源码已发布到git，下载地址：https://github.com/sunnymaple/rest-spring-boot-starter ​       上一片文章我们对响应参数做了统一的封装，看是功能已经完成，但是还是有一点欠缺，因为这些都是在程序正常返回响应值得理想情况下，我们的程序不可能没有bug，亦或是客户端提交了不合法的参数导致程序无法正常运行，如果是后者">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/5/1.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/5/2.jpg">
+<meta property="og:updated_time" content="2019-06-15T05:56:38.168Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot（系列五）、自定义Starter实战-统一异常处理">
+<meta name="twitter:description" content="​        该部分讲解的源码已发布到git，下载地址：https://github.com/sunnymaple/rest-spring-boot-starter ​       上一片文章我们对响应参数做了统一的封装，看是功能已经完成，但是还是有一点欠缺，因为这些都是在程序正常返回响应值得理想情况下，我们的程序不可能没有bug，亦或是客户端提交了不合法的参数导致程序无法正常运行，如果是后者">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/springboot/5/1.jpg">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot（系列五）、自定义Starter实战-统一异常处理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot（系列五）、自定义Starter实战-统一异常处理
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-06-20
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>​        该部分讲解的源码已发布到git，下载地址：<a href="https://github.com/sunnymaple/rest-spring-boot-starter" target="_blank" rel="noopener">https://github.com/sunnymaple/rest-spring-boot-starter</a></p>
+<p>​       上一片文章我们对响应参数做了统一的封装，看是功能已经完成，但是还是有一点欠缺，因为这些都是在程序正常返回响应值得理想情况下，我们的程序不可能没有bug，亦或是客户端提交了不合法的参数导致程序无法正常运行，如果是后者，那么我们就得给客户端做出相应的提示，让客户端做出判断后修改提交参数等操作，当然在程序出现bug时，我们的程序应该记录相关错误日志。这些在上一节的内容中是没有办法统一处理的，那么可以在controller中try-cath下，然后打印日志或者返回异常相关信息，这样无疑造成开发的不利，那同样可以使用自定义的starter做统一的异常处理。</p>
+<h1 id="1、SpringBoot定义的异常处理"><a href="#1、SpringBoot定义的异常处理" class="headerlink" title="1、SpringBoot定义的异常处理"></a>1、SpringBoot定义的异常处理</h1><p>再讲如何写starter之前，先看看springboot为我们做的统一异常处理，如果你引入上一章的自定义starter时，请在pom文件中删除，或者在application.properties配置文件中，加入下面配置：</p>
+<blockquote>
+<p>response.handler.enabled=false</p>
+</blockquote>
+<p>编写测试代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"/test"</span>)</span><br><span class="line"><span class="meta">@Validated</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(<span class="string">"/exceptionTest"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Integer <span class="title">exceptionTest</span><span class="params">(@NotNull(message = <span class="string">"val不能为空！"</span>)</span> Integer val)</span>&#123;</span><br><span class="line">        Integer result = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            result = serviceMethod(val);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.info(<span class="string">""</span>,e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 模拟service层抛出异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> Integer <span class="title">serviceMethod</span><span class="params">(Integer val)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> val/<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由代码可以看出exceptionTest接口定义了参数val不能为空（这涉及到@Validated和@NotNull注解，后面会给出说明），以及调用了serviceMethod，该防护会抛出异常。<br>而springboot给出的异常处理接口在spring-boot-autoconfigure jar包中的BasicErrorController，部分源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(<span class="string">"$&#123;server.error.path:$&#123;error.path:/error&#125;&#125;"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicErrorController</span> <span class="keyword">extends</span> <span class="title">AbstractErrorController</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">  <span class="meta">@RequestMapping</span>(produces = MediaType.TEXT_HTML_VALUE)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">errorHtml</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> </span>&#123;</span><br><span class="line">      HttpStatus status = getStatus(request);</span><br><span class="line">      Map&lt;String, Object&gt; model =          Collections.unmodifiableMap(getErrorAttributes(</span><br><span class="line">         request, isIncludeStackTrace(request, MediaType.TEXT_HTML)));</span><br><span class="line">   response.setStatus(status.value());</span><br><span class="line">   ModelAndView modelAndView = resolveErrorView(request, response, status, model);</span><br><span class="line">   <span class="keyword">return</span> (modelAndView != <span class="keyword">null</span>) ? modelAndView : <span class="keyword">new</span> ModelAndView(<span class="string">"error"</span>, model);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@RequestMapping</span></span><br><span class="line"><span class="keyword">public</span> ResponseEntity&lt;Map&lt;String, Object&gt;&gt; error(HttpServletRequest request) &#123;</span><br><span class="line">   Map&lt;String, Object&gt; body = getErrorAttributes(request,</span><br><span class="line">         isIncludeStackTrace(request, MediaType.ALL));</span><br><span class="line">   HttpStatus status = getStatus(request);</span><br><span class="line">   <span class="keyword">return</span> <span class="keyword">new</span> ResponseEntity&lt;&gt;(body, status);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BasicErrorController定义了两个接口，一个处理MediaType.TEXT_HTML_VALUE，即text/html，响应的是ModelAndView 对象，即返回一个视图；而另一个则非text/html，响应ResponseEntity对象。<br>接下来我们启动测试项目，并在浏览器地址栏中输入：</p>
+<blockquote>
+<p><a href="http://localhost:8888/test/exceptionTest" target="_blank" rel="noopener">http://localhost:8888/test/exceptionTest</a></p>
+</blockquote>
+<p>结果如下：<br><img src="/images/springboot/5/1.jpg" alt="图片"><br>页面提示了val不能为空，但是中文乱码了，但是这个页面对用户而言是不友好的，当然我们可以自定义5xx（500等以5开头的响应吗）或者4xx（404/405等已4开头的状态码），但这不是这里研究的对象。接下来，我们再在postMan工具中，同样请求该接口，接口响应参数如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="string">"2019-06-14T03:07:49.998+0000"</span>,</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">500</span>,</span><br><span class="line">    <span class="attr">"error"</span>: <span class="string">"Internal Server Error"</span>,</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"exceptionTest.val: val不能为空！"</span>,</span><br><span class="line">    <span class="attr">"path"</span>: <span class="string">"/test/exceptionTest"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是如果我输入了参数，而程序出由于除了0导致了异常，此时我们在application.properties文件中将response.handler.enabled=false指定为true或者注释掉，并在postman中输入如下地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://localhost:8888/test/exceptionTest?val=1</span><br></pre></td></tr></table></figure>
+
+<p>响应结果如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">200</span>,</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"请求成功！"</span>,</span><br><span class="line">    <span class="attr">"result"</span>: <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="number">1560482400365</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>显然异常被catch了，请求成功了，但是result为null，显然不是我们想要的。</p>
+<h1 id="2、自定义异常处理"><a href="#2、自定义异常处理" class="headerlink" title="2、自定义异常处理"></a>2、自定义异常处理</h1><p>说了上面那么多不痛不痒的，接下来，我们将实现我们自己的异常处理功能，在上一篇文章的基础上，我们加个exception包，在该包下定义了实现该功能的类（源码已经上传到git：<a href="https://github.com/sunnymaple/rest-spring-boot-starter" target="_blank" rel="noopener">https://github.com/sunnymaple/rest-spring-boot-starter</a>）：<br><img src="/images/springboot/5/2.jpg" alt="图片"></p>
+<p>主要看看AppExceptionHandler类以及BasicRestExceptionController类的作用。</p>
+<h2 id="2-1、AppExceptionHandler"><a href="#2-1、AppExceptionHandler" class="headerlink" title="2.1、AppExceptionHandler"></a>2.1、AppExceptionHandler</h2><p>直接上部分源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ControllerAdvice</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppExceptionHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打印日志并设置异常信息</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e 异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> message 异常message</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> status 错误状态码</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">printLogAndSetAttribute</span><span class="params">(Throwable e, String message,Integer status)</span></span>&#123;</span><br><span class="line">        <span class="comment">//打印日志</span></span><br><span class="line">        log.error(e.getClass().getSimpleName() + <span class="string">"--&gt;"</span> + message,e);</span><br><span class="line">        <span class="comment">//修改http响应状态码为异常状态码status,这里根据需求定，如果后台发生异常，响应状态码和异常状态码需要一致，则打开下面一行代码</span></span><br><span class="line"><span class="comment">//        request.setAttribute("javax.servlet.error.status_code",status);</span></span><br><span class="line">        <span class="comment">//设置异常信息</span></span><br><span class="line">        <span class="keyword">if</span> (Utils.isEmpty(status))&#123;</span><br><span class="line">            status = HttpStatusEnum.INTERNAL_SERVER_ERROR.getStatus();</span><br><span class="line">        &#125;</span><br><span class="line">        request.setAttribute(<span class="string">"status"</span>,status);</span><br><span class="line">        request.setAttribute(<span class="string">"message"</span>,message);</span><br><span class="line">        request.setAttribute(<span class="string">"isException"</span>,<span class="string">"1"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 参数绑定异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e &#123;<span class="doctag">@see</span> BindException&#125;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(BindException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">exceptionHandle</span><span class="params">(BindException e,HandlerMethod handlerMethod,HttpServletRequest request)</span></span>&#123;</span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">//转发到异常处理接口</span></span><br><span class="line">      <span class="keyword">return</span> forward(handlerMethod);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 抛出参数验证异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e &#123;<span class="doctag">@see</span> ConstraintViolationException&#125;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(ConstraintViolationException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">exceptionHandle</span><span class="params">(ConstraintViolationException e, HandlerMethod handlerMethod)</span></span>&#123;</span><br><span class="line">      ...</span><br><span class="line">      <span class="comment">//转发到异常处理接口</span></span><br><span class="line">      <span class="keyword">return</span> forward(handlerMethod);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 不支持的请求方式异常处理</span></span><br><span class="line"><span class="comment">     * 如接口指定了只有Get请求，而实际以Post的方式请求，就会抛出该异常</span></span><br><span class="line"><span class="comment">     * 注意：该接口不能传入&#123;<span class="doctag">@link</span> HandlerMethod&#125;对象，否则捕捉不到该异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e HttpRequestMethodNotSupportedException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(HttpRequestMethodNotSupportedException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">exceptionHandle</span><span class="params">(HttpRequestMethodNotSupportedException e)</span></span>&#123;</span><br><span class="line">        HttpStatusEnum definitionEnum = HttpStatusEnum.METHOD_NOT_ALLOWED;</span><br><span class="line">             ...</span><br><span class="line">      <span class="comment">//转发到异常处理接口</span></span><br><span class="line">      <span class="keyword">return</span> forward(handlerMethod);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 异常RestException</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handlerMethod</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(RestException.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">exceptionHandle</span><span class="params">(RestException e,HandlerMethod handlerMethod)</span></span>&#123;</span><br><span class="line">             ...</span><br><span class="line">      <span class="comment">//转发到异常处理接口</span></span><br><span class="line">      <span class="keyword">return</span> forward(handlerMethod);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 其他异常</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> e</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> handlerMethod</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@ExceptionHandler</span>(Exception.class)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">exceptionHandle</span><span class="params">(Exception e, HandlerMethod handlerMethod)</span></span>&#123;</span><br><span class="line">             ...</span><br><span class="line">      <span class="comment">//转发到异常处理接口</span></span><br><span class="line">      <span class="keyword">return</span> forward(handlerMethod);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先看到该类上的controller增强器注解@ControllerAdvice，方法printLogAndSetAttribute()用于打印日志并且设置异常相关信息；而更多的方法是加上了@ExceptionHandler注解，并定义一个异常，表示被定义的异常都会被该接口拦截，不止上面定义的这些异常，大家也可以自己定义处理更多的异常。主要讲下处理的BindException和ConstraintViolationException异常，它们是spring对@Validated注解（参数验证）处理的异常，它的用法是在controller类中加上@Validated注解，并在方法（接口）中的参数或者参数对象属性中使用下面这些注解：</p>
+<blockquote>
+<p>@Null 限制只能为null<br>@NotNull 限制必须不为null<br>@AssertFalse 限制必须为false<br>@AssertTrue 限制必须为true<br>@DecimalMax(value) 限制必须为一个不大于指定值的数字<br>@DecimalMin(value) 限制必须为一个不小于指定值的数字<br>@Digits(integer,fraction) 限制必须为一个小数，且整数部分的位数不能超过integer，小数部分的位数不能超过fraction<br>@Future 限制必须是一个将来的日期<br>@Max(value) 限制必须为一个不大于指定值的数字<br>@Min(value) 限制必须为一个不小于指定值的数字<br>@Pattern(value) 限制必须符合指定的正则表达式<br>@Size(max,min) 限制字符长度必须在min到max之间<br>@Past 验证注解的元素值（日期类型）比当前时间早<br>@NotEmpty 验证注解的元素值不为null且不为空（字符串长度不为0、集合大小不为0）<br>@NotBlank 验证注解的元素值不为空（不为null、去除首位空格后长度为0），不同于@NotEmpty，@NotBlank只应用于字符串且在比较时会去除字符串的空格<br>@Email 验证注解的元素值是Email，也可以通过正则表达式和flag指定自定义的email格式 </p>
+</blockquote>
+<p>实现了这两个异常的处理方法，那么我们在请求上面的测试接口时（不带请求参数），返回的响应参数是：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">1000</span>,</span><br><span class="line">    <span class="attr">"message"</span>: <span class="string">"val不能为空！"</span>,</span><br><span class="line">    <span class="attr">"result"</span>: <span class="literal">null</span>,</span><br><span class="line">    <span class="attr">"timestamp"</span>: <span class="number">1560490900367</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而在每一个处理异常的方法中，都返回了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">return forward(handlerMethod);</span><br></pre></td></tr></table></figure>
+
+<p>我们看看方法forward的源码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义异常处理接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String FORWARD_EXCEPTION_URI = <span class="string">"/restException"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * SpringBoot定义的异常处理接口 &#123;<span class="doctag">@link</span> BasicErrorController&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Value</span>(<span class="string">"$&#123;server.error.path:$&#123;error.path:/error&#125;&#125;"</span>)</span><br><span class="line"><span class="keyword">private</span> String errorPath;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> String <span class="title">forward</span><span class="params">(HandlerMethod handlerMethod)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> isResponseBody(handlerMethod) ? (<span class="string">"forward:"</span> + FORWARD_EXCEPTION_URI) : (<span class="string">"forward:"</span> + errorPath);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 判断是否是请求接口是否是ResponseBody</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> handlerMethod</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isResponseBody</span><span class="params">(HandlerMethod handlerMethod)</span></span>&#123;</span><br><span class="line">    <span class="comment">//判断是否使用了responseHandler</span></span><br><span class="line">    AppResponseHandlerProperties properties = AppResponseHandlerProperties.getInstance();</span><br><span class="line">    <span class="keyword">if</span> (Utils.isEmpty(properties) || !properties.isEnabled())&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//接口方法</span></span><br><span class="line">    Method method = handlerMethod.getMethod();</span><br><span class="line">    <span class="comment">//接口类</span></span><br><span class="line">    Class&lt;?&gt; aClass = handlerMethod.getBean().getClass();</span><br><span class="line">    <span class="comment">//先判断Controller类对象是否有RestController/ResponseBody注解</span></span><br><span class="line">    RestController restController = aClass.getAnnotation(RestController.class);</span><br><span class="line">    ResponseBody responseBody = aClass.getAnnotation(ResponseBody.class);</span><br><span class="line">    <span class="keyword">if</span> (!Utils.isEmpty(restController) || !Utils.isEmpty(responseBody))&#123;</span><br><span class="line">        <span class="comment">//获取返回值类型</span></span><br><span class="line">        Class&lt;?&gt; returnType = method.getReturnType();</span><br><span class="line">        <span class="keyword">if</span> (returnType == ModelAndView.class)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//判断方法（接口）是否有ResponseBody注解</span></span><br><span class="line">    ResponseBody rBody = handlerMethod.getMethodAnnotation(ResponseBody.class);</span><br><span class="line">    <span class="keyword">if</span> (Utils.isEmpty(rBody))&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先它判断是否是@ResponseBody，如果是它转发到接口/restException，否则则是errorPath，而errorPath使用@Value定义的正式文章开头提到的springboot提供的异常处理接口BasicErrorController。</p>
+<h2 id="2-2、BasicRestExceptionController"><a href="#2-2、BasicRestExceptionController" class="headerlink" title="2.2、BasicRestExceptionController"></a>2.2、BasicRestExceptionController</h2><p>而BasicRestExceptionController类则是上一节提到的/restException接口，它和BasicErrorController一样，同样定义了两个接口，但是比较简单，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/restException"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BasicRestExceptionController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * SpringBoot定义的异常处理接口 &#123;<span class="doctag">@link</span> BasicErrorController&#125;</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Value</span>(<span class="string">"$&#123;server.error.path:$&#123;error.path:/error&#125;&#125;"</span>)</span><br><span class="line">    <span class="keyword">private</span> String errorPath;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 对定义了ResponseBody的请求接口，返回异常信息（message）</span></span><br><span class="line"><span class="comment">     * 然后交给&#123;<span class="doctag">@link</span> AppResponseHandler&#125;处理</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> request</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@RequestMapping</span>(produces = <span class="string">"application/json"</span>)</span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">error</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> request.getAttribute(<span class="string">"message"</span>).toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(produces = <span class="string">"text/html"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">error</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"forward:"</span> + errorPath;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3、对统一响应参数的修改"><a href="#3、对统一响应参数的修改" class="headerlink" title="3、对统一响应参数的修改"></a>3、对统一响应参数的修改</h1><h2 id="3-1、AppResponseHandler"><a href="#3-1、AppResponseHandler" class="headerlink" title="3.1、AppResponseHandler"></a>3.1、AppResponseHandler</h2><p>在beforeBodyWrite方法中，添加了对异常的处理，如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">beforeBodyWrite</span><span class="params">(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse)</span> </span>&#123;</span><br><span class="line">        Object result = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//对异常进行处理</span></span><br><span class="line">            HttpServletRequest request = ((ServletServerHttpRequest) serverHttpRequest).getServletRequest();</span><br><span class="line">            Object isException = request.getAttribute(<span class="string">"isException"</span>);</span><br><span class="line">            <span class="keyword">if</span> (!Utils.isEmpty(isException) &amp;&amp; Objects.equals(isException.toString(),<span class="string">"1"</span>))&#123;</span><br><span class="line">                <span class="comment">//接口异常</span></span><br><span class="line">                String message = request.getAttribute(<span class="string">"message"</span>).toString();</span><br><span class="line">                Integer status = Integer.parseInt(request.getAttribute(<span class="string">"status"</span>).toString());</span><br><span class="line"><span class="comment">//                result = JSONObject.toJSONString(new RestResult(status,message), SerializerFeature.WriteMapNullValue);</span></span><br><span class="line">                result = <span class="keyword">new</span> RestResult(status,message);</span><br><span class="line">            &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">//封装统一格式的响应参数</span></span><br><span class="line">                result = restResult(o,mediaType,serverHttpRequest,serverHttpResponse,aClass);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            HttpStatusEnum statusEnum = HttpStatusEnum.INTERNAL_SERVER_ERROR;</span><br><span class="line">            result = <span class="keyword">new</span> RestResult(statusEnum.getStatus(),statusEnum.getMessage());</span><br><span class="line">            log.info(<span class="string">"创建统一格式的响应数据异常！"</span>,e);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2、HttpStatusEnum"><a href="#3-2、HttpStatusEnum" class="headerlink" title="3.2、HttpStatusEnum"></a>3.2、HttpStatusEnum</h2><p>在响应状态码枚举类中添加了如下异常状态码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 参数提交异常，异常信息由使用者定义</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">PARAM_EXCEPTION(<span class="number">1000</span>),</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 用户名密码错误提示信息</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">USER_PASSWORD_ERROR(<span class="number">1001</span>, <span class="string">"用户名或密码错误!"</span>),</span><br><span class="line"></span><br><span class="line">LOGIN_EXCEPTION(<span class="number">1002</span>,<span class="string">"未登录，或者没有权限！"</span>),</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 不支持的请求方式，如指定了post请求，却使用get请求之后抛出的异常</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED.value(),<span class="string">"不支持的请求方式！"</span>)</span><br></pre></td></tr></table></figure>
+
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年06月15日 13:56</p>
+        <p>原始链接： <a class="post-url" href="/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" title="SpringBoot（系列五）、自定义Starter实战-统一异常处理">https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/&title=《SpringBoot（系列五）、自定义Starter实战-统一异常处理》 — 晴枫慕竹&pic=/images/springboot.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/&title=《SpringBoot（系列五）、自定义Starter实战-统一异常处理》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot（系列五）、自定义Starter实战-统一异常处理》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、SpringBoot定义的异常处理"><span class="post-toc-text">1、SpringBoot定义的异常处理</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、自定义异常处理"><span class="post-toc-text">2、自定义异常处理</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1、AppExceptionHandler"><span class="post-toc-text">2.1、AppExceptionHandler</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2、BasicRestExceptionController"><span class="post-toc-text">2.2、BasicRestExceptionController</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、对统一响应参数的修改"><span class="post-toc-text">3、对统一响应参数的修改</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1、AppResponseHandler"><span class="post-toc-text">3.1、AppResponseHandler</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2、HttpStatusEnum"><span class="post-toc-text">3.2、HttpStatusEnum</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          用U盘安装centOS7系统出现dracut:/#的解决方法
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringBoot（系列一）、SpringBoot入门</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

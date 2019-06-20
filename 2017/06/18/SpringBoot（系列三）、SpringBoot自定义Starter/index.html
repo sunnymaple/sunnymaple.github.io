@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot（系列三）、SpringBoot自定义Starter | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响">
+<meta name="keywords" content="SpringBoot">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot（系列三）、SpringBoot自定义Starter">
+<meta property="og:url" content="https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/1.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/2.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/3.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/4.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/5.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/6.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/7.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/8.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/9.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/10.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/11.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/12.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/13.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/14.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/22.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/18.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/19.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/20.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/21.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/15.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/16.jpg">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/17.jpg">
+<meta property="og:updated_time" content="2019-06-12T09:59:34.211Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot（系列三）、SpringBoot自定义Starter">
+<meta name="twitter:description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/springboot/3/1.jpg">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot（系列三）、SpringBoot自定义Starter" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot（系列三）、SpringBoot自定义Starter
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2017-06-18
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。<br>   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响应Hello 。<br>   首先我们看下工程结构：</p>
+<p><img src="/images/springboot/3/1.jpg" alt="图片"><br>       helloworld-spring-boot-starter-autoconfigure（以下简称autoconfigure）：该模块用来实现Helloworld的自动配置功能，它的打包方式为jar;<br>       helloworld-spring-boot-starter（以下简称starter）：该模块的打包方式是jar，依赖autoconfigure模块，它不写任何代码，只做自动配置包的自动引入，如果要使用helloworld自动配置功能，只要在pom文件中引入starter模块即可：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="1-项目工程的创建"><a href="#1-项目工程的创建" class="headerlink" title="1 项目工程的创建"></a>1 项目工程的创建</h1><h2 id="1-1-创建Empty-Project"><a href="#1-1-创建Empty-Project" class="headerlink" title="1.1 创建Empty Project"></a>1.1 创建Empty Project</h2><p>（1）、新建一个空的项目，如下图，点击Next<br><img src="/images/springboot/3/2.jpg" alt="图片"></p>
+<p>（2）、输入项目名称以及选择项目存放路径，点击Finish</p>
+<p><img src="/images/springboot/3/3.jpg" alt="图片"></p>
+<h2 id="1-2-创建starter模块"><a href="#1-2-创建starter模块" class="headerlink" title="1.2 创建starter模块"></a>1.2 创建starter模块</h2><p>（1）、在1.1节中新建的空项目基础上新建一个Module</p>
+<p><img src="/images/springboot/3/4.jpg" alt="图片"></p>
+<p>（1）、选择Maven，点击Next</p>
+<p><img src="/images/springboot/3/5.jpg" alt="图片"></p>
+<p>（2）、输入GroupId、ArtifactId和Version信息，点击Finish</p>
+<p><img src="/images/springboot/3/6.jpg" alt="图片"></p>
+<p>（3）、由于这个模块只做自动配置包的引入，所有删除src下的包，最终项目结构如下：</p>
+<p>   <img src="/images/springboot/3/7.jpg" alt="图片"></p>
+<p>pom.xml文件：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3-创建autoconfigure模块"><a href="#1-3-创建autoconfigure模块" class="headerlink" title="1.3 创建autoconfigure模块"></a>1.3 创建autoconfigure模块</h2><p>（1）、按1.2节第（1）步，新建一个Module，并选择Spring Initializr，点击Next</p>
+<p><img src="/images/springboot/3/8.jpg" alt="图片"></p>
+<p>（2）、输入项目相关信息，如下图所示：</p>
+<p><img src="/images/springboot/3/9.jpg" alt="图片"></p>
+<p>（3）、选择依赖，我们这里只选择web场景的依赖，点击Next</p>
+<p><img src="/images/springboot/3/10.jpg" alt="图片"></p>
+<p>（4）、默认，不需要改动，点击Finish</p>
+<p><img src="/images/springboot/3/11.jpg" alt="图片"></p>
+<p>（4）、删除SpringBoot自动创建的主配置类、resources下所有文件（夹）以及test文件夹，最终项目结构如下：<br><img src="/images/springboot/3/12.jpg" alt="图片"></p>
+<p>pom.xml（已删除test测试模块的自动配置包以及build下的maven插件）</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>helloworld-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>（5）、在1.2节创建的helloworld-spring-boot-starter的pom下模块引入本节创建的autoconfigure模块：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-4-实现HelloWorld自动配置"><a href="#1-4-实现HelloWorld自动配置" class="headerlink" title="1.4 实现HelloWorld自动配置"></a>1.4 实现HelloWorld自动配置</h2><p>（1）、在helloworld包下新建HelloWorldProperties类，作为配置类，目的是后面使用这个自动配置，直接可以在application.properties文件中配置：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.seagetech.spring.boot.helloworld;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * HelloWorld属性配置类</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@auther</span>: wangzb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2018/11/13 22:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@ConfigurationProperties</span>(prefix = <span class="string">"hello"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldProperties</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打招呼的内容，默认为“World!”</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">private</span> String msg = <span class="string">"World!"</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMsg</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMsg</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.msg = msg;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（2）、新建HelloWorldService接口，并实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">接口：</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@auther</span>: wangzb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2018/11/13 22:28</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWorldService</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打招呼方法</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name 人名，向谁打招呼使用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function">String <span class="title">sayHello</span><span class="params">(String name)</span></span>;</span><br><span class="line">&#125;</span><br><span class="line">实现类：</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@auther</span>: wangzb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2018/11/13 22:33</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldServiceImpl</span> <span class="keyword">implements</span> <span class="title">HelloWorldService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HelloWorldProperties helloWorldProperties;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 打招呼方法</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name 人名，向谁打招呼使用</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello "</span> + name + <span class="string">" "</span> + helloWorldProperties.getMsg();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>（3）、新建HelloWorldAutoConfiguration配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@auther</span>: wangzb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2018/11/13 22:37</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">//定义为配置类</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="comment">//在web条件下成立</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication</span></span><br><span class="line"><span class="comment">//启用HelloWorldProperties配置功能，并加入到IOC容器中</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties</span>(&#123;HelloWorldProperties.class&#125;)</span><br><span class="line"><span class="comment">//导入HelloWorldService组件</span></span><br><span class="line"><span class="meta">@Import</span>(HelloWorldServiceImpl.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldAutoConfiguration</span> </span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-5-创建spring-factories文件"><a href="#1-5-创建spring-factories文件" class="headerlink" title="1.5 创建spring.factories文件"></a>1.5 创建spring.factories文件</h2><p>​       由于springboot的自动配置原理是SpringFactoriesLoader.loadFactoryNames方法来扫描具有META-INF/spring.factories文件中配置的所有自动配置类，这样我们的自动配置类才能生效，所以我们在autoconfigure模块的resources下创建META-INF/spring.factories文件：</p>
+<p><img src="/images/springboot/3/13.jpg" alt="图片"></p>
+<p>在spring.factories中写入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">org.springframework.boot.autoconfigure.EnableAutoConfiguration=\</span><br><span class="line">  com.seagetech.spring.boot.helloworld.HelloWorldAutoConfiguration</span><br></pre></td></tr></table></figure>
+
+<h1 id="2-helloworld自动配置的使用"><a href="#2-helloworld自动配置的使用" class="headerlink" title="2 helloworld自动配置的使用"></a>2 helloworld自动配置的使用</h1><p>创建好helloworld自动配置项目后，接下来就是使用了，我们在idea中使用install将1节中创建好的starter/autoconfigure模块打包到本地maven创库，然后在﻿一、SpringBoot入门﻿ 章节创建的sping-boot-demo项目中使用，在其pom文件中引入：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在主配置类路径下创建HelloWorldController ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.seagetech.springbootdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.seagetech.spring.boot.helloworld.HelloWorldService;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Controller;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@auther</span>: wangzb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span>: 2018/11/17 11:17</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> HelloWorldService helloWorldService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(value = <span class="string">"/sayHello"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> helloWorldService.sayHello(name);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>启动项目，在浏览器输入：<a href="http://localhost:8080/sayHello?name=wangzb" target="_blank" rel="noopener">http://localhost:8080/sayHello?name=wangzb</a>，浏览器返回：</p>
+<blockquote>
+<p>Hello wangzb World!</p>
+</blockquote>
+<p>看到默认返回的消息是World!，如果在application.properties文件中配置如下属性：</p>
+<blockquote>
+<p>hello.msg = 你好</p>
+</blockquote>
+<p>我们在重启项目，重复以上步骤，浏览器响应：</p>
+<blockquote>
+<p>Hello wangzb 你好</p>
+</blockquote>
+<h1 id="3-元数据的配置"><a href="#3-元数据的配置" class="headerlink" title="3 元数据的配置"></a>3 元数据的配置</h1><p>到目前为止，helloworld的自动配置功能已实现，并且正确使用了，但还有一点不够完美，如果你也按上面步骤实现了自己的helloworld自动配置，在application.properties中配置hello.msg属性时，你会发现并没有提示你有关该配置的信息，但是如果你想配置tomcat端口时，输入server.port是有提示的：</p>
+<p><img src="/images/springboot/3/14.jpg" alt="图片"></p>
+<pre><code>这种功能我们如何做呢，我们打开﻿一、SpringBoot入门﻿ 章节下载的《spring-boot-reference.pdf》文件，在目录中找到“Appendix B. Configuration Metadata（附录B.配置元数据）”，下面我们使用谷歌来翻译下相关原文：</code></pre><blockquote>
+<p>  Spring Boot jars include metadata files that provide details of all supported configuration properties.The files are designed to let IDE developers offer contextual help and “code completion” as users are working with application.properties or application.yml files.<br>   Spring Boot jar包含元数据文件，提供所有支持的配置属性的详细信息。这些文件旨在让IDE开发人员使用application.properties或application.yml文件像用户一样提供上下文帮助和“代码完成”</p>
+<p>……</p>
+<p>B.1 Metadata Format<br>     Configuration metadata files are located inside jars under META-INF/spring-configurationmetadata.json They use a simple JSON format with items categorized under either “groups” or “properties” and additional values hints categorized under “hints”, as shown in the following example:<br>B.1 元数据格式<br>      配置元数据文件位于META-INF / spring-configuration-metadata.json下的jar中。它们使用简单的JSON格式，其中的项目分类为“groups”或“properties”和其他值提示分类在“hints”下。</p>
+<p> ….</p>
+</blockquote>
+<p>看看它的例子：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"groups"</span>: [&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"server"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"org.springframework.boot.autoconfigure.web.ServerProperties"</span>,</span><br><span class="line">    <span class="attr">"sourceType"</span>: <span class="string">"org.springframework.boot.autoconfigure.web.ServerProperties"</span></span><br><span class="line">&#125;,</span><br><span class="line">...</span><br><span class="line">],</span><br><span class="line"><span class="attr">"properties"</span>: [&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"server.port"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"java.lang.Integer"</span>,</span><br><span class="line">    <span class="attr">"sourceType"</span>: <span class="string">"org.springframework.boot.autoconfigure.web.ServerProperties"</span></span><br><span class="line">&#125;,&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"server.address"</span>,</span><br><span class="line">    <span class="attr">"type"</span>: <span class="string">"java.net.InetAddress"</span>,</span><br><span class="line">    <span class="attr">"sourceType"</span>: <span class="string">"org.springframework.boot.autoconfigure.web.ServerProperties"</span></span><br><span class="line">&#125;,</span><br><span class="line">...</span><br><span class="line">],</span><br><span class="line"><span class="attr">"hints"</span>: [&#123;</span><br><span class="line">    <span class="attr">"name"</span>: <span class="string">"spring.jpa.hibernate.ddl-auto"</span>,</span><br><span class="line">    <span class="attr">"values"</span>: [&#123;</span><br><span class="line">         <span class="attr">"value"</span>: <span class="string">"none"</span>,</span><br><span class="line">         <span class="attr">"description"</span>: <span class="string">"Disable DDL handling."</span></span><br><span class="line">     &#125;,&#123;</span><br><span class="line">         <span class="attr">"value"</span>: <span class="string">"validate"</span>,</span><br><span class="line">         <span class="attr">"description"</span>: <span class="string">"Validate the schema, make no changes to the database."</span></span><br><span class="line">     &#125;,&#123;</span><br><span class="line">         <span class="attr">"value"</span>: <span class="string">"update"</span>,</span><br><span class="line">         <span class="attr">"description"</span>: <span class="string">"Update the schema if necessary."</span></span><br><span class="line">     &#125;]</span><br><span class="line">]&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以元数据是在位于META-INF/spring-configuration-metadata.json下配置的，下面就列出有关groups、properties、hints使用。</p>
+<h2 id="3-1-Group属性"><a href="#3-1-Group属性" class="headerlink" title="3.1 Group属性"></a>3.1 Group属性</h2><p>“groups”中包含的JSON对象可以包含下表中显示的属性：</p>
+<p><img src="/images/springboot/3/22.jpg" alt></p>
+<h2 id="3-2-Property属性"><a href="#3-2-Property属性" class="headerlink" title="3.2 Property属性"></a>3.2 Property属性</h2><p>properties数组中包含的JSON对象可由以下属性构成：</p>
+<p><img src="/images/springboot/3/18.jpg" alt></p>
+<h2 id="3-3-hints属性"><a href="#3-3-hints属性" class="headerlink" title="3.3 hints属性"></a>3.3 hints属性</h2><p>hints数组中包含的JSON对象可以包含以下属性：</p>
+<p><img src="/images/springboot/3/19.jpg" alt></p>
+<p>每个”hints”元素的values属性中包含的JSON对象可以包含下表中描述的属性：</p>
+<p><img src="/images/springboot/3/20.jpg" alt></p>
+<p>每个”hints”元素的providers属性中的JSON对象可以包含下表中描述的属性:</p>
+<p><img src="/images/springboot/3/21.jpg" alt></p>
+<h2 id="3-4-配置元数据"><a href="#3-4-配置元数据" class="headerlink" title="3.4 配置元数据"></a>3.4 配置元数据</h2><p>所以如果想有更好的用户体验，可以为我们自定义的starter配置元数据，下面就为HelloWorld配置元数据。<br>   在META-INF下创建spring-configuration-metadata.json文件：</p>
+<p><img src="/images/springboot/3/15.jpg" alt="图片"></p>
+<p>在文件中输入如下内容：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"hints"</span>:[&#123;</span><br><span class="line">    <span class="attr">"name"</span>:<span class="string">"hello.msg"</span>,</span><br><span class="line">    <span class="attr">"values"</span>:[&#123;</span><br><span class="line">      <span class="attr">"value"</span>:<span class="string">"你好"</span>,</span><br><span class="line">      <span class="attr">"description"</span>:<span class="string">"中文方式打招呼"</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">      <span class="attr">"value"</span>:<span class="string">"Hi"</span>,</span><br><span class="line">      <span class="attr">"description"</span>:<span class="string">"英文方式打招呼"</span></span><br><span class="line">    &#125;]</span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"groups"</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"com.seagetech.spring.boot.helloworld.HelloWorldProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"hello"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"com.seagetech.spring.boot.helloworld.HelloWorldProperties"</span></span><br><span class="line">    &#125;],</span><br><span class="line">  <span class="attr">"properties"</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"com.seagetech.spring.boot.helloworld.HelloWorldProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"hello.msg"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"java.lang.String"</span>,</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"打招呼的内容"</span>,</span><br><span class="line">      <span class="attr">"defaultValue"</span>: <span class="string">"Worlds"</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>​        然后将autoconfigure模块重新打包，接下来就是在spring-boot-demo项目中使用，如下图所示，就有了属性的提示：</p>
+<p><img src="/images/springboot/3/16.jpg" alt="图片"></p>
+<p><img src="/images/springboot/3/17.jpg" alt="图片"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年06月12日 17:59</p>
+        <p>原始链接： <a class="post-url" href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" title="SpringBoot（系列三）、SpringBoot自定义Starter">https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/&title=《SpringBoot（系列三）、SpringBoot自定义Starter》 — 晴枫慕竹&pic=/images/springboot.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/&title=《SpringBoot（系列三）、SpringBoot自定义Starter》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot（系列三）、SpringBoot自定义Starter》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1-项目工程的创建"><span class="post-toc-text">1 项目工程的创建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1-创建Empty-Project"><span class="post-toc-text">1.1 创建Empty Project</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2-创建starter模块"><span class="post-toc-text">1.2 创建starter模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3-创建autoconfigure模块"><span class="post-toc-text">1.3 创建autoconfigure模块</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-4-实现HelloWorld自动配置"><span class="post-toc-text">1.4 实现HelloWorld自动配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-5-创建spring-factories文件"><span class="post-toc-text">1.5 创建spring.factories文件</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2-helloworld自动配置的使用"><span class="post-toc-text">2 helloworld自动配置的使用</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3-元数据的配置"><span class="post-toc-text">3 元数据的配置</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1-Group属性"><span class="post-toc-text">3.1 Group属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2-Property属性"><span class="post-toc-text">3.2 Property属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3-hints属性"><span class="post-toc-text">3.3 hints属性</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-4-配置元数据"><span class="post-toc-text">3.4 配置元数据</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          SpringBoot（系列二）、SpringBoot自动配置原理
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

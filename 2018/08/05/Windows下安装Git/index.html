@@ -3,25 +3,36 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>用U盘安装centOS7系统出现dracut:/#的解决方法 | 晴枫慕竹</title>
+  <title>Windows下安装Git | 晴枫慕竹</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="如果使用U盘安装centos7操作系统，出现dracut:/#，这个问题是因为安装程序未找到安装文件，无法加载导致的解决办法是，dracut:/#界面输入：  ls /dev   一搬sda和sdb后面加数字的就是U盘，我这里是sda4，然后重启服务器，重新进入到安装界面，根据提示，输入e或者Tab键：  initrd=initrd.imginst.stage2*=hd:LABEL=CentOS\">
-<meta name="keywords" content="Linux,Centos7">
+  <meta name="description" content="1、git下载从官网下载：  https://git-scm.com/download/win  目前最新版本是2.220。  由于服务器是在国外，如果大家觉得下载慢，或者下载失败的话，大家可以复制链接地址：  https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-64-bit.e">
+<meta name="keywords" content="Git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="用U盘安装centOS7系统出现dracut:&#x2F;#的解决方法">
-<meta property="og:url" content="https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/index.html">
+<meta property="og:title" content="Windows下安装Git">
+<meta property="og:url" content="https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="如果使用U盘安装centos7操作系统，出现dracut:/#，这个问题是因为安装程序未找到安装文件，无法加载导致的解决办法是，dracut:/#界面输入：  ls /dev   一搬sda和sdb后面加数字的就是U盘，我这里是sda4，然后重启服务器，重新进入到安装界面，根据提示，输入e或者Tab键：  initrd=initrd.imginst.stage2*=hd:LABEL=CentOS\">
+<meta property="og:description" content="1、git下载从官网下载：  https://git-scm.com/download/win  目前最新版本是2.220。  由于服务器是在国外，如果大家觉得下载慢，或者下载失败的话，大家可以复制链接地址：  https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-64-bit.e">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/Linux/1.png">
-<meta property="og:updated_time" content="2019-06-10T08:28:18.870Z">
+<meta property="og:image" content="https://uploader.shimo.im/f/HeD1WrcRlBoRoAj7.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/7qHzINj0LeEH1syd.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Y1M1BgU6YDYHiBze.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/fWVwSexn4wUpKYXs.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/LniDY9gv6mM1YY1N.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/LG4YzlbDLX044eOi.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/oKnIC2QARV4CmuGh.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/IEUqFkr8JLgm2ypr.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/58T2CQagWMMcI1hZ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/JHc1b8tB9K8UI6bh.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/0OVl1B0hjFYIYTxL.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Z8Fm9HbheeQO1WGi.png!thumbnail">
+<meta property="og:updated_time" content="2019-06-22T08:56:27.710Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="用U盘安装centOS7系统出现dracut:&#x2F;#的解决方法">
-<meta name="twitter:description" content="如果使用U盘安装centos7操作系统，出现dracut:/#，这个问题是因为安装程序未找到安装文件，无法加载导致的解决办法是，dracut:/#界面输入：  ls /dev   一搬sda和sdb后面加数字的就是U盘，我这里是sda4，然后重启服务器，重新进入到安装界面，根据提示，输入e或者Tab键：  initrd=initrd.imginst.stage2*=hd:LABEL=CentOS\">
-<meta name="twitter:image" content="https://www.sunnymaple.cn/images/Linux/1.png">
+<meta name="twitter:title" content="Windows下安装Git">
+<meta name="twitter:description" content="1、git下载从官网下载：  https://git-scm.com/download/win  目前最新版本是2.220。  由于服务器是在国外，如果大家觉得下载慢，或者下载失败的话，大家可以复制链接地址：  https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-64-bit.e">
+<meta name="twitter:image" content="https://uploader.shimo.im/f/HeD1WrcRlBoRoAj7.png!thumbnail">
   
   
     <link rel="icon" href="/me.ico">
@@ -109,14 +120,14 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-用U盘安装centOS7系统出现dracut的解决方法" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-Windows下安装Git" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      用U盘安装centOS7系统出现dracut:/#的解决方法
+      Windows下安装Git
     </h1>
     <div class="post-title-bar">
       <ul>
@@ -124,12 +135,12 @@
               <li>
                   <i class="fa fa-book"></i>
                   
-                      <a href="/categories/Centos7/">Centos7</a>
+                      <a href="/categories/Git/">Git</a>
                   
               </li>
           
         <li>
-          <i class="fa fa-calendar"></i>  2019-06-10
+          <i class="fa fa-calendar"></i>  2018-08-05
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -145,24 +156,42 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>如果使用U盘安装centos7操作系统，出现dracut:/#，这个问题是因为安装程序未找到安装文件，无法加载导致的<br>解决办法是，dracut:/#界面输入：</p>
+            <h1 id="1、git下载"><a href="#1、git下载" class="headerlink" title="1、git下载"></a>1、git下载</h1><p>从官网下载：</p>
 <blockquote>
-<p>ls /dev</p>
+<p><a href="https://git-scm.com/download/win" target="_blank" rel="noopener">https://git-scm.com/download/win</a></p>
 </blockquote>
-<p><img src="https://www.sunnymaple.cn/images/Linux/1.png" alt="图片"></p>
-<p>一搬sda和sdb后面加数字的就是U盘，我这里是sda4，然后重启服务器，重新进入到安装界面，根据提示，输入e或者Tab键：</p>
+<p>目前最新版本是2.220。</p>
+<p><img src="https://uploader.shimo.im/f/HeD1WrcRlBoRoAj7.png!thumbnail" alt="图片"></p>
+<p>由于服务器是在国外，如果大家觉得下载慢，或者下载失败的话，大家可以复制链接地址：</p>
 <blockquote>
-<p>initrd=initrd.imginst.stage2*<em>=hd:LABEL=CentOS\x207\x20x86_64 rd.live.check quiet *</em></p>
+<p><a href="https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-64-bit.exe" target="_blank" rel="noopener">https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2.22.0-64-bit.exe</a></p>
 </blockquote>
-<p>修改为：</p>
-<blockquote>
-<p>initrd=initrd.imginst.stage2*<em>=hd:/dev/sda4 quiet *</em></p>
-</blockquote>
+<p>然后粘贴到迅雷等下载工具中下载。</p>
+<h1 id="2、Git安装步骤"><a href="#2、Git安装步骤" class="headerlink" title="2、Git安装步骤"></a>2、Git安装步骤</h1><p>下载好后，接下来就是安装了，双击安装文件：<br><img src="https://uploader.shimo.im/f/7qHzINj0LeEH1syd.png!thumbnail" alt="图片"></p>
+<p>点击next</p>
+<p><img src="https://uploader.shimo.im/f/Y1M1BgU6YDYHiBze.png!thumbnail" alt="图片"></p>
+<p>Additianal icons –&gt; On the Desktop 选中后会在桌面安装git的图标；<br>Windows Expoer … 选中后，鼠标右击弹出选项菜单会出现Git Bash Here和Git GUI Here；<br>Git LFS…  选中后支持大文件<br>…<br>本页保持默认，点击Next</p>
+<p><img src="https://uploader.shimo.im/f/fWVwSexn4wUpKYXs.png!thumbnail" alt="图片"></p>
+<p>选择编辑器，由于Linux是上习惯使用的是Vim编辑器，所以建议默认选择Vim编辑器，点击Next</p>
+<p><img src="https://uploader.shimo.im/f/LniDY9gv6mM1YY1N.png!thumbnail" alt="图片"></p>
+<p>Use Git form Git Bash only 只在git Bash中使用Git命令，不改变任何操作系统的有关环境变量，所以该选项是最安全的，所以选择该项 点击Next</p>
+<p><img src="https://uploader.shimo.im/f/LG4YzlbDLX044eOi.png!thumbnail" alt="图片"></p>
+<p>选择本地库和远程库的连接方式，默认选择Use the OpenSSL library 点击Next</p>
+<p><img src="https://uploader.shimo.im/f/oKnIC2QARV4CmuGh.png!thumbnail" alt="图片"></p>
+<p>   选择文本行末换行风格，由于Windows和Linux文件行末换行风格不一致，所以在上传（push）或者拉取（pull）文件时，需要对文件换行符进行转换，默认选择第一项即可，我们不需要过多的考虑，点击Next</p>
+<p><img src="https://uploader.shimo.im/f/IEUqFkr8JLgm2ypr.png!thumbnail" alt="图片"></p>
+<p>选择终端工具，<br>Use MinTTY git默认的工具<br>Use window’s … 使用Window的默认的控制台窗口，它使用的是cmd命令行，<br>我们都知道git大部分命令和Linux命令相符合，所以建议选择第一个，如果选择第二个将和Windows命令混合使用，必然会晕，所以默认选择第一个，点击Next</p>
+<p><img src="https://uploader.shimo.im/f/58T2CQagWMMcI1hZ.png!thumbnail" alt="图片"></p>
+<p>默认，点击Next</p>
+<p><img src="https://uploader.shimo.im/f/JHc1b8tB9K8UI6bh.png!thumbnail" alt="图片"></p>
+<p>git使用实验性的内置交互式添加（“git add -i”或“git add -p”）。这使得它更快（特别是启动！）但它还没有被认为是健壮的，显然这是两个新的命令，还处于试验阶段，想尝鲜的话，可以选择它，然后点击next</p>
+<p><img src="https://uploader.shimo.im/f/0OVl1B0hjFYIYTxL.png!thumbnail" alt="图片"></p>
+<p>最后点击安装即可Install 安装即可。安装完成后，在电脑任意位置，右击，如果出现git bash here和git gui here说明安装成功。<br><img src="https://uploader.shimo.im/f/Z8Fm9HbheeQO1WGi.png!thumbnail" alt="图片"></p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年06月10日 16:28</p>
-        <p>原始链接： <a class="post-url" href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/" title="用U盘安装centOS7系统出现dracut:/#的解决方法">https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/</a></p>
+        <p>最后更新： 2019年06月22日 16:56</p>
+        <p>原始链接： <a class="post-url" href="/2018/08/05/Windows下安装Git/" title="Windows下安装Git">https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">
                 <img src="/images/130_130.png" alt="汪志斌">
@@ -219,7 +248,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/&title=《用U盘安装centOS7系统出现dracut:/#的解决方法》 — 晴枫慕竹&pic=/images/Linux/centos7.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/&title=《Windows下安装Git》 — 晴枫慕竹&pic=https://www.sunnymaple.cnimages/130_130.png" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -229,22 +258,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/&title=《用U盘安装centOS7系统出现dracut:/#的解决方法》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/&title=《Windows下安装Git》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《用U盘安装centOS7系统出现dracut:/#的解决方法》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/&via=https://www.sunnymaple.cn" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Windows下安装Git》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/&via=https://www.sunnymaple.cn" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -254,7 +283,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2018/08/05/Windows下安装Git/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -266,9 +295,7 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/Linux/" class="color1">Linux</a>
-      
-    <a href="/tags/Centos7/" class="color3">Centos7</a>
+    <a href="/tags/Git/" class="color4">Git</a>
       
   </li>
 
@@ -279,22 +306,28 @@
 </article>
 
 
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、git下载"><span class="post-toc-text">1、git下载</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、Git安装步骤"><span class="post-toc-text">2、Git安装步骤</span></a></li></ol>
+        </nav>
+    </aside>
+    
 
 <nav id="article-nav">
   
-    <a href="/2019/06/10/三步解决centos7无法连接外网/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          三步解决centos7无法连接外网
+          用U盘安装centOS7系统出现dracut:/#的解决方法
         
       </span>
     </a>
   
   
-    <a href="/2018/08/05/Windows下安装Git/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">Windows下安装Git</span>
+    <a href="/2018/08/04/Git简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Git简介</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

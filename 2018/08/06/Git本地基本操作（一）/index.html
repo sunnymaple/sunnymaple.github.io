@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Git本地基本操作（一） | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init  之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
+<meta name="keywords" content="Git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git本地基本操作（一）">
+<meta property="og:url" content="https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init  之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/1.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/2.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/3.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/4.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/5.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/6.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/7.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/8.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/9.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/10.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/11.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/12.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/13.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/14.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/15.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/16.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/17.png">
+<meta property="og:updated_time" content="2019-06-24T01:03:52.691Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git本地基本操作（一）">
+<meta name="twitter:description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init  之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/git/3/1.png">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Git本地基本操作（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Git本地基本操作（一）
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/Git/">Git</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2018-08-06
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="1、本地库初始化"><a href="#1、本地库初始化" class="headerlink" title="1、本地库初始化"></a>1、本地库初始化</h1><p>在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：</p>
+<p><img src="/images/git/3/1.png" alt="图片"></p>
+<p>然后输入命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/2.png" alt="图片"><br>之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -la 或者 ls -la</span><br></pre></td></tr></table></figure>
+
+<p>即可查看目录结构：<br><img src="/images/git/3/3.png" alt="图片"></p>
+<p>.git下的文件结构：<br><img src="/images/git/3/4.png" alt="图片"><br>注意：如果不清楚该目录下各文件以及目录的作用，不要随意修改它，避免出错</p>
+<h1 id="2、设置签名"><a href="#2、设置签名" class="headerlink" title="2、设置签名"></a>2、设置签名</h1><p><strong>签名的形式：</strong><br>user.name:表示用户名称<br>user.email:表示邮箱，注意这里的邮箱只要满足邮箱格式就可以，并不需要一定存在的邮箱，git不会去检查你输入的邮箱是否存在<br><strong>签名的作用:</strong><br>用于区分不同的开发人员身份，注意这里的签名和登录git的代码托管中心（远程创库，如gitHub/gitee/gitLab）完全不是一个东西。<br><strong>签名的级别：</strong><br>签名分为两种，一是项目级别，或者叫创库级别，仅在当前本地库有效，该签名是设置在当前创库的.git/config文件内；二是系统用户级别，指的是当前登录操作系统的用户级别有效，该设置是在系统用户下的。<br>在设置签名前，我们先看看刚刚生成的.git下的config文件，使用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ./git/config</span><br></pre></td></tr></table></figure>
+
+<h2 id><a href="#" class="headerlink" title></a><img src="/images/git/3/5.png" alt="图片"></h2><p>文件中没有任何有关user.name和user.email的有关信息，接下来我们就开始设置签名。</p>
+<h2 id="2-1、设置创库级别的签名"><a href="#2-1、设置创库级别的签名" class="headerlink" title="2.1、设置创库级别的签名"></a>2.1、设置创库级别的签名</h2><p>使用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name 用户名称</span><br><span class="line">git config user.email 用户邮箱</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/6.png" alt="图片"></p>
+<p>我们在看看.git/config文件：</p>
+<p><img src="/images/git/3/7.png" alt="图片"></p>
+<h2 id="2-2、设置系统级别的签名"><a href="#2-2、设置系统级别的签名" class="headerlink" title="2.2、设置系统级别的签名"></a>2.2、设置系统级别的签名</h2><p>系统级别的签名，即全局的签名，使用命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 用户名称</span><br><span class="line">git config --global user.email 用户邮箱</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/8.png" alt="图片"></p>
+<p>我们再查看系统用户目录下的.gitconfig文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.gitconfig</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/9.png" alt="图片"></p>
+<p>注意，~表示系统用户目录，如我的是</p>
+<blockquote>
+<p>C:\Users\wangzb</p>
+</blockquote>
+<h2 id="2-3、签名级别的优先级"><a href="#2-3、签名级别的优先级" class="headerlink" title="2.3、签名级别的优先级"></a>2.3、签名级别的优先级</h2><p>签名的优先级采用就近原则：创库级别 &gt; 系统级别，即：<br>①、两者都存在时，使用创库级别<br>②、如果只存在其一，则选择存在的签名<br>③、两者都不存在是不允许</p>
+<h1 id="3、基本操作"><a href="#3、基本操作" class="headerlink" title="3、基本操作"></a>3、基本操作</h1><p>设置好签名后，就可以使用该创库做版本控制了。</p>
+<h2 id="3-1、查看状态"><a href="#3-1、查看状态" class="headerlink" title="3.1、查看状态"></a>3.1、查看状态</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/10.png" alt="图片"></p>
+<blockquote>
+<p>On branch master<br>No commits yet<br>nothing to commit (create/copy files and use “git add” to track)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">在master分支，没有任何需要提交的，注意create/copy files and use &quot;git add&quot; to track，提示创建或者复制一些文件，然后使用git add 命令。那么下面我们便来创建一个文件：</span><br><span class="line">vi test.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/11.png" alt="图片"></p>
+<p>编辑任意内容，退出并保存，然后在使用查看状态的命令：<br><img src="/images/git/3/12.png" alt="图片"></p>
+<p>出现红色（注意这颜色的区别，后面会用到）的test.txt,表示文件test.txt未添加到暂存区，并提示使用git add 命令</p>
+<h2 id="3-2、添加到暂存区"><a href="#3-2、添加到暂存区" class="headerlink" title="3.2、添加到暂存区"></a>3.2、添加到暂存区</h2><p>添加某个新建/修改的文件到暂存区：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;file&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者添加所有新增/修改后的文件添加到暂存区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/13.png" alt="图片"><br>注意警告提示：</p>
+<blockquote>
+<p>warning: LF will be replaced by CRLF in test.txt.</p>
+</blockquote>
+<p>意思是换行符LF将被替换为CRLF，这个我在上篇<a href="http://www.sunnymaple.cn/2018/08/05/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Git/">《Windows下安装Git》</a>已说明，既然是警告日志，我们也不用管太多。<br>然后我们在使用git status命令会如何：<br><img src="/images/git/3/14.png" alt="图片"></p>
+<p>我们看到出现了绿色的“new file: test.txt”的字样，这表示test.txt文件已在暂存区，可以提交到本地创库。我们看到日志提示信息：</p>
+<blockquote>
+<p>Changes to be committed:<br> (use “git rm –cached <file>…” to unstage)</file></p>
+</blockquote>
+<p>我们可以使用git rm –cached <file>命令将某个文件从暂存区移除，即退回到工作区<br><img src="/images/git/3/15.png" alt="图片"></file></p>
+<h2 id="3-3、提交到本地库"><a href="#3-3、提交到本地库" class="headerlink" title="3.3、提交到本地库"></a>3.3、提交到本地库</h2><p>由于上一节我们将暂存区的test.txt文件清除掉了，为了测试将暂存区的内容提交到本地库，我们在这里在次使用git add test.txt添加到暂存区。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;commit message&quot; &lt;file&gt;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/git/3/16.png" alt="图片"></p>
+<p>使用上述命令后，我们新建test.text文件就从暂存区到了本地库，然后我们再查看状态：</p>
+<p><img src="/images/git/3/17.png" alt="图片"></p>
+<p>已经没有任何内容需要提交的了。</p>
+<h1 id="4、总结"><a href="#4、总结" class="headerlink" title="4、总结"></a>4、总结</h1><p>①、本地库初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
+
+<p>②、设置签名<br><strong>创库级别：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name 用户名</span><br><span class="line">git config user.email 用户邮箱</span><br></pre></td></tr></table></figure>
+
+<p><strong>系统级别：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 用户名</span><br><span class="line">git config --global user.email 用户邮箱</span><br></pre></td></tr></table></figure>
+
+<p><strong>签名优先级：</strong>创库级别大于系统级别<br>③、从工作区添加到暂存区</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;file&gt;</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
+
+<p>④、从暂存区移除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm --cached &lt;file&gt;</span><br></pre></td></tr></table></figure>
+
+<p>⑤、从暂存区提交到本地库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m &quot;commit message&quot; &lt;file&gt;</span><br></pre></td></tr></table></figure>
+
+<p>注意：对于新添加的文件需要使用add命令，对于只修改了文件内容，可以跳过add，直接使用commit命令即可提交到本地库。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年06月24日 09:03</p>
+        <p>原始链接： <a class="post-url" href="/2018/08/06/Git本地基本操作（一）/" title="Git本地基本操作（一）">https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/&title=《Git本地基本操作（一）》 — 晴枫慕竹&pic=/images/git/git.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/&title=《Git本地基本操作（一）》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Git本地基本操作（一）》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Git/" class="color4">Git</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、本地库初始化"><span class="post-toc-text">1、本地库初始化</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、设置签名"><span class="post-toc-text">2、设置签名</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#"><span class="post-toc-text"></span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1、设置创库级别的签名"><span class="post-toc-text">2.1、设置创库级别的签名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2、设置系统级别的签名"><span class="post-toc-text">2.2、设置系统级别的签名</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3、签名级别的优先级"><span class="post-toc-text">2.3、签名级别的优先级</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、基本操作"><span class="post-toc-text">3、基本操作</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1、查看状态"><span class="post-toc-text">3.1、查看状态</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2、添加到暂存区"><span class="post-toc-text">3.2、添加到暂存区</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3、提交到本地库"><span class="post-toc-text">3.3、提交到本地库</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4、总结"><span class="post-toc-text">4、总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/06/10/三步解决centos7无法连接外网/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          三步解决centos7无法连接外网
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2018/08/06/Git本地基本操作（二）/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Git本地基本操作（二）</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

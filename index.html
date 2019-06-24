@@ -170,6 +170,77 @@
 
 
   
+    <article id="post-用U盘安装centOS7系统出现dracut的解决方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/">用U盘安装centOS7系统出现dracut:/#的解决方法</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/Centos7/">Centos7</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/">
+                
+                <img src="https://www.sunnymaple.cn//images/Linux/centos7.png" alt="用U盘安装centOS7系统出现dracut:/#的解决方法" title="用U盘安装centOS7系统出现dracut:/#的解决方法">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                如果使用U盘安装centos7操作系统，出现dracut:/#，这个问题是因为安装程序未找到安装文件，无法加载导致的解决办法是，dracut:/#界面输入：
+
+ls /dev
+
+
+一搬sda和sdb后面加数字的就是U盘，我这里是sda4，然后重启服务器，重新进入到安装界面，根据提示，输入e或者Tab键：
+
+initrd=initrd.imginst.stage2*=hd:...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-06-10</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Linux/" class="color1">Linux</a>
+      
+    <a href="/tags/Centos7/" class="color3">Centos7</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
     <article id="post-三步解决centos7无法连接外网" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -248,14 +319,14 @@ vi /etc/resolv.conf
 
 
   
-    <article id="post-用U盘安装centOS7系统出现dracut的解决方法" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Git本地基本操作（一）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/">用U盘安装centOS7系统出现dracut:/#的解决方法</a>
+      <a class="article-title" href="/2018/08/06/Git本地基本操作（一）/">Git本地基本操作（一）</a>
     </h1>
   
 
@@ -263,7 +334,7 @@ vi /etc/resolv.conf
               <span class="header-cate">
                 <i class="fa fa-map-marker"></i>
                   
-                  <a href="/categories/Centos7/">Centos7</a>
+                  <a href="/categories/Git/">Git</a>
                   
               </span>
           
@@ -272,22 +343,21 @@ vi /etc/resolv.conf
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/">
+            <a href="/2018/08/06/Git本地基本操作（一）/">
                 
-                <img src="https://www.sunnymaple.cn//images/Linux/centos7.png" alt="用U盘安装centOS7系统出现dracut:/#的解决方法" title="用U盘安装centOS7系统出现dracut:/#的解决方法">
+                <img src="https://www.sunnymaple.cn//images/git/git.jpg" alt="Git本地基本操作（一）" title="Git本地基本操作（一）">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                如果使用U盘安装centos7操作系统，出现dracut:/#，这个问题是因为安装程序未找到安装文件，无法加载导致的解决办法是，dracut:/#界面输入：
+                1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：
 
-ls /dev
+然后输入命令：
+1git init
 
-
-一搬sda和sdb后面加数字的就是U盘，我这里是sda4，然后重启服务器，重新进入到安装界面，根据提示，输入e或者Tab键：
-
-initrd=initrd.imginst.stage2*=hd:...
+之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令：
+1...
             </p>
         </div>
       
@@ -297,21 +367,86 @@ initrd=initrd.imginst.stage2*=hd:...
         
         <ul class="article-footer-menu">
             
-                <li><i class="fa fa-calendar"></i>2019-06-10</li>
+                <li><i class="fa fa-calendar"></i>2018-08-06</li>
             
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/Linux/" class="color1">Linux</a>
-      
-    <a href="/tags/Centos7/" class="color3">Centos7</a>
+    <a href="/tags/Git/" class="color4">Git</a>
       
   </li>
 
         </ul>
         
-            <a href="/2019/06/10/用U盘安装centOS7系统出现dracut的解决方法/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2018/08/06/Git本地基本操作（一）/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-Git本地基本操作（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/08/06/Git本地基本操作（二）/">Git本地基本操作（二）</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/Git/">Git</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2018/08/06/Git本地基本操作（二）/">
+                
+                <img src="https://www.sunnymaple.cn//images/git/git.jpg" alt="Git本地基本操作（二）" title="Git本地基本操作（二）">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、查看本地库历史版本为了方便查看日志，且日志看起来比较多，这里我不断往test.txt文件中添加一行内容，每添加一行后都使用commit命令提交到本地库，现在test.txt文件内容如下：
+使用下面命令查看本地库的版本记录：
+1git log
+
+
+由于提交的内容有点多，一页显示不全，使用上下箭头依次向上向下翻一行，或者使用b向上翻一页，空格建向下翻一页，q退出。我们看到...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2018-08-06</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/Git/" class="color4">Git</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2018/08/06/Git本地基本操作（二）/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -516,14 +651,14 @@ https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2
 
 
   
-    <article id="post-SpringBoot（系列一）、SpringBoot入门" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-SpringBoot（系列二）、SpringBoot自动配置原理" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/">SpringBoot（系列一）、SpringBoot入门</a>
+      <a class="article-title" href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">SpringBoot（系列二）、SpringBoot自动配置原理</a>
     </h1>
   
 
@@ -540,16 +675,16 @@ https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/">
+            <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">
                 
-                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列一）、SpringBoot入门" title="SpringBoot（系列一）、SpringBoot入门">
+                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列二）、SpringBoot自动配置原理" title="SpringBoot（系列二）、SpringBoot自动配置原理">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                1 SpringBoot HelloWorld功能：浏览器发送sayHello请求，服务器接受请求并处理，响应Hello 
-1.1 创建一个maven工程123&lt;groupId&gt;com.seagetech&lt;/groupId&gt;&lt;artifactId&gt;springboot-helloworld&lt;/artifactId&gt;&lt;v...
+                1 SpringBoot运作原理上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下：
+123456789101112131415161718192021222324252627282930313233343536373839@Target(&#123;ElementType.TYPE&#125;)@Retentio...
             </p>
         </div>
       
@@ -571,7 +706,7 @@ https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2
 
         </ul>
         
-            <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -641,136 +776,11 @@ https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2
 
 
   
-    <article id="post-SpringBoot（系列二）、SpringBoot自动配置原理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">SpringBoot（系列二）、SpringBoot自动配置原理</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/SpringBoot/">SpringBoot</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">
-                
-                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列二）、SpringBoot自动配置原理" title="SpringBoot（系列二）、SpringBoot自动配置原理">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                1 SpringBoot运作原理上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下：
-123456789101112131415161718192021222324252627282930313233343536373839@Target(&#123;ElementType.TYPE&#125;)@Retentio...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2017-06-18</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
 
 
-  
-    <article id="post-SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/">SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/SpringBoot/">SpringBoot</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/">
-                
-                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数" title="SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                有时候有这样的需求，接口需要返回统一格式的响应参数，如下：
-123456&#123;  "status":200,  "message":"请求成功！",  "result"："响应参数对象",  "timestamp":1559815994252 &#125;
-
-所有的响应结果对象都封装在result对象中，或许我们会在每个controller层接口都类似这样操作：
-1...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2017-06-18</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
-
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next >></a>
+  </nav>
 </section>
         
       </div>
@@ -827,7 +837,7 @@ https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2
             <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -860,7 +870,7 @@ https://github.com/git-for-windows/git/releases/download/v2.22.0.windows.1/Git-2
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 15px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
         </div>
     </div>
 </div>

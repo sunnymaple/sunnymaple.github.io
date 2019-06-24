@@ -37,11 +37,11 @@
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/19.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/20.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/21.png">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/22.pngl">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/22.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/23.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/24.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/4/25.png">
-<meta property="og:updated_time" content="2019-06-24T01:04:13.728Z">
+<meta property="og:updated_time" content="2019-06-24T01:26:49.731Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git本地基本操作（二）">
 <meta name="twitter:description" content="1、查看本地库历史版本为了方便查看日志，且日志看起来比较多，这里我不断往test.txt文件中添加一行内容，每添加一行后都使用commit命令提交到本地库，现在test.txt文件内容如下： 使用下面命令查看本地库的版本记录： 1git log   由于提交的内容有点多，一页显示不全，使用上下箭头依次向上向下翻一行，或者使用b向上翻一页，空格建向下翻一页，q退出。我们看到第一条记录：  commi">
@@ -171,31 +171,31 @@
             
             <h1 id="1、查看本地库历史版本"><a href="#1、查看本地库历史版本" class="headerlink" title="1、查看本地库历史版本"></a>1、查看本地库历史版本</h1><p>为了方便查看日志，且日志看起来比较多，这里我不断往test.txt文件中添加一行内容，每添加一行后都使用commit命令提交到本地库，现在test.txt文件内容如下：<br><img src="/images/git/4/1.png" alt="图片"></p>
 <p>使用下面命令查看本地库的版本记录：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/2.png" alt="图片"></p>
 <p>由于提交的内容有点多，一页显示不全，使用上下箭头依次向上向下翻一行，或者使用b向上翻一页，空格建向下翻一页，q退出。我们看到第一条记录：</p>
 <blockquote>
-<p>commit e22bc415838f8781485a608cac7ca3e18ed85005 (HEAD -&gt; master)<br>Author: sunnymaple <a href="mailto:&#115;&#117;&#110;&#x6e;&#x79;&#x6d;&#x61;&#112;&#x6c;&#x65;&#x40;&#x31;&#50;&#51;&#x2e;&#x63;&#x6f;&#109;" target="_blank" rel="noopener">&#115;&#117;&#110;&#x6e;&#x79;&#x6d;&#x61;&#112;&#x6c;&#x65;&#x40;&#x31;&#50;&#51;&#x2e;&#x63;&#x6f;&#109;</a><br>Date:   Sun Jun 23 16:40:08 2019 +0800<br>   n</p>
+<p>commit e22bc415838f8781485a608cac7ca3e18ed85005 (HEAD -&gt; master)<br>Author: sunnymaple <a href="mailto:&#115;&#117;&#110;&#110;&#x79;&#109;&#x61;&#112;&#108;&#x65;&#x40;&#x31;&#x32;&#51;&#x2e;&#x63;&#111;&#109;" target="_blank" rel="noopener">&#115;&#117;&#110;&#110;&#x79;&#109;&#x61;&#112;&#108;&#x65;&#x40;&#x31;&#x32;&#51;&#x2e;&#x63;&#111;&#109;</a><br>Date:   Sun Jun 23 16:40:08 2019 +0800<br>   n</p>
 </blockquote>
 <p>第一行：<br><strong>commit：</strong>表示一次提交；<br><strong>e22bc415838f8781485a608cac7ca3e18ed85005：</strong>为本次提交的一个索引，它是一个哈希值，哈希是一系列的加密算法，Git底层采用的是SHA-1算法；<br><strong>HEAD -&gt; master：</strong>HEAD表示一个指针，指向当前分支最顶端的一个commit，该分支上一次commit后的节点，git版本的控制实质是HEAD指针的移动；<br>第二行：作者信息，即签名对应的user.name和user.email；<br>第三行：提交的日期；<br>第四行：git commit -m “n”，即双引号内提交的信息。<br>如果觉得上面git log命令看起来不够简洁，且内容多的时候看起来不方便，可以使用下面这些命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty=oneline</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=oneline</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/3.png" alt="图片"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --oneline</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --oneline</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/4.png" alt="图片"></p>
 <p>这里的索引号已经变短了，它取的是长索引号的前7个字符，虽然变的更短，但它足以保证不重复了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/5.png" alt="图片"></p>
 <p>其中HEAD@{n}：这个n代表的是当前版本，也就是HEAD-&gt;指向的版本移动到该版本所需要的步数。</p>
 <h1 id="2、本地库版本的移动"><a href="#2、本地库版本的移动" class="headerlink" title="2、本地库版本的移动"></a>2、本地库版本的移动</h1><p>上一节我们说到版本的移动本质就是移动HEAD指针，然而我们有三种方式可以操作HEAD指针来移动本地库的版本，分别是基于索引值操作、基于“^”符号操作以及基于“~”符号操作。</p>
 <h2 id="2-1、基于索引值"><a href="#2-1、基于索引值" class="headerlink" title="2.1、基于索引值"></a>2.1、基于索引值</h2><p>直接上命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
 
 <p>由上一节的git reflog命令查看版本记录可以看出，当前本地库的版本处于e22bc41，如果我们要退回到d5e4028的版本，即test.txt文件最后一行的记录应该是k，在命令行中输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard d5e4028</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard d5e4028</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/6.png" alt="图片"></p>
 <p>然后我们再使用git reflog查看下版本记录：</p>
@@ -204,19 +204,19 @@
 <p><img src="/images/git/4/8.png" alt="图片"></p>
 <p>最后一行已是“kkkkkkkk”，我们想回到那个版本，就使用哪个版本索引值，无论是前进还是后退，就像有个时空隧道一样，我们可以在任意一个时代穿梭，非常方便，这个也是我最喜欢使用的一种方式。</p>
 <h2 id="2-2、基于“-”符号"><a href="#2-2、基于“-”符号" class="headerlink" title="2.2、基于“^”符号"></a>2.2、基于“^”符号</h2><p>该方式只能后退，也就是如果我们退到了k的版本，那在想回m的版本，使用该方式就不行了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
 
 <p>其中一个“^”表示退一步，n个表示退n步：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
 
 <p>结果如下：</p>
 <p><img src="/images/git/4/9.png" alt="图片"></p>
 <p>那么问题来，退一步一个^，退两步^^，也许到10步十个^我们还能接受，那要是退100步、200呢，我们不是地主家的傻儿子学写字哈，肯定有其他办法，这就是接下来要讲的第三种方式。</p>
 <h2 id="2-3、基于“-”符号"><a href="#2-3、基于“-”符号" class="headerlink" title="2.3、基于“~”符号"></a>2.3、基于“~”符号</h2><p>该方式也只能后退，命令如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~n</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~n</span><br></pre></td></tr></table></figure>
 
 <p>其中n是数字，表示后退n步。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~2</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD~2</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
 
 <p>结果如下：</p>
 <p><img src="/images/git/4/10.png" alt="图片"></p>
@@ -224,92 +224,92 @@
 <h1 id="3、reset命令参数对比"><a href="#3、reset命令参数对比" class="headerlink" title="3、reset命令参数对比"></a>3、reset命令参数对比</h1><p>在上一节讲解完三种方式移动本地库版本后，不知道大家是否和我有一样的疑问：<br>1、test.txt文件是在工作区的，为什么在使用reset命令移动本地库的版本后，test.txt文件也会随之改变呢？<br>2、既然工作区的内容会随之改变，那暂存区又是怎么变化的？<br>带着这两个疑问，我们首先使用git status命令查看当前的状态：</p>
 <p><img src="/images/git/4/11.png" alt="图片"></p>
 <p>好像并没有需要add或者commit的。<br>那再使用帮组命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --help</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
 
 <p>输入命令后回车，会在浏览器中打开帮助文档（本地，而不是在线文档）</p>
 <p><img src="/images/git/4/12.png" alt="图片"></p>
 <p>这个帮助文档是本地的，而不是在线的，看到摘要的最后一行，rest 除了有hard参数外，还有soft、mixed、merge、keep参数，这些参数有什么区别呢？我们接着往下翻约这个帮组文档。</p>
 <p><img src="/images/git/4/13.png" alt="图片"></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
 
 <p><mode>即soft/mixed/hard等参数，而<commit>即我们使用git log查看历史版本记录的那个commit索引值，而当<mode>缺省时，默认使用mixed。</mode></commit></mode></p>
 <h2 id="3-1、soft参数"><a href="#3-1、soft参数" class="headerlink" title="3.1、soft参数"></a>3.1、soft参数</h2><p>只在本地库移动HEAD指针，不会改变工作区和暂存区。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --sofy 1de85c6</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --sofy 1de85c6</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/14.png" alt="图片"></p>
 <p>本地库变成了g的版本，而工作区最后一行还是h，并没有变成g，接下我们查看状态：</p>
 <p><img src="/images/git/4/15.png" alt="图片"></p>
 <p>正好，工作区和缓存区一致，但是本地库中后退了一个版本，所有出现了绿色的“modified:test.txt”字样，说明test.txt文件需要commit以下从缓存区提交到本地库。</p>
 <h2 id="3-2、mixed参数"><a href="#3-2、mixed参数" class="headerlink" title="3.2、mixed参数"></a>3.2、mixed参数</h2><p>mixed参数不仅在本地库移动HEAD指针，还会重置暂存区，使得暂存区和本地库一致，我们使用mixed参数再将HEAD指针回退一个版本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --sofy 765deba</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --sofy 765deba</span><br><span class="line">git reflog</span><br><span class="line">cat test.txt</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/16.png" alt="图片"></p>
 <p>这里工作区的test.txt文件依然没有改变，而本地库后退到f的版本，似乎本没有看出它和soft的区别，那我们再查看下状态：<br><img src="/images/git/4/17.png" alt="图片"></p>
 <p>这时候出现了红色的“modified: test.txt”字样，说明缓存区和本地库的版本都后退了，而工作区还存在修改的内容未被add到缓存区，当然，使用commit也可以直接提交到本地库。</p>
 <h2 id="3-3、hard参数"><a href="#3-3、hard参数" class="headerlink" title="3.3、hard参数"></a>3.3、hard参数</h2><p>该参数作用比较强一些，它不仅会移动本地库的HEAD指针，还同时会重置缓存区和工作区。它功能演示我们已经在第二节已经说明了，这里我们使用hard参数来找回被删除的文件。</p>
 <h3 id="3-3-1、找回已添加到缓存区的文件"><a href="#3-3-1、找回已添加到缓存区的文件" class="headerlink" title="3.3.1、找回已添加到缓存区的文件"></a>3.3.1、找回已添加到缓存区的文件</h3><p>我们先创建一个test2.txt文件，然后添加到缓存区，再提交到本地库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi text2.txt</span><br><span class="line">git add .</span><br><span class="line">git commit -m  &quot;create text2.txt&quot;</span><br><span class="line">git status </span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">vi text2.txt</span><br><span class="line">git add .</span><br><span class="line">git commit -m  <span class="string">"create text2.txt"</span></span><br><span class="line">git status </span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/18.png" alt="图片"></p>
 <p>工作区现在是两个文件，test.txt和text2.txt，然后我们吧text2.txt文件删除：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm text2.txt</span><br><span class="line">git add .</span><br><span class="line">git status </span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">rm text2.txt</span><br><span class="line">git add .</span><br><span class="line">git status </span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/19.png" alt="图片"></p>
 <p>那要如何找回text2.txt文件呢，使用下面的命令（不改变本地库，重置工作区和缓存区）：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/20.png" alt="图片"></p>
 <h3 id="3-3-2、找回已提交到本地库的文件"><a href="#3-3-2、找回已提交到本地库的文件" class="headerlink" title="3.3.2、找回已提交到本地库的文件"></a>3.3.2、找回已提交到本地库的文件</h3><p>先执行下面这些命令，将文件text2.txt文件删除，然后提交到本地库：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm text2.txt</span><br><span class="line">git add .</span><br><span class="line">git commit -m &quot;delete text2txt.&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rm text2.txt</span><br><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">"delete text2txt."</span></span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/21.png" alt="图片"></p>
 <p>查看状态和历史版本：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">ll</span><br><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br><span class="line">ll</span><br><span class="line">git reflog</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/git/4/22.pngl" alt="图片"></p>
+<p><img src="/images/git/4/22.png" alt="图片"></p>
 <p>我们看到版本索引号0c4148f正好是创建文件是commit的记录，所以输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 0c4148f</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 0c4148f</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/23.png" alt="图片"></p>
 <p>删除的文件被找回。</p>
 <h1 id="4、比较文件的差异"><a href="#4、比较文件的差异" class="headerlink" title="4、比较文件的差异"></a>4、比较文件的差异</h1><h2 id="4-1、工作区和暂存区比较"><a href="#4-1、工作区和暂存区比较" class="headerlink" title="4.1、工作区和暂存区比较"></a>4.1、工作区和暂存区比较</h2><p>我们先删除在test.txt文件最后一行随便输入一行内容，然后将g对应一行的数据删除，然后输入命令：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff test.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff test.txt</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/24.png" alt="图片"><br>绿色的+表示添加的内容，红色的-表示删除的内容。</p>
-<h2 id="4-2、工作区和本地库比较"><a href="#4-2、工作区和本地库比较" class="headerlink" title="4.2、工作区和本地库比较"></a>4.2、工作区和本地库比较</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff [HEAD] &lt;file&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="4-2、工作区和本地库比较"><a href="#4-2、工作区和本地库比较" class="headerlink" title="4.2、工作区和本地库比较"></a>4.2、工作区和本地库比较</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff [HEAD] &lt;file&gt;</span><br></pre></td></tr></table></figure>
 
 <p>其中[HEAD]可以为版本索引值，“^”符号：HEAD^，“<del>”符号：HEAD</del>n，如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> git diff e22bc41 test.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> git diff e22bc41 test.txt</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/4/25.png" alt="图片"></p>
 <h1 id="5、总结"><a href="#5、总结" class="headerlink" title="5、总结"></a>5、总结</h1><p><strong>①、查看本地库历史版本：</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git log</span><br><span class="line">git log --pretty=oneline </span><br><span class="line">git log --oneline</span><br><span class="line">git reflog</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span></span><br><span class="line">git <span class="built_in">log</span> --pretty=oneline </span><br><span class="line">git <span class="built_in">log</span> --oneline</span><br><span class="line">git reflog</span><br></pre></td></tr></table></figure>
 
 <p><strong>②、本地库版本移动：</strong><br>本地库版本移动有三种方式：<br><strong>基于索引值</strong>：其中<commit>为每次提交的版本索引号，<mode>可以为soft、mixed以及hard等。<br>soft：只移动本地库；<br>mixed：移动本地库，同时重置缓存区；<br>hard：移动本地库，同时重置工作区和缓存区。</mode></commit></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
 
 <p><strong>基于“^”符号：</strong>只能后退，不能前进，n个“^”符号表示后退n步</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] HEAD^</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] HEAD^</span><br></pre></td></tr></table></figure>
 
 <p><strong>基于“~”符号：</strong>也只能后退，不能前进，n表示后退n步</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] HEAD~n</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset [&lt;mode&gt;] HEAD~n</span><br></pre></td></tr></table></figure>
 
 <p><strong>③、找回删除的文件</strong><br>找回已在工作区删除，且已添加到缓存区的文件，但还未提交到本地库的文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD</span><br></pre></td></tr></table></figure>
 
 <p>找回在工作区已删除，且已提交到本地库的文件，<commit>为对应的版本索引：</commit></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard [&lt;commit&gt;]</span><br></pre></td></tr></table></figure>
 
 <p><strong>④、文件差异比较</strong><br>工作区和暂存区比较：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff &lt;file&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff &lt;file&gt;</span><br></pre></td></tr></table></figure>
 
 <p>工作区和本地库比较：其中[HEAD]可以为版本索引值，“^”符号：HEAD^，“<del>”符号：HEAD</del>n</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff [HEAD] &lt;file&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff [HEAD] &lt;file&gt;</span><br></pre></td></tr></table></figure>
 
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年06月24日 09:04</p>
+        <p>最后更新： 2019年06月24日 09:26</p>
         <p>原始链接： <a class="post-url" href="/2018/08/06/Git本地基本操作（二）/" title="Git本地基本操作（二）">https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（二）/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">

@@ -107,14 +107,14 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
-    <article id="post-SpringBoot（系列二）、SpringBoot自动配置原理" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-SpringBoot（系列三）、SpringBoot自定义Starter" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">SpringBoot（系列二）、SpringBoot自动配置原理</a>
+      <a class="article-title" href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/">SpringBoot（系列三）、SpringBoot自定义Starter</a>
     </h1>
   
 
@@ -131,16 +131,15 @@
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">
+            <a href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/">
                 
-                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列二）、SpringBoot自动配置原理" title="SpringBoot（系列二）、SpringBoot自动配置原理">
+                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列三）、SpringBoot自定义Starter" title="SpringBoot（系列三）、SpringBoot自定义Starter">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                1 SpringBoot运作原理上一章中我们提到主程序类的注解@SpringBootApplication注解，它其实是个组合注解，源码如下：
-123456789101112131415161718192021222324252627282930313233343536373839@Target(&#123;ElementType.TYPE&#125;)@Retentio...
+                在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求...
             </p>
         </div>
       
@@ -162,7 +161,70 @@
 
         </ul>
         
-            <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-SpringBoot（系列一）、SpringBoot入门" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/">SpringBoot（系列一）、SpringBoot入门</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/">
+                
+                <img src="https://www.sunnymaple.cn//images/springboot.jpg" alt="SpringBoot（系列一）、SpringBoot入门" title="SpringBoot（系列一）、SpringBoot入门">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1 SpringBoot HelloWorld功能：浏览器发送sayHello请求，服务器接受请求并处理，响应Hello 
+1.1 创建一个maven工程123&lt;groupId&gt;com.seagetech&lt;/groupId&gt;&lt;artifactId&gt;springboot-helloworld&lt;/artifactId&gt;&lt;v...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2017-06-18</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -294,10 +356,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -330,7 +392,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
         </div>
     </div>
 </div>

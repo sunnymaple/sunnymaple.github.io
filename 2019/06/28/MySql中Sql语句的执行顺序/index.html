@@ -3,45 +3,25 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>secureCRT 7 的安装与破解 | 晴枫慕竹</title>
+  <title>MySql中Sql语句的执行顺序 | 晴枫慕竹</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="百度网盘链接：https://pan.baidu.com/s/1_sT-uvW-61Iz1B1UhBdiwQ提取码：9ye7  1、打开下载这两个文件；2、安装scrt7.3.4，我这里提供的是一个32位的版本，64位的机器安装之后也没问题，在安装过程中，程序会提示你是否将32位的软件安装至64的操作系统，直接点击 Continue；3、是否同意条款，选项I accept…； 4、直接 next">
-<meta name="keywords" content="SecureCRT">
+  <meta name="description" content="虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。 1、手写顺序1234567891011121314SELECT DISTINCT    &amp;lt;select_list&amp;gt;FROM    &amp;lt;left_table&amp;gt; &amp;lt;join_type&amp;gt;JOIN &amp;lt;right_tabl">
+<meta name="keywords" content="MySql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="secureCRT 7 的安装与破解">
-<meta property="og:url" content="https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/index.html">
+<meta property="og:title" content="MySql中Sql语句的执行顺序">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="百度网盘链接：https://pan.baidu.com/s/1_sT-uvW-61Iz1B1UhBdiwQ提取码：9ye7  1、打开下载这两个文件；2、安装scrt7.3.4，我这里提供的是一个32位的版本，64位的机器安装之后也没问题，在安装过程中，程序会提示你是否将32位的软件安装至64的操作系统，直接点击 Continue；3、是否同意条款，选项I accept…； 4、直接 next">
+<meta property="og:description" content="虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。 1、手写顺序1234567891011121314SELECT DISTINCT    &amp;lt;select_list&amp;gt;FROM    &amp;lt;left_table&amp;gt; &amp;lt;join_type&amp;gt;JOIN &amp;lt;right_tabl">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/1.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/2.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/3.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/4.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/5.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/6.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/7.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/8.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/9.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/10.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/11.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/12.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/13.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/14.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/15.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/16.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/17.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/18.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/19.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/20.jpg">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/21.jpg">
-<meta property="og:updated_time" content="2019-06-22T08:21:24.874Z">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/2/1.png">
+<meta property="og:updated_time" content="2019-06-28T03:13:39.559Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="secureCRT 7 的安装与破解">
-<meta name="twitter:description" content="百度网盘链接：https://pan.baidu.com/s/1_sT-uvW-61Iz1B1UhBdiwQ提取码：9ye7  1、打开下载这两个文件；2、安装scrt7.3.4，我这里提供的是一个32位的版本，64位的机器安装之后也没问题，在安装过程中，程序会提示你是否将32位的软件安装至64的操作系统，直接点击 Continue；3、是否同意条款，选项I accept…； 4、直接 next">
-<meta name="twitter:image" content="https://www.sunnymaple.cn/images/tools/secureCRT/1.jpg">
+<meta name="twitter:title" content="MySql中Sql语句的执行顺序">
+<meta name="twitter:description" content="虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。 1、手写顺序1234567891011121314SELECT DISTINCT    &amp;lt;select_list&amp;gt;FROM    &amp;lt;left_table&amp;gt; &amp;lt;join_type&amp;gt;JOIN &amp;lt;right_tabl">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/MySql/2/1.png">
   
   
     <link rel="icon" href="/me.ico">
@@ -129,14 +109,14 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap"><article id="post-SecureCRT 7 的安装与破解" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main" class="body-wrap"><article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="post-title" itemprop="name">
-      secureCRT 7 的安装与破解
+      MySql中Sql语句的执行顺序
     </h1>
     <div class="post-title-bar">
       <ul>
@@ -144,12 +124,12 @@
               <li>
                   <i class="fa fa-book"></i>
                   
-                      <a href="/categories/Tools/">Tools</a>
+                      <a href="/categories/MySql/">MySql</a>
                   
               </li>
           
         <li>
-          <i class="fa fa-calendar"></i>  2019-06-19
+          <i class="fa fa-calendar"></i>  2019-06-28
         </li>
         <li>
           <i class="fa fa-eye"></i>
@@ -165,30 +145,17 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>百度网盘链接：<a href="https://pan.baidu.com/s/1_sT-uvW-61Iz1B1UhBdiwQ" target="_blank" rel="noopener">https://pan.baidu.com/s/1_sT-uvW-61Iz1B1UhBdiwQ</a><br>提取码：9ye7 </p>
-<p>1、打开下载这两个文件；<br><img src="/images/tools/secureCRT/1.jpg" alt="图片"><br>2、安装scrt7.3.4，我这里提供的是一个32位的版本，64位的机器安装之后也没问题，在安装过程中，程序会提示你是否将32位的软件安装至64的操作系统，直接点击 Continue；<br><img src="/images/tools/secureCRT/2.jpg" alt="图片"><br>3、是否同意条款，选项I accept…；<br><img src="/images/tools/secureCRT/3.jpg" alt="图片"></p>
-<p>4、直接 next<br><img src="/images/tools/secureCRT/4.jpg" alt="图片"></p>
-<p>5、选择自己定制<br><img src="/images/tools/secureCRT/5.jpg" alt="图片"></p>
-<p>6、修改安装路径（可选）；<br><img src="/images/tools/secureCRT/6.jpg" alt="图片"></p>
-<p>7、直接 next<br><img src="/images/tools/secureCRT/7.jpg" alt="图片"></p>
-<p>8、显示安装信息  点击 Install<br><img src="/images/tools/secureCRT/8.jpg" alt="图片"></p>
-<p>9、安装完成  Finish<br><img src="/images/tools/secureCRT/9.jpg" alt="图片"></p>
-<p>10、开始破解，将keygen.exe 拷贝至secureCRT<br><img src="/images/tools/secureCRT/10.jpg" alt="图片"></p>
-<p>11、双击打开 keygen.exe 选择左下角 Patch<br><img src="/images/tools/secureCRT/11.jpg" alt="图片"></p>
-<p>第一次选择 secureCRT.exe<br><img src="/images/tools/secureCRT/12.jpg" alt="图片"></p>
-<p>第二次选择 LicenseHelper.exe<br><img src="/images/tools/secureCRT/13.jpg" alt="图片"></p>
-<p>两次选择都会出现一个成功提示，这里就不截图了；<br>12、运行 secureCRT 7.3 会出现如下提示，点击下一步<br><img src="/images/tools/secureCRT/14.jpg" alt="图片"></p>
-<p>选择左下角 Enter License Manually<br><img src="/images/tools/secureCRT/15.jpg" alt="图片"></p>
-<p>13、输入注册信息，首先看一下注册机页面里的几个数据<br><img src="/images/tools/secureCRT/16.jpg" alt="图片">1、name：注册时的姓名；<br>2、Company：注册时的单位；<br>3、Serial Number 序列号；<br>4、Issue Date 签发日期；<br>5、Licence Key 授权 key；<br>6、Generate 生成；<br>这几个值在注册 secureCRT 都是必须要用到的，所以如果你修改了 Name 或者 Company 记得一定要点击Generate 重新生成下授权 key，否则注册无法成功；<br>第一步，输入姓名和单位名称，这里输入注册机里1和2的数据，输入之后点击下一步<br><img src="/images/tools/secureCRT/17.jpg" alt="图片"></p>
-<p>第二步，输入 Serial Number 和 Licence Key，这里输入注册机里的3和5的数据，然后点击下一步；<br> <img src="/images/tools/secureCRT/18.jpg" alt="图片"></p>
-<p>第三步，输入签发日期，这里输入注册机里4的数据，注意，这里的 Features 不用填，直接点击下一步；<br><img src="/images/tools/secureCRT/19.jpg" alt="图片"></p>
-<p>如果看到下图1信息，则说明已经注册成功，点击完成即可；如果显示类似于下图2信息，则说明注册失败，你需要重新生成授权码并从第一步重新来；<br><img src="/images/tools/secureCRT/20.jpg" alt="图片"></p>
-<p><img src="/images/tools/secureCRT/21.jpg" alt="图片"><br>点击完成之后，即可任意使用了。</p>
+            <p>虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。</p>
+<h1 id="1、手写顺序"><a href="#1、手写顺序" class="headerlink" title="1、手写顺序"></a>1、手写顺序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">SELECT DISTINCT</span><br><span class="line">    &lt;select_list&gt;</span><br><span class="line">FROM</span><br><span class="line">    &lt;left_table&gt; &lt;join_type&gt;</span><br><span class="line">JOIN &lt;right_table&gt; ON &lt;join_cndition&gt;</span><br><span class="line">WHERE</span><br><span class="line">     &lt;where_condition&gt;</span><br><span class="line">GROUP BY </span><br><span class="line">     &lt;group_by_list&gt;</span><br><span class="line">HAVING </span><br><span class="line">     &lt;having_condition&gt;</span><br><span class="line">ORDER BY </span><br><span class="line">     &lt;order_by_condition&gt;</span><br><span class="line">LIMIT &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2、机读顺序"><a href="#2、机读顺序" class="headerlink" title="2、机读顺序"></a>2、机读顺序</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">FROM &lt;left_table&gt;</span><br><span class="line">ON &lt;join_condition&gt;</span><br><span class="line">&lt;join_type&gt; JOIN &lt;right_table&gt;</span><br><span class="line">WHERE &lt;where_condition&gt;</span><br><span class="line">GROUP BY  &lt;group_by_list&gt;</span><br><span class="line">HAVING &lt;having_condition&gt;</span><br><span class="line">SELECT </span><br><span class="line">DISTINCT &lt;select_list&gt;</span><br><span class="line">ORDER BY &lt;order_by_condition&gt;</span><br><span class="line">LIMIT &lt;limit_number&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3、用鱼骨图总结sql执行顺序"><a href="#3、用鱼骨图总结sql执行顺序" class="headerlink" title="3、用鱼骨图总结sql执行顺序"></a>3、用鱼骨图总结sql执行顺序</h2><p><img src="/images/MySql/2/1.png" alt="图片"></p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年06月22日 16:21</p>
-        <p>原始链接： <a class="post-url" href="/2019/06/19/SecureCRT 7 的安装与破解/" title="secureCRT 7 的安装与破解">https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/</a></p>
+        <p>最后更新： 2019年06月28日 11:13</p>
+        <p>原始链接： <a class="post-url" href="/2019/06/28/MySql中Sql语句的执行顺序/" title="MySql中Sql语句的执行顺序">https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">
                 <img src="/images/130_130.png" alt="汪志斌">
@@ -245,7 +212,7 @@
     <div class="post-share-list" id="share-list">
         <ul class="share-icons">
           <li>
-            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/&title=《secureCRT 7 的安装与破解》 — 晴枫慕竹&pic=https://www.sunnymaple.cnimages/130_130.png" data-title="微博">
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/&title=《MySql中Sql语句的执行顺序》 — 晴枫慕竹&pic=/images/MySql/MySql.png" data-title="微博">
               <i class="fa fa-weibo"></i>
             </a>
           </li>
@@ -255,22 +222,22 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/&title=《secureCRT 7 的安装与破解》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/&title=《MySql中Sql语句的执行顺序》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
           <li>
-            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/" data-title="Facebook">
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/" data-title="Facebook">
               <i class="fa fa-facebook"></i>
             </a>
           </li>
           <li>
-            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《secureCRT 7 的安装与破解》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/&via=https://www.sunnymaple.cn" data-title="Twitter">
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySql中Sql语句的执行顺序》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/&via=https://www.sunnymaple.cn" data-title="Twitter">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
           <li>
-            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/" data-title="Google+">
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/" data-title="Google+">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -280,7 +247,7 @@
 <div class="post-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;" id="wxShare-close">×</a>
     <p>扫一扫，分享到微信</p>
-    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/06/19/SecureCRT 7 的安装与破解/" alt="微信分享二维码">
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/06/28/MySql中Sql语句的执行顺序/" alt="微信分享二维码">
 </div>
 
 <div class="mask"></div>
@@ -292,7 +259,7 @@
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/SecureCRT/" class="color5">SecureCRT</a>
+    <a href="/tags/MySql/" class="color1">MySql</a>
       
   </li>
 
@@ -303,22 +270,18 @@
 </article>
 
 
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、手写顺序"><span class="post-toc-text">1、手写顺序</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、机读顺序"><span class="post-toc-text">2、机读顺序</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3、用鱼骨图总结sql执行顺序"><span class="post-toc-text">3、用鱼骨图总结sql执行顺序</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
 
 <nav id="article-nav">
   
-    <a href="/2019/06/27/class等文件(夹)/" id="article-nav-newer" class="article-nav-link-wrap">
-
-      <span class="article-nav-title">
-        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
-        
-          idea隐藏.iml/.idea/.class等文件(夹)
-        
-      </span>
-    </a>
   
-  
-    <a href="/2019/06/10/三步解决centos7无法连接外网/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">三步解决centos7无法连接外网</span>
+    <a href="/2019/06/28/MySql索引简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">MySql索引简介</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

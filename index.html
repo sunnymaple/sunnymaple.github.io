@@ -107,6 +107,202 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
+    <article id="post-MySql性能分析工具Explain" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/MySql性能分析工具Explain/">MySql性能分析工具Explain</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/07/02/MySql性能分析工具Explain/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql性能分析工具Explain" title="MySql性能分析工具Explain">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。当客户端想MySQL请求一条Query，命令解析器模块...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-07-02</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/07/02/MySql性能分析工具Explain/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-如何避免索引失效？" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/02/如何避免索引失效？/">如何避免索引失效？</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/07/02/如何避免索引失效？/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="如何避免索引失效？" title="如何避免索引失效？">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                本文讲解的例子使用的sql：
+123456789101112131415CREATE TABLE staffs(  id INT PRIMARY KEY AUTO_INCREMENT,  NAME VARCHAR(24) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,  age INT NOT NULL DEFA...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-07-02</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/07/02/如何避免索引失效？/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-MySql索引简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/MySql索引简介/">MySql索引简介</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/06/28/MySql索引简介/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql索引简介" title="MySql索引简介">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、索引是什么官方对索引的定义：
+
+索引（Index）是帮助MySql高效获取数据的数据结构
+
+索引的目的在于提高查询效率，可以类比字典，例如要查询“mysql”这个单词，我们肯定需要定位到m字母，然后从上往下找到y字母，再找到剩余的sql，如果没有索引，那么每次查找可能都需要从a~z之上而下的查找，查找次数多，效率低。
+个人理解：
+
+索引是排好序的快速查找的数据结构
+
+...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-06-28</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/06/28/MySql索引简介/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
     <article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -230,77 +426,6 @@
         </ul>
         
             <a href="/2019/06/28/RestTemplate多文件上传问题/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article id="post-MySql索引简介" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/MySql索引简介/">MySql索引简介</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/MySql/">MySql</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/06/28/MySql索引简介/">
-                
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql索引简介" title="MySql索引简介">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                1、索引是什么官方对索引的定义：
-
-索引（Index）是帮助MySql高效获取数据的数据结构
-
-索引的目的在于提高查询效率，可以类比字典，例如要查询“mysql”这个单词，我们肯定需要定位到m字母，然后从上往下找到y字母，再找到剩余的sql，如果没有索引，那么每次查找可能都需要从a~z之上而下的查找，查找次数多，效率低。
-个人理解：
-
-索引是排好序的快速查找的数据结构
-
-...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-06-28</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/MySql/" class="color1">MySql</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/06/28/MySql索引简介/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -650,141 +775,6 @@ initrd=initrd.imginst.stage2*=hd:...
 
 
   
-    <article id="post-Git本地基本操作（二）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/06/Git本地基本操作（二）/">Git本地基本操作（二）</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/Git/">Git</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2018/08/06/Git本地基本操作（二）/">
-                
-                <img src="https://www.sunnymaple.cn//images/git/git.jpg" alt="Git本地基本操作（二）" title="Git本地基本操作（二）">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                1、查看本地库历史版本为了方便查看日志，且日志看起来比较多，这里我不断往test.txt文件中添加一行内容，每添加一行后都使用commit命令提交到本地库，现在test.txt文件内容如下：
-使用下面命令查看本地库的版本记录：
-1git log
-
-
-由于提交的内容有点多，一页显示不全，使用上下箭头依次向上向下翻一行，或者使用b向上翻一页，空格建向下翻一页，q退出。我们看到...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2018-08-06</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/Git/" class="color4">Git</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2018/08/06/Git本地基本操作（二）/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article id="post-Git本地基本操作（一）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/06/Git本地基本操作（一）/">Git本地基本操作（一）</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/Git/">Git</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2018/08/06/Git本地基本操作（一）/">
-                
-                <img src="https://www.sunnymaple.cn//images/git/git.jpg" alt="Git本地基本操作（一）" title="Git本地基本操作（一）">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：
-
-然后输入命令：
-1git init
-
-之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令：
-1...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2018-08-06</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/Git/" class="color4">Git</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2018/08/06/Git本地基本操作（一）/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -846,7 +836,7 @@ initrd=initrd.imginst.stage2*=hd:...
             <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 17.5px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 15px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -879,7 +869,7 @@ initrd=initrd.imginst.stage2*=hd:...
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 17.5px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 15px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 13.33px;">Centos7</a> <a href="/tags/Git/" style="font-size: 16.67px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 20px;">SpringBoot</a>
         </div>
     </div>
 </div>

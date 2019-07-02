@@ -8,13 +8,13 @@
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init  之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
+  <meta name="description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init   之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
 <meta name="keywords" content="Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git本地基本操作（一）">
 <meta property="og:url" content="https://www.sunnymaple.cn/2018/08/06/Git本地基本操作（一）/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init  之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
+<meta property="og:description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init   之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/1.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/3/2.png">
@@ -36,7 +36,7 @@
 <meta property="og:updated_time" content="2019-06-24T01:23:55.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git本地基本操作（一）">
-<meta name="twitter:description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init  之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
+<meta name="twitter:description" content="1、本地库初始化在任何想要创建本地库的的目录下，右击选择Git Bash Here,如我是在目录D:\home\sunnymaple\gitdemo下，弹出如下框：  然后输入命令： 1git init   之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令： 1ll -la 或者 ls">
 <meta name="twitter:image" content="https://www.sunnymaple.cn/images/git/3/1.png">
   
   
@@ -166,12 +166,23 @@
 <p>然后输入命令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/git/3/2.png" alt="图片"><br>之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令：</p>
+<p><img src="/images/git/3/2.png" alt="图片">
+之后在该目录下便能看到一个.git的目录文件，注意使用ll或者ls命令查看文件是查看不到的，因为Linux系统的以“.”号开头的目录或者文件是默认隐藏的，使用命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ll -la 或者 ls -la</span><br></pre></td></tr></table></figure>
 
-<p>即可查看目录结构：<br><img src="/images/git/3/3.png" alt="图片"></p>
-<p>.git下的文件结构：<br><img src="/images/git/3/4.png" alt="图片"><br>注意：如果不清楚该目录下各文件以及目录的作用，不要随意修改它，避免出错</p>
-<h1 id="2、设置签名"><a href="#2、设置签名" class="headerlink" title="2、设置签名"></a>2、设置签名</h1><p><strong>签名的形式：</strong><br>user.name:表示用户名称<br>user.email:表示邮箱，注意这里的邮箱只要满足邮箱格式就可以，并不需要一定存在的邮箱，git不会去检查你输入的邮箱是否存在<br><strong>签名的作用:</strong><br>用于区分不同的开发人员身份，注意这里的签名和登录git的代码托管中心（远程创库，如gitHub/gitee/gitLab）完全不是一个东西。<br><strong>签名的级别：</strong><br>签名分为两种，一是项目级别，或者叫创库级别，仅在当前本地库有效，该签名是设置在当前创库的.git/config文件内；二是系统用户级别，指的是当前登录操作系统的用户级别有效，该设置是在系统用户下的。<br>在设置签名前，我们先看看刚刚生成的.git下的config文件，使用命令：</p>
+<p>即可查看目录结构：
+<img src="/images/git/3/3.png" alt="图片"></p>
+<p>.git下的文件结构：
+<img src="/images/git/3/4.png" alt="图片">
+注意：如果不清楚该目录下各文件以及目录的作用，不要随意修改它，避免出错</p>
+<h1 id="2、设置签名"><a href="#2、设置签名" class="headerlink" title="2、设置签名"></a>2、设置签名</h1><p><strong>签名的形式：</strong>
+user.name:表示用户名称
+user.email:表示邮箱，注意这里的邮箱只要满足邮箱格式就可以，并不需要一定存在的邮箱，git不会去检查你输入的邮箱是否存在
+<strong>签名的作用:</strong>
+用于区分不同的开发人员身份，注意这里的签名和登录git的代码托管中心（远程创库，如gitHub/gitee/gitLab）完全不是一个东西。
+<strong>签名的级别：</strong>
+签名分为两种，一是项目级别，或者叫创库级别，仅在当前本地库有效，该签名是设置在当前创库的.git/config文件内；二是系统用户级别，指的是当前登录操作系统的用户级别有效，该设置是在系统用户下的。
+在设置签名前，我们先看看刚刚生成的.git下的config文件，使用命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ./git/config</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/3/5.png" alt="图片"></p>
@@ -194,16 +205,24 @@
 <blockquote>
 <p>C:\Users\wangzb</p>
 </blockquote>
-<h2 id="2-3、签名级别的优先级"><a href="#2-3、签名级别的优先级" class="headerlink" title="2.3、签名级别的优先级"></a>2.3、签名级别的优先级</h2><p>签名的优先级采用就近原则：创库级别 &gt; 系统级别，即：<br>①、两者都存在时，使用创库级别<br>②、如果只存在其一，则选择存在的签名<br>③、两者都不存在是不允许</p>
+<h2 id="2-3、签名级别的优先级"><a href="#2-3、签名级别的优先级" class="headerlink" title="2.3、签名级别的优先级"></a>2.3、签名级别的优先级</h2><p>签名的优先级采用就近原则：创库级别 &gt; 系统级别，即：
+①、两者都存在时，使用创库级别
+②、如果只存在其一，则选择存在的签名
+③、两者都不存在是不允许</p>
 <h1 id="3、基本操作"><a href="#3、基本操作" class="headerlink" title="3、基本操作"></a>3、基本操作</h1><p>设置好签名后，就可以使用该创库做版本控制了。</p>
 <h2 id="3-1、查看状态"><a href="#3-1、查看状态" class="headerlink" title="3.1、查看状态"></a>3.1、查看状态</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/git/3/10.png" alt="图片"></p>
 <blockquote>
-<p>On branch master<br>No commits yet<br>nothing to commit (create/copy files and use “git add” to track)<br>在master分支，没有任何需要提交的，注意create/copy files and use “git add” to track，提示创建或者复制一些文件，然后使用git add 命令。那么下面我们便来创建一个文件：<br>vi test.txt</p>
+<p>On branch master
+No commits yet
+nothing to commit (create/copy files and use “git add” to track)
+在master分支，没有任何需要提交的，注意create/copy files and use “git add” to track，提示创建或者复制一些文件，然后使用git add 命令。那么下面我们便来创建一个文件：
+vi test.txt</p>
 </blockquote>
 <p><img src="/images/git/3/11.png" alt="图片"></p>
-<p>编辑任意内容，退出并保存，然后在使用查看状态的命令：<br><img src="/images/git/3/12.png" alt="图片"></p>
+<p>编辑任意内容，退出并保存，然后在使用查看状态的命令：
+<img src="/images/git/3/12.png" alt="图片"></p>
 <p>出现红色（注意这颜色的区别，后面会用到）的test.txt,表示文件test.txt未添加到暂存区，并提示使用git add 命令</p>
 <h2 id="3-2、添加到暂存区"><a href="#3-2、添加到暂存区" class="headerlink" title="3.2、添加到暂存区"></a>3.2、添加到暂存区</h2><p>添加某个新建/修改的文件到暂存区：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;file&gt;</span><br></pre></td></tr></table></figure>
@@ -211,16 +230,21 @@
 <p>或者添加所有新增/修改后的文件添加到暂存区</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/git/3/13.png" alt="图片"><br>注意警告提示：</p>
+<p><img src="/images/git/3/13.png" alt="图片">
+注意警告提示：</p>
 <blockquote>
 <p>warning: LF will be replaced by CRLF in test.txt.</p>
 </blockquote>
-<p>意思是换行符LF将被替换为CRLF，这个我在上篇<a href="http://www.sunnymaple.cn/2018/08/05/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Git/">《Windows下安装Git》</a>已说明，既然是警告日志，我们也不用管太多。<br>然后我们在使用git status命令会如何：<br><img src="/images/git/3/14.png" alt="图片"></p>
+<p>意思是换行符LF将被替换为CRLF，这个我在上篇<a href="http://www.sunnymaple.cn/2018/08/05/Windows%E4%B8%8B%E5%AE%89%E8%A3%85Git/">《Windows下安装Git》</a>已说明，既然是警告日志，我们也不用管太多。
+然后我们在使用git status命令会如何：
+<img src="/images/git/3/14.png" alt="图片"></p>
 <p>我们看到出现了绿色的“new file: test.txt”的字样，这表示test.txt文件已在暂存区，可以提交到本地创库。我们看到日志提示信息：</p>
 <blockquote>
-<p>Changes to be committed:<br> (use “git rm –cached <file>…” to unstage)</file></p>
+<p>Changes to be committed:
+ (use “git rm –cached <file>…” to unstage)</file></p>
 </blockquote>
-<p>我们可以使用git rm –cached <file>命令将某个文件从暂存区移除，即退回到工作区<br><img src="/images/git/3/15.png" alt="图片"></file></p>
+<p>我们可以使用git rm –cached <file>命令将某个文件从暂存区移除，即退回到工作区
+<img src="/images/git/3/15.png" alt="图片"></file></p>
 <h2 id="3-3、提交到本地库"><a href="#3-3、提交到本地库" class="headerlink" title="3.3、提交到本地库"></a>3.3、提交到本地库</h2><p>由于上一节我们将暂存区的test.txt文件清除掉了，为了测试将暂存区的内容提交到本地库，我们在这里在次使用git add test.txt添加到暂存区。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">"commit message"</span> &lt;file&gt;</span><br></pre></td></tr></table></figure>
 
@@ -231,13 +255,15 @@
 <h1 id="4、总结"><a href="#4、总结" class="headerlink" title="4、总结"></a>4、总结</h1><p>①、本地库初始化</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br></pre></td></tr></table></figure>
 
-<p>②、设置签名<br><strong>创库级别：</strong></p>
+<p>②、设置签名
+<strong>创库级别：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config user.name 用户名</span><br><span class="line">git config user.email 用户邮箱</span><br></pre></td></tr></table></figure>
 
 <p><strong>系统级别：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name 用户名</span><br><span class="line">git config --global user.email 用户邮箱</span><br></pre></td></tr></table></figure>
 
-<p><strong>签名优先级：</strong>创库级别大于系统级别<br>③、从工作区添加到暂存区</p>
+<p><strong>签名优先级：</strong>创库级别大于系统级别
+③、从工作区添加到暂存区</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;file&gt;</span><br></pre></td></tr></table></figure>
 
 <p>或者</p>

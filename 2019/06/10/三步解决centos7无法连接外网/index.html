@@ -8,13 +8,13 @@
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而  ping www.baidu.com   却无法ping通，这里记录解决办法： 1、检查dns输入：  route -n  若不存在第一条0.0.00的则无法访问外网。 2、添加dns在命令行中输入：  vi /etc/resolv.conf  并添加8.8.8.8,然后wq保存 3、添加路由在命令行中">
+  <meta name="description" content="使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而  ping www.baidu.com   却无法ping通，这里记录解决办法： 1、检查dns输入：  route -n   若不存在第一条0.0.00的则无法访问外网。 2、添加dns在命令行中输入：  vi /etc/resolv.conf  并添加8.8.8.8,然后wq保存  3、添加路由在命令">
 <meta name="keywords" content="Linux,Centos7">
 <meta property="og:type" content="article">
 <meta property="og:title" content="三步解决centos7无法连接外网">
 <meta property="og:url" content="https://www.sunnymaple.cn/2019/06/10/三步解决centos7无法连接外网/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而  ping www.baidu.com   却无法ping通，这里记录解决办法： 1、检查dns输入：  route -n  若不存在第一条0.0.00的则无法访问外网。 2、添加dns在命令行中输入：  vi /etc/resolv.conf  并添加8.8.8.8,然后wq保存 3、添加路由在命令行中">
+<meta property="og:description" content="使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而  ping www.baidu.com   却无法ping通，这里记录解决办法： 1、检查dns输入：  route -n   若不存在第一条0.0.00的则无法访问外网。 2、添加dns在命令行中输入：  vi /etc/resolv.conf  并添加8.8.8.8,然后wq保存  3、添加路由在命令">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/Linux/2.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/Linux/3.png">
@@ -22,7 +22,7 @@
 <meta property="og:updated_time" content="2019-06-10T09:01:38.239Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="三步解决centos7无法连接外网">
-<meta name="twitter:description" content="使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而  ping www.baidu.com   却无法ping通，这里记录解决办法： 1、检查dns输入：  route -n  若不存在第一条0.0.00的则无法访问外网。 2、添加dns在命令行中输入：  vi /etc/resolv.conf  并添加8.8.8.8,然后wq保存 3、添加路由在命令行中">
+<meta name="twitter:description" content="使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而  ping www.baidu.com   却无法ping通，这里记录解决办法： 1、检查dns输入：  route -n   若不存在第一条0.0.00的则无法访问外网。 2、添加dns在命令行中输入：  vi /etc/resolv.conf  并添加8.8.8.8,然后wq保存  3、添加路由在命令">
 <meta name="twitter:image" content="https://www.sunnymaple.cn/images/Linux/2.png">
   
   
@@ -156,17 +156,20 @@
 <blockquote>
 <p>route -n</p>
 </blockquote>
-<p><img src="https://www.sunnymaple.cn/images/Linux/2.png" alt="图片"><br>若不存在第一条0.0.00的则无法访问外网。</p>
+<p><img src="https://www.sunnymaple.cn/images/Linux/2.png" alt="图片">
+若不存在第一条0.0.00的则无法访问外网。</p>
 <h1 id="2、添加dns"><a href="#2、添加dns" class="headerlink" title="2、添加dns"></a>2、添加dns</h1><p>在命令行中输入：</p>
 <blockquote>
 <p>vi /etc/resolv.conf</p>
 </blockquote>
-<p>并添加8.8.8.8,然后wq保存<br><img src="https://www.sunnymaple.cn/images/Linux/3.png" alt="图片"></p>
+<p>并添加8.8.8.8,然后wq保存
+<img src="https://www.sunnymaple.cn/images/Linux/3.png" alt="图片"></p>
 <h1 id="3、添加路由"><a href="#3、添加路由" class="headerlink" title="3、添加路由"></a>3、添加路由</h1><p>在命令行中输入：</p>
 <blockquote>
 <p>route add default gw 192.168.199.1</p>
 </blockquote>
-<p>其中地址192.168.199.1为网关的ip<br>通过上面的三步即可解决问题，现在</p>
+<p>其中地址192.168.199.1为网关的ip
+通过上面的三步即可解决问题，现在</p>
 <blockquote>
 <p>ping <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a></p>
 </blockquote>

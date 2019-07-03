@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>sql优化分析 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="1、sql优化思路①、慢查询的开启与捕获②、explain+慢SQL分析③、show profile 查询SQL在Mysql服务器里面执行细节和生命周期情况④、SQL数据库服务器的参数调优 2、优化查询2.1、永远小表驱动大表类似嵌套循环Nested Loop， 123456for(int i=0;i&amp;lt;5;i++)&amp;#123;  ...  for(int j=0;j&amp;lt;1000;j++)">
+<meta name="keywords" content="MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sql优化分析">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/07/03/sql优化分析/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="1、sql优化思路①、慢查询的开启与捕获②、explain+慢SQL分析③、show profile 查询SQL在Mysql服务器里面执行细节和生命周期情况④、SQL数据库服务器的参数调优 2、优化查询2.1、永远小表驱动大表类似嵌套循环Nested Loop， 123456for(int i=0;i&amp;lt;5;i++)&amp;#123;  ...  for(int j=0;j&amp;lt;1000;j++)">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/6/1.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/6/2.png">
+<meta property="og:updated_time" content="2019-07-03T01:51:27.683Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sql优化分析">
+<meta name="twitter:description" content="1、sql优化思路①、慢查询的开启与捕获②、explain+慢SQL分析③、show profile 查询SQL在Mysql服务器里面执行细节和生命周期情况④、SQL数据库服务器的参数调优 2、优化查询2.1、永远小表驱动大表类似嵌套循环Nested Loop， 123456for(int i=0;i&amp;lt;5;i++)&amp;#123;  ...  for(int j=0;j&amp;lt;1000;j++)">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/MySql/6/1.png">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-sql优化分析" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      sql优化分析
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/MySql/">MySql</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-07-03
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="1、sql优化思路"><a href="#1、sql优化思路" class="headerlink" title="1、sql优化思路"></a>1、sql优化思路</h1><p>①、慢查询的开启与捕获<br>②、explain+慢SQL分析<br>③、show profile 查询SQL在Mysql服务器里面执行细节和生命周期情况<br>④、SQL数据库服务器的参数调优</p>
+<h1 id="2、优化查询"><a href="#2、优化查询" class="headerlink" title="2、优化查询"></a>2、优化查询</h1><h2 id="2-1、永远小表驱动大表"><a href="#2-1、永远小表驱动大表" class="headerlink" title="2.1、永远小表驱动大表"></a>2.1、永远小表驱动大表</h2><p>类似嵌套循环Nested Loop，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">5</span>;i++)&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j&lt;<span class="number">1000</span>;j++)&#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于Java而言，也许1000和5次的循环顺序无所谓，因为结果一致，而对于MySQL数据库，如果小的循环在外层，对于数据库连接来说就只连接5次，进行5000次操作，如果1000在外，则需要进行1000次数据库连接，从而浪费资源，增加消耗。这就是为什么要小表驱动大表。<br>这里可以关联到IN和EXISTA效率问题（注意A表和B表的都有建立主键或者唯一索引约束）：<br>①、当B表的数据集必须小于A表的数据集时，使用in优于exists</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select * from A  where id in (select id from B)</span><br><span class="line">#等价于：</span><br><span class="line">for select id from B</span><br><span class="line">for select * from A where A.id = B.id</span><br></pre></td></tr></table></figure>
+
+<p>②、当B表的数据集大于A表的数据集时，使用exists优于in</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select * from A where exists (select 1 from B where B.id = A.id)</span><br><span class="line">#等价于</span><br><span class="line">for select id from A</span><br><span class="line">for select * from B where B.id = A.id</span><br></pre></td></tr></table></figure>
+
+<p>注：exists</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select ... from table where exists(subquery)</span><br></pre></td></tr></table></figure>
+
+<p>该语法可以理解为：将主查询的数据，放到子查询中做条件验证，根据验证结果（true或者false）来决定主查询的数据结果是否得以保留。<br>提示：<br>①、exits（subquery）只返回TRUE或者FALSE，因此子查询中的select * 也可以是select 1 或者其他，官方说法是其实执行时忽略select清单，因此没有区别；<br>②、exists子查询的实际执行过程可能经过了优化而不是我们理解哈桑的逐条对比，如果担心效率问题，可以进行实际检验以确定是否有效率问题；<br>③、exits子查询往往也可以用条件表达式，其他子查询或者JOIN来替代，何种最优化需要具体分析。</p>
+<h2 id="2-2、order-by优化"><a href="#2-2、order-by优化" class="headerlink" title="2.2、order by优化"></a>2.2、order by优化</h2><p>MySQL支持两种方式排序，filesort（文件排序）和index（索引排序）排序，index效率高，它指的是MySQL扫描索引本身完成排序，filesort方式效率低。所以order by排序应避免使用filesort排序。</p>
+<h3 id="2-2-1、filesort排序"><a href="#2-2-1、filesort排序" class="headerlink" title="2.2.1、filesort排序"></a>2.2.1、filesort排序</h3><p>如果不在索引列上，filesort有两种算法，MySQL就要启动双路排序和单路排序。<br><strong>双路排序：</strong><br>MySQL4.1之前是使用双路排序，字面意思就是两次扫描，最终得到数据，读取行指针和order by列，对他们进行排序，然后扫描已经排好序的列表，按照列的值重新从列表中读取对应的数据输出，从磁盘取出排序字段，在buffer进行排序，再从磁盘取其他字段。<br><strong>单路排序</strong>：
+取一次数据，要对磁盘进行两次扫描，众所周知，I/O是很耗时的，所以在MySQL4.1之后，出现了第二种改进的算法，就是单路排序，从磁盘读取查询需要的数据列，按照order by列在buffer对他们进行排序，然后扫描排序后的列表进行输出，它的效率更快一些，避免了第二次读取数据，并且把随机IO变成了顺序IO，但是它会使用更多的空间，因为它一次把每一行都保存在内存中了。</p>
+<h3 id="2-2-2、案例测试"><a href="#2-2-2、案例测试" class="headerlink" title="2.2.2、案例测试"></a>2.2.2、案例测试</h3><p>我们举个case来测试下order by的排序，sql语句：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tbA(</span><br><span class="line"> id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,</span><br><span class="line"> age INT ,</span><br><span class="line"> birth TIMESTAMP NOT NULL</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">INSERT INTO tbA(age,birth) VALUES(22,NOW());</span><br><span class="line">INSERT INTO tbA(age,birth) VALUES(23,NOW());</span><br><span class="line">INSERT INTO tbA(age,birth) VALUES(24,NOW());</span><br><span class="line"></span><br><span class="line">CREATE INDEX idx_A_ageBirth ON tbA(age,birth);</span><br></pre></td></tr></table></figure>
+
+<p>CASE1:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">explain select * from tbA where age&gt;20 order by age;</span><br><span class="line">explain select * from tbA where age&gt;20 order by age,birth;</span><br><span class="line">explain select * from tbA where age&gt;20 order by birth;</span><br><span class="line">explain select * from tbA where age&gt;20 order by birth,age;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/MySql/6/1.png" alt="图片"><br>测试结果为第1、2条sql语句使用Using index排序，第3、4条sql语句不仅出现了Using index，还出先了Using filesort排序。<br>CASE2:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">explain select * from tbA order by birth;</span><br><span class="line">explain select * from tbA where birth&gt;&apos;2019-07-03 10:10:00&apos; order by birth;</span><br><span class="line">explain select * from tbA where birth&gt;&apos;2019-07-03 10:10:00&apos; order by age;</span><br><span class="line">explain select * from tbA where birth&gt;&apos;2019-07-03 10:10:00&apos; order by age asc ,birth desc;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/MySql/6/2.png" alt="图片"><br>测试结果为第3条sql语句使用Using index排序，第1、2、4条sql语句不仅出现了Using index，还出先了Using filesort排序。</p>
+<h3 id="2-2-3、结论和引申出的问题"><a href="#2-2-3、结论和引申出的问题" class="headerlink" title="2.2.3、结论和引申出的问题"></a>2.2.3、结论和引申出的问题</h3><p>①、order by字段尽可能的在索引列上排序，遵守索引建的最佳左前缀原则，以下分别是order by字段分别是使用索引排序还是文件排序：</p>
+<blockquote>
+<p>KEY a_b_c(a,b_c)<br>order by能使用索引最左前缀<br>-ORDER BY a<br>-ORDER BY a,b<br>-ORDER BY a,b,c<br>-ORDER BY a DESC,b DESC,c DESC</p>
+<p>如果WHERE使用索引的最左前缀定义为常量，则order by能使用索引<br>-WHERE a=const ORDER BY b,c<br>-WHERE a=const AND b=const ORDER BY c<br>-WHERE a=const AND b&gt;const ORDER BY b,c</p>
+<p>不能使用索引进行排序<br>-ORDER BY a AES,b DESC,c DESC /<em>排序不一致</em>/
+-WHERE g=const ORDER BY b,c     /<em>丢失a索引</em>/
+-WHERE a=const ORDER BY c  /<em>丢失b索引</em>/
+-WHERE a=const ORDER BY a,d  /<em>d不是索引</em>/
+-WHERE a in(…)  ORDER BY b,c  /<em>对于排序来说，多个相等条件也是范围查询</em>/</p>
+</blockquote>
+<p>②、如果对order by做了优化后，还不好使。这可能是由于单路照成的，在sort_buffer中，方法B比方法A要多占用很多空间，因为方法B是把所有字段都取出，所以有可能取出的数据总大小超出了sort_buffer的容量，导致每次只能取sort_buffer容量大小的数据，进行排序（创建tmp文件，多路合并），排序再取sort_buffer容量大小，再排……从而多次I/O。<br><strong>解决办法：</strong><br>增大sort_buffer_size参数的设置，增大max_length_for_sort_data参数设置</p>
+<blockquote>
+<p>1.在使用order by时，不要用select *，只查询所需的字段。因为当查询字段过多时，会导致sort_buffer不够，从而使用多路排序或进行多次I/O操作；<br>2.尝试提高sort_buffer_size，无论是文件排序还是索引排序，增大此参数都会提高效率；<br>3.尝试提高max_length_for_sort_data，提高该参数可以增大使用单路排序的概率。</p>
+</blockquote>
+<h2 id="2-3、group-by排序"><a href="#2-3、group-by排序" class="headerlink" title="2.3、group by排序"></a>2.3、group by排序</h2><p>group by与order by很类似，其实质是先排序后分组，遵照索引创建顺序的最佳左前缀法则。当无法使用索引列的时候，也要对sort_buffer_size和max_length_for_sort_data参数进行调整。注意where高于having，能写在where中的限定条件就不要去having限定了</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年07月03日 09:51</p>
+        <p>原始链接： <a class="post-url" href="/2019/07/03/sql优化分析/" title="sql优化分析">https://www.sunnymaple.cn/2019/07/03/sql优化分析/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/07/03/sql优化分析/&title=《sql优化分析》 — 晴枫慕竹&pic=/images/MySql/MySql.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/07/03/sql优化分析/&title=《sql优化分析》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/07/03/sql优化分析/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《sql优化分析》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/07/03/sql优化分析/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/07/03/sql优化分析/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/07/03/sql优化分析/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、sql优化思路"><span class="post-toc-text">1、sql优化思路</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、优化查询"><span class="post-toc-text">2、优化查询</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1、永远小表驱动大表"><span class="post-toc-text">2.1、永远小表驱动大表</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2、order-by优化"><span class="post-toc-text">2.2、order by优化</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-1、filesort排序"><span class="post-toc-text">2.2.1、filesort排序</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-2、案例测试"><span class="post-toc-text">2.2.2、案例测试</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#2-2-3、结论和引申出的问题"><span class="post-toc-text">2.2.3、结论和引申出的问题</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3、group-by排序"><span class="post-toc-text">2.3、group by排序</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/03/批量插入数据脚本/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">批量插入数据脚本</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

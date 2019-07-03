@@ -166,59 +166,26 @@
             <p>本文讲解的例子使用的sql：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE staffs(</span><br><span class="line">  id INT PRIMARY KEY AUTO_INCREMENT,</span><br><span class="line">  NAME VARCHAR(24) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,</span><br><span class="line">  age INT NOT NULL DEFAULT 0 COMMENT &apos;年龄&apos;,</span><br><span class="line">  pos VARCHAR(20) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;职位&apos;,</span><br><span class="line">  add_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT &apos;入职时间&apos;</span><br><span class="line">) CHARSET utf8 COMMENT &apos;员工记录表&apos;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">INSERT INTO staffs(NAME,age,pos,add_time) VALUES(&apos;z3&apos;,22,&apos;manager&apos;,NOW());</span><br><span class="line">INSERT INTO staffs(NAME,age,pos,add_time) VALUES(&apos;July&apos;,23,&apos;dev&apos;,NOW());</span><br><span class="line">INSERT INTO staffs(NAME,age,pos,add_time) VALUES(&apos;2000&apos;,23,&apos;dev&apos;,NOW());</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">ALTER TABLE staffs ADD INDEX idx_staffes_nameAgePos(NAME,age,pos);</span><br></pre></td></tr></table></figure>
 
-<h1 id="1、全值匹配我最爱"><a href="#1、全值匹配我最爱" class="headerlink" title="1、全值匹配我最爱"></a>1、全值匹配我最爱</h1><p>这句话的意思是我们在写sql的时候尽量使用覆盖索引，即查询的where后面的条件包括使用的字段、个数以及顺序和建立的复合索引一致，如上面的sql我们建立了索引：
-<img src="/images/MySql/5/1.png" alt="图片">
-索引idx_staffes_nameAgePos按name、age、pos的顺序：
-<img src="/images/MySql/5/2.png" alt="图片">
-如果不使用*，而select的查询字段也和索引一致的话：
-<img src="/images/MySql/5/3.png" alt="图片">
-我们看到Extra列出现了Using index，效果最佳，这也是为啥不建议使用select *的原因之一。
-同时大家注意下，覆盖索引时explain各属性列的值，尤其是type、key、ref、rows以及Extra列与下面哥案例的变化。</p>
+<h1 id="1、全值匹配我最爱"><a href="#1、全值匹配我最爱" class="headerlink" title="1、全值匹配我最爱"></a>1、全值匹配我最爱</h1><p>这句话的意思是我们在写sql的时候尽量使用覆盖索引，即查询的where后面的条件包括使用的字段、个数以及顺序和建立的复合索引一致，如上面的sql我们建立了索引：<br><img src="/images/MySql/5/1.png" alt="图片"><br>索引idx_staffes_nameAgePos按name、age、pos的顺序：<br><img src="/images/MySql/5/2.png" alt="图片"><br>如果不使用*，而select的查询字段也和索引一致的话：<br><img src="/images/MySql/5/3.png" alt="图片"><br>我们看到Extra列出现了Using index，效果最佳，这也是为啥不建议使用select *的原因之一。<br>同时大家注意下，覆盖索引时explain各属性列的值，尤其是type、key、ref、rows以及Extra列与下面哥案例的变化。</p>
 <h1 id="2、最佳左前缀法则"><a href="#2、最佳左前缀法则" class="headerlink" title="2、最佳左前缀法则"></a>2、最佳左前缀法则</h1><p>如果引用了多列，要遵守最左前缀法则，指的是查询从索引的最左前列开始并且不跳过索引的列。按idx_staffes_nameAgePos索引来说，查询应该从name属性开始，并且不能越过age属性，我们来看看下面sql例子：</p>
-<h2 id="2-1、没有从最前列开始"><a href="#2-1、没有从最前列开始" class="headerlink" title="2.1、没有从最前列开始"></a>2.1、没有从最前列开始</h2><p><img src="/images/MySql/5/4.png" alt="图片">
-我们看到type列变成了All全表扫描，而key列也为null，并没有使用到索引，这是索引失效的一个典型的案例，那如果不使用select * 会怎样：
-<img src="/images/MySql/5/5.png" alt="图片">
-type列变成了index，比select *效果好多了，但远没有覆盖查询效率高。</p>
-<h2 id="2-2、跳过中间索引列"><a href="#2-2、跳过中间索引列" class="headerlink" title="2.2、跳过中间索引列"></a>2.2、跳过中间索引列</h2><p>我们看下面案例：
-<img src="/images/MySql/5/6.png" alt="图片">
-where条件下去掉了索引中间的数学age，虽然使用到了索引，但是ref列的const常量只有一个，也就是虽然使用了索引，但只是用到了name属性，仅仅三分之一而已。</p>
-<h1 id="3、不在索引列上做任何操作"><a href="#3、不在索引列上做任何操作" class="headerlink" title="3、不在索引列上做任何操作"></a>3、不在索引列上做任何操作</h1><p>操作一般指：计算，函数、（自动or手动）类型转换，这样会导致索引失效而转向全表扫描，下面看下使用left函数的例子：
-<img src="/images/MySql/5/7.png" alt="图片">
-此时我们看到type是all全表扫描，而key列也是null，根本没有用到索引。</p>
-<h1 id="4、存储引擎不能使用范围条件右边的列"><a href="#4、存储引擎不能使用范围条件右边的列" class="headerlink" title="4、存储引擎不能使用范围条件右边的列"></a>4、存储引擎不能使用范围条件右边的列</h1><p>这句话的意思是，如果索引中的列使用了范围查询，范围一般指在where查询条件中使用in、&gt;(&gt;=)、&lt;(&lt;=)以及between等范围的语句，可能会导致索引部分失效：
-<img src="/images/MySql/5/8.png" alt="图片">
-结果中虽然key列中显示使用了索引，但是type变成了range，ref列为null，降低了性能。我们在看看不使用select *的情况：
-<img src="/images/MySql/5/9.png" alt="图片">
-虽然使用了索引，但是ref列只有一个const常量，并没有使用的全部索引。</p>
-<h1 id="5、使用不等于（-或者-lt-gt-）导致全表扫描"><a href="#5、使用不等于（-或者-lt-gt-）导致全表扫描" class="headerlink" title="5、使用不等于（!=或者&lt;&gt;）导致全表扫描"></a>5、使用不等于（!=或者&lt;&gt;）导致全表扫描</h1><p>MySQL在使用不等于的时候无法使用索引会导致全表扫描：
-<img src="/images/MySql/5/10.png" alt="图片"></p>
+<h2 id="2-1、没有从最前列开始"><a href="#2-1、没有从最前列开始" class="headerlink" title="2.1、没有从最前列开始"></a>2.1、没有从最前列开始</h2><p><img src="/images/MySql/5/4.png" alt="图片"><br>我们看到type列变成了All全表扫描，而key列也为null，并没有使用到索引，这是索引失效的一个典型的案例，那如果不使用select * 会怎样：<br><img src="/images/MySql/5/5.png" alt="图片"><br>type列变成了index，比select *效果好多了，但远没有覆盖查询效率高。</p>
+<h2 id="2-2、跳过中间索引列"><a href="#2-2、跳过中间索引列" class="headerlink" title="2.2、跳过中间索引列"></a>2.2、跳过中间索引列</h2><p>我们看下面案例：<br><img src="/images/MySql/5/6.png" alt="图片"><br>where条件下去掉了索引中间的数学age，虽然使用到了索引，但是ref列的const常量只有一个，也就是虽然使用了索引，但只是用到了name属性，仅仅三分之一而已。</p>
+<h1 id="3、不在索引列上做任何操作"><a href="#3、不在索引列上做任何操作" class="headerlink" title="3、不在索引列上做任何操作"></a>3、不在索引列上做任何操作</h1><p>操作一般指：计算，函数、（自动or手动）类型转换，这样会导致索引失效而转向全表扫描，下面看下使用left函数的例子：<br><img src="/images/MySql/5/7.png" alt="图片"><br>此时我们看到type是all全表扫描，而key列也是null，根本没有用到索引。</p>
+<h1 id="4、存储引擎不能使用范围条件右边的列"><a href="#4、存储引擎不能使用范围条件右边的列" class="headerlink" title="4、存储引擎不能使用范围条件右边的列"></a>4、存储引擎不能使用范围条件右边的列</h1><p>这句话的意思是，如果索引中的列使用了范围查询，范围一般指在where查询条件中使用in、&gt;(&gt;=)、&lt;(&lt;=)以及between等范围的语句，可能会导致索引部分失效：<br><img src="/images/MySql/5/8.png" alt="图片"><br>结果中虽然key列中显示使用了索引，但是type变成了range，ref列为null，降低了性能。我们在看看不使用select *的情况：<br><img src="/images/MySql/5/9.png" alt="图片"><br>虽然使用了索引，但是ref列只有一个const常量，并没有使用的全部索引。</p>
+<h1 id="5、使用不等于（-或者-lt-gt-）导致全表扫描"><a href="#5、使用不等于（-或者-lt-gt-）导致全表扫描" class="headerlink" title="5、使用不等于（!=或者&lt;&gt;）导致全表扫描"></a>5、使用不等于（!=或者&lt;&gt;）导致全表扫描</h1><p>MySQL在使用不等于的时候无法使用索引会导致全表扫描：<br><img src="/images/MySql/5/10.png" alt="图片"></p>
 <h1 id="6、is-null-is-not-null-也会导致索引失效"><a href="#6、is-null-is-not-null-也会导致索引失效" class="headerlink" title="6、is null,is not null 也会导致索引失效"></a>6、is null,is not null 也会导致索引失效</h1><p><img src="/images/MySql/5/11.png" alt="图片"></p>
 <h1 id="7、like的通配符导致全表扫描"><a href="#7、like的通配符导致全表扫描" class="headerlink" title="7、like的通配符导致全表扫描"></a>7、like的通配符导致全表扫描</h1><p>like通配符有三种情况：%在前，%在后，%前后都有，下面我们分别看下这三种情况。</p>
 <h2 id="7-1、-在前"><a href="#7-1、-在前" class="headerlink" title="7.1、%在前"></a>7.1、%在前</h2><p><img src="/images/MySql/5/12.png" alt="图片"></p>
 <h2 id="7-2、-在后"><a href="#7-2、-在后" class="headerlink" title="7.2、%在后"></a>7.2、%在后</h2><p><img src="/images/MySql/5/13.png" alt="图片"></p>
 <h2 id="7-3、-前后都有"><a href="#7-3、-前后都有" class="headerlink" title="7.3、%前后都有"></a>7.3、%前后都有</h2><p><img src="/images/MySql/5/14.png" alt="图片"></p>
 <p>由上面三种情况可得而知，只有%在后才使用了索引，且type还是range级别。</p>
-<h2 id="7-4、解决-号前后都有的情况索引失效的问题"><a href="#7-4、解决-号前后都有的情况索引失效的问题" class="headerlink" title="7.4、解决%号前后都有的情况索引失效的问题"></a>7.4、解决%号前后都有的情况索引失效的问题</h2><p>问题：解决like ‘%字符串%’时索引不被使用的方法？
-可以使用覆盖索引的办法，不仅是这个问题，以上出现索引失效的问题都可以使用覆盖索引来解决，这也是为啥推荐使用覆盖索引。我们看下结果：</p>
-<p><img src="/images/MySql/5/15.png" alt="图片">
-type从all变成了index，且key列显示使用了索引。</p>
-<h1 id="8、字符串不加单引号引起索引失效"><a href="#8、字符串不加单引号引起索引失效" class="headerlink" title="8、字符串不加单引号引起索引失效"></a>8、字符串不加单引号引起索引失效</h1><p>这个问题也是比较严重的问题，先不说可能会导致失败，加入出现全数字的字符串，就如我们开头插入语句中，第三条数据的name是字符串2000，那么我们先看看是否不加引号是否可以正确查询出数据：
-<img src="/images/MySql/5/16.png" alt="图片">
-显而易见查询并没有什么问题，这是因为MySQL优化器为我们的sql做了类型的转换。我们再来使用explain分析这条语句：
-<img src="/images/MySql/5/17.png" alt="图片">
-看看type的类型为all，导致了全表扫描，那么如果name加了双引号呢：
-<img src="/images/MySql/5/18.png" alt="图片">
-type是ref级别，且使用了索引，所有结论便是，我们尽量不能干这种让MySQL内部做类型转换的事情。</p>
-<h1 id="9、使用or连接时导致索引失效"><a href="#9、使用or连接时导致索引失效" class="headerlink" title="9、使用or连接时导致索引失效"></a>9、使用or连接时导致索引失效</h1><p>or尽量少用，看看例子：
-<img src="/images/MySql/5/19.png" alt="图片">
-全表扫描，并未使用的索引。</p>
+<h2 id="7-4、解决-号前后都有的情况索引失效的问题"><a href="#7-4、解决-号前后都有的情况索引失效的问题" class="headerlink" title="7.4、解决%号前后都有的情况索引失效的问题"></a>7.4、解决%号前后都有的情况索引失效的问题</h2><p>问题：解决like ‘%字符串%’时索引不被使用的方法？<br>可以使用覆盖索引的办法，不仅是这个问题，以上出现索引失效的问题都可以使用覆盖索引来解决，这也是为啥推荐使用覆盖索引。我们看下结果：</p>
+<p><img src="/images/MySql/5/15.png" alt="图片"><br>type从all变成了index，且key列显示使用了索引。</p>
+<h1 id="8、字符串不加单引号引起索引失效"><a href="#8、字符串不加单引号引起索引失效" class="headerlink" title="8、字符串不加单引号引起索引失效"></a>8、字符串不加单引号引起索引失效</h1><p>这个问题也是比较严重的问题，先不说可能会导致失败，加入出现全数字的字符串，就如我们开头插入语句中，第三条数据的name是字符串2000，那么我们先看看是否不加引号是否可以正确查询出数据：<br><img src="/images/MySql/5/16.png" alt="图片"><br>显而易见查询并没有什么问题，这是因为MySQL优化器为我们的sql做了类型的转换。我们再来使用explain分析这条语句：<br><img src="/images/MySql/5/17.png" alt="图片"><br>看看type的类型为all，导致了全表扫描，那么如果name加了双引号呢：<br><img src="/images/MySql/5/18.png" alt="图片"><br>type是ref级别，且使用了索引，所有结论便是，我们尽量不能干这种让MySQL内部做类型转换的事情。</p>
+<h1 id="9、使用or连接时导致索引失效"><a href="#9、使用or连接时导致索引失效" class="headerlink" title="9、使用or连接时导致索引失效"></a>9、使用or连接时导致索引失效</h1><p>or尽量少用，看看例子：<br><img src="/images/MySql/5/19.png" alt="图片"><br>全表扫描，并未使用的索引。</p>
 <h1 id="10、总结"><a href="#10、总结" class="headerlink" title="10、总结"></a>10、总结</h1><p>对于索引正确使用的案例，总结下面几句话：</p>
 <blockquote>
-<p>全值匹配我最爱，最左前缀要遵守
-带头大哥不能死，中间兄弟不能断
-索引列上少计算，范围之后全失效
-LIKE百分写最右，覆盖索引不写星
-不等空值还有or，索引失效要少用</p>
+<p>全值匹配我最爱，最左前缀要遵守<br>带头大哥不能死，中间兄弟不能断<br>索引列上少计算，范围之后全失效<br>LIKE百分写最右，覆盖索引不写星<br>不等空值还有or，索引失效要少用</p>
 </blockquote>
 <p>解析：第一行是对节1、2的说明，而第二行是对最左前缀要遵守的解析，第三行分别是节3、4；第四行是节7的说明，最后一行概括了节5、6、8，9的内容。</p>
 
@@ -360,8 +327,8 @@ LIKE百分写最右，覆盖索引不写星
     </a>
   
   
-    <a href="/2019/06/28/MySql索引简介/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">MySql索引简介</span>
+    <a href="/2019/06/28/MySql中Sql语句的执行顺序/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">MySql中Sql语句的执行顺序</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

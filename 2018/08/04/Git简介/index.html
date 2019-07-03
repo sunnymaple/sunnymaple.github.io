@@ -8,13 +8,13 @@
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="1、版本控制工具1.1、集中式版本控制CVS、SVN、VSS，常用的是SVN  1.2、分布式版本控制Git、MerCurial等，常用的是Git  2、Git结构git分三个区： ①、工作 区：可以比作平时我们写代码的地方 ②、暂存区：临时存放区，通过git add . 获取git add 命令可以将工作区的文件添加到暂存区 ③、本地库：本地库记录了所有的历史版本，通过git commit -m">
+  <meta name="description" content="1、版本控制工具1.1、集中式版本控制CVS、SVN、VSS，常用的是SVN 1.2、分布式版本控制Git、MerCurial等，常用的是Git 2、Git结构git分三个区：①、工作 区：可以比作平时我们写代码的地方②、暂存区：临时存放区，通过git add . 获取git add 命令可以将工作区的文件添加到暂存区③、本地库：本地库记录了所有的历史版本，通过git commit -m “提交说">
 <meta name="keywords" content="Git">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Git简介">
 <meta property="og:url" content="https://www.sunnymaple.cn/2018/08/04/Git简介/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="1、版本控制工具1.1、集中式版本控制CVS、SVN、VSS，常用的是SVN  1.2、分布式版本控制Git、MerCurial等，常用的是Git  2、Git结构git分三个区： ①、工作 区：可以比作平时我们写代码的地方 ②、暂存区：临时存放区，通过git add . 获取git add 命令可以将工作区的文件添加到暂存区 ③、本地库：本地库记录了所有的历史版本，通过git commit -m">
+<meta property="og:description" content="1、版本控制工具1.1、集中式版本控制CVS、SVN、VSS，常用的是SVN 1.2、分布式版本控制Git、MerCurial等，常用的是Git 2、Git结构git分三个区：①、工作 区：可以比作平时我们写代码的地方②、暂存区：临时存放区，通过git add . 获取git add 命令可以将工作区的文件添加到暂存区③、本地库：本地库记录了所有的历史版本，通过git commit -m “提交说">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/1/1.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/git/1/2.png">
@@ -24,7 +24,7 @@
 <meta property="og:updated_time" content="2019-06-22T09:29:10.347Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git简介">
-<meta name="twitter:description" content="1、版本控制工具1.1、集中式版本控制CVS、SVN、VSS，常用的是SVN  1.2、分布式版本控制Git、MerCurial等，常用的是Git  2、Git结构git分三个区： ①、工作 区：可以比作平时我们写代码的地方 ②、暂存区：临时存放区，通过git add . 获取git add 命令可以将工作区的文件添加到暂存区 ③、本地库：本地库记录了所有的历史版本，通过git commit -m">
+<meta name="twitter:description" content="1、版本控制工具1.1、集中式版本控制CVS、SVN、VSS，常用的是SVN 1.2、分布式版本控制Git、MerCurial等，常用的是Git 2、Git结构git分三个区：①、工作 区：可以比作平时我们写代码的地方②、暂存区：临时存放区，通过git add . 获取git add 命令可以将工作区的文件添加到暂存区③、本地库：本地库记录了所有的历史版本，通过git commit -m “提交说">
 <meta name="twitter:image" content="https://www.sunnymaple.cn/images/git/1/1.png">
   
   
@@ -149,20 +149,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h1 id="1、版本控制工具"><a href="#1、版本控制工具" class="headerlink" title="1、版本控制工具"></a>1、版本控制工具</h1><h2 id="1-1、集中式版本控制"><a href="#1-1、集中式版本控制" class="headerlink" title="1.1、集中式版本控制"></a>1.1、集中式版本控制</h2><p>CVS、<strong>SVN</strong>、VSS，常用的是SVN
-<img src="/images/git/1/1.png" alt="图片"></p>
-<h2 id="1-2、分布式版本控制"><a href="#1-2、分布式版本控制" class="headerlink" title="1.2、分布式版本控制"></a>1.2、分布式版本控制</h2><p><strong>Git</strong>、MerCurial等，常用的是Git
-<img src="/images/git/1/2.png" alt="图片"></p>
-<h1 id="2、Git结构"><a href="#2、Git结构" class="headerlink" title="2、Git结构"></a>2、Git结构</h1><p>git分三个区：
-①、工作 区：可以比作平时我们写代码的地方
-②、暂存区：临时存放区，通过git add . 获取git add <file>命令可以将工作区的文件添加到暂存区
-③、本地库：本地库记录了所有的历史版本，通过git commit -m “提交说明” 命令可以将暂存区的文件提交到本地库。
-<img src="/images/git/1/3.png" alt="图片"></file></p>
+            <h1 id="1、版本控制工具"><a href="#1、版本控制工具" class="headerlink" title="1、版本控制工具"></a>1、版本控制工具</h1><h2 id="1-1、集中式版本控制"><a href="#1-1、集中式版本控制" class="headerlink" title="1.1、集中式版本控制"></a>1.1、集中式版本控制</h2><p>CVS、<strong>SVN</strong>、VSS，常用的是SVN<br><img src="/images/git/1/1.png" alt="图片"></p>
+<h2 id="1-2、分布式版本控制"><a href="#1-2、分布式版本控制" class="headerlink" title="1.2、分布式版本控制"></a>1.2、分布式版本控制</h2><p><strong>Git</strong>、MerCurial等，常用的是Git<br><img src="/images/git/1/2.png" alt="图片"></p>
+<h1 id="2、Git结构"><a href="#2、Git结构" class="headerlink" title="2、Git结构"></a>2、Git结构</h1><p>git分三个区：<br>①、工作 区：可以比作平时我们写代码的地方<br>②、暂存区：临时存放区，通过git add . 获取git add <file>命令可以将工作区的文件添加到暂存区<br>③、本地库：本地库记录了所有的历史版本，通过git commit -m “提交说明” 命令可以将暂存区的文件提交到本地库。<br><img src="/images/git/1/3.png" alt="图片"></file></p>
 <h1 id="3、Git的协作"><a href="#3、Git的协作" class="headerlink" title="3、Git的协作"></a>3、Git的协作</h1><h2 id="3-1、Git和代码托管中心"><a href="#3-1、Git和代码托管中心" class="headerlink" title="3.1、Git和代码托管中心"></a>3.1、Git和代码托管中心</h2><p>第2节讲解了git的本地结构分为三个区，如果一个人开发的话，有git完全足够，因为他本身就可以作为一个版本控制工具，那如果是多人协作，那需要一个集中管理的代码托管中心</p>
-<p>局域网下：
-     gitLab服务器，这个可以自己搭建，当然局域网下也可以通过域名等使得在外网环境下也能访问。
-外网环境下：
-     国外有：gitHub：</p>
+<p>局域网下：<br>     gitLab服务器，这个可以自己搭建，当然局域网下也可以通过域名等使得在外网环境下也能访问。<br>外网环境下：<br>     国外有：gitHub：</p>
 <blockquote>
 <p><a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a></p>
 </blockquote>
@@ -170,19 +161,10 @@
 <p><a href="https://gitee.com/" target="_blank" rel="noopener">https://gitee.com/</a></p>
 </blockquote>
 <h2 id="3-2、团队内协作"><a href="#3-2、团队内协作" class="headerlink" title="3.2、团队内协作"></a>3.2、团队内协作</h2><p><img src="/images/git/1/4.png" alt="图片"></p>
-<p>解析：有两个角色，他们都有自己的本地库
-①、岳不群：他也许是个项目经理的角色
-②、令狐冲：他是令狐冲手下的一个程序员
-有一天，发生这样的故事，公司来了一个项目，需要马上开发，岳不群在自己本地初始化了一个git本地库，搭建了项目基本框架后push到了远程库，并把地址发给了令狐冲，令狐冲从远程clone了一份到自己的本地库，然后就开始开发了，但他把项目开发完成后，把自己的代码push到了远程库，那么项目作为项目经理的岳不群就可以从远程pull下来刚刚令狐冲提交到远程库的代码。这就是团队内协作的基本过程。</p>
+<p>解析：有两个角色，他们都有自己的本地库<br>①、岳不群：他也许是个项目经理的角色<br>②、令狐冲：他是令狐冲手下的一个程序员<br>有一天，发生这样的故事，公司来了一个项目，需要马上开发，岳不群在自己本地初始化了一个git本地库，搭建了项目基本框架后push到了远程库，并把地址发给了令狐冲，令狐冲从远程clone了一份到自己的本地库，然后就开始开发了，但他把项目开发完成后，把自己的代码push到了远程库，那么项目作为项目经理的岳不群就可以从远程pull下来刚刚令狐冲提交到远程库的代码。这就是团队内协作的基本过程。</p>
 <h2 id="3-3、跨团队协作"><a href="#3-3、跨团队协作" class="headerlink" title="3.3、跨团队协作"></a>3.3、跨团队协作</h2><p><img src="/images/git/1/5.png" alt="图片"></p>
-<p>上个项目由于用到了独孤九剑相关的武功，对令狐冲来说太简单，令狐冲三下五除二就完成了，正在他得意的时，岳不群又给他分配任务了，令狐冲一看懵逼了，这块正好是他的弱项，可能只有葵花宝典才能决绝，这突然让他想到他的好朋友东方不败，于是他和领导岳不群说明了情况。得到领导的允许后，他们一起找到东方不败。
-东方不败接下项目后，首先从岳不群的远程库中fork了一份到自己的远程库，clone到自己的本地库后开始开发了，当他开发完成push到自己的远程库，确定没问题后，她提交了个申请|（pull request）给岳不群，岳不群审核完毕后，就合并（merger）到了自己的远程库之后，岳不群和和令狐冲就可以pull到自己的本地库，查看东方不败提交的代码。
-这就是团队外协作的例子。</p>
-<h1 id="4、Git的优势"><a href="#4、Git的优势" class="headerlink" title="4、Git的优势"></a>4、Git的优势</h1><p>①、大部分在本地操作，不需要联网。Git在本地有版本库，保存了完整的历史，所以在本地就可以做完整的版本控制
-②、完整性保证。对每一次提交的数据做Hash的操作，可以使用将本地库和远程库做hash运算，得出的结果一致，说明和远程库保持一致。
-③、尽可能添加数据而不是删除或者修改数据。
-④、分支操作非常快捷流畅。
-⑤、与Linux命令全面兼容。</p>
+<p>上个项目由于用到了独孤九剑相关的武功，对令狐冲来说太简单，令狐冲三下五除二就完成了，正在他得意的时，岳不群又给他分配任务了，令狐冲一看懵逼了，这块正好是他的弱项，可能只有葵花宝典才能决绝，这突然让他想到他的好朋友东方不败，于是他和领导岳不群说明了情况。得到领导的允许后，他们一起找到东方不败。<br>东方不败接下项目后，首先从岳不群的远程库中fork了一份到自己的远程库，clone到自己的本地库后开始开发了，当他开发完成push到自己的远程库，确定没问题后，她提交了个申请|（pull request）给岳不群，岳不群审核完毕后，就合并（merger）到了自己的远程库之后，岳不群和和令狐冲就可以pull到自己的本地库，查看东方不败提交的代码。<br>这就是团队外协作的例子。</p>
+<h1 id="4、Git的优势"><a href="#4、Git的优势" class="headerlink" title="4、Git的优势"></a>4、Git的优势</h1><p>①、大部分在本地操作，不需要联网。Git在本地有版本库，保存了完整的历史，所以在本地就可以做完整的版本控制<br>②、完整性保证。对每一次提交的数据做Hash的操作，可以使用将本地库和远程库做hash运算，得出的结果一致，说明和远程库保持一致。<br>③、尽可能添加数据而不是删除或者修改数据。<br>④、分支操作非常快捷流畅。<br>⑤、与Linux命令全面兼容。</p>
 
             <div class="post-copyright">
     <div class="content">

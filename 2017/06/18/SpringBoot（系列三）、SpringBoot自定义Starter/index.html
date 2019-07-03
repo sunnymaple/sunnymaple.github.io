@@ -8,13 +8,13 @@
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。    还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，">
+  <meta name="description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响">
 <meta name="keywords" content="SpringBoot">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot（系列三）、SpringBoot自定义Starter">
 <meta property="og:url" content="https://www.sunnymaple.cn/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。    还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，">
+<meta property="og:description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/1.jpg">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/springboot/3/2.jpg">
@@ -41,7 +41,7 @@
 <meta property="og:updated_time" content="2019-06-12T09:59:34.211Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot（系列三）、SpringBoot自定义Starter">
-<meta name="twitter:description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。    还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，">
+<meta name="twitter:description" content="在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响">
 <meta name="twitter:image" content="https://www.sunnymaple.cn/images/springboot/3/1.jpg">
   
   
@@ -166,16 +166,11 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。
-   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响应Hello 。
-   首先我们看下工程结构：</p>
-<p><img src="/images/springboot/3/1.jpg" alt="图片">
-       helloworld-spring-boot-starter-autoconfigure（以下简称autoconfigure）：该模块用来实现Helloworld的自动配置功能，它的打包方式为jar;
-       helloworld-spring-boot-starter（以下简称starter）：该模块的打包方式是jar，依赖autoconfigure模块，它不写任何代码，只做自动配置包的自动引入，如果要使用helloworld自动配置功能，只要在pom文件中引入starter模块即可：</p>
+            <p>在前面两章的学习后，我们对如何创建一个SpringBoot项目、SpringBoot的运行原理以及自动配置等都有了一定的了解。如果我们系统中也想要拥有自动配置的功能，可以自己编写一个starter （启动器），想想就觉得很酷，因为这意味着我们不仅有自己定义的自动配的功能，而且具有更通用的耦合度更低的配置。<br>   还是以第一章开头的简单功能为例：浏览器发送sayHello请求，服务器接受请求并处理，响应Hello 。<br>   首先我们看下工程结构：</p>
+<p><img src="/images/springboot/3/1.jpg" alt="图片"><br>       helloworld-spring-boot-starter-autoconfigure（以下简称autoconfigure）：该模块用来实现Helloworld的自动配置功能，它的打包方式为jar;<br>       helloworld-spring-boot-starter（以下简称starter）：该模块的打包方式是jar，依赖autoconfigure模块，它不写任何代码，只做自动配置包的自动引入，如果要使用helloworld自动配置功能，只要在pom文件中引入starter模块即可：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="1-项目工程的创建"><a href="#1-项目工程的创建" class="headerlink" title="1 项目工程的创建"></a>1 项目工程的创建</h1><h2 id="1-1-创建Empty-Project"><a href="#1-1-创建Empty-Project" class="headerlink" title="1.1 创建Empty Project"></a>1.1 创建Empty Project</h2><p>（1）、新建一个空的项目，如下图，点击Next
-<img src="/images/springboot/3/2.jpg" alt="图片"></p>
+<h1 id="1-项目工程的创建"><a href="#1-项目工程的创建" class="headerlink" title="1 项目工程的创建"></a>1 项目工程的创建</h1><h2 id="1-1-创建Empty-Project"><a href="#1-1-创建Empty-Project" class="headerlink" title="1.1 创建Empty Project"></a>1.1 创建Empty Project</h2><p>（1）、新建一个空的项目，如下图，点击Next<br><img src="/images/springboot/3/2.jpg" alt="图片"></p>
 <p>（2）、输入项目名称以及选择项目存放路径，点击Finish</p>
 <p><img src="/images/springboot/3/3.jpg" alt="图片"></p>
 <h2 id="1-2-创建starter模块"><a href="#1-2-创建starter模块" class="headerlink" title="1.2 创建starter模块"></a>1.2 创建starter模块</h2><p>（1）、在1.1节中新建的空项目基础上新建一个Module</p>
@@ -197,8 +192,7 @@
 <p><img src="/images/springboot/3/10.jpg" alt="图片"></p>
 <p>（4）、默认，不需要改动，点击Finish</p>
 <p><img src="/images/springboot/3/11.jpg" alt="图片"></p>
-<p>（4）、删除SpringBoot自动创建的主配置类、resources下所有文件（夹）以及test文件夹，最终项目结构如下：
-<img src="/images/springboot/3/12.jpg" alt="图片"></p>
+<p>（4）、删除SpringBoot自动创建的主配置类、resources下所有文件（夹）以及test文件夹，最终项目结构如下：<br><img src="/images/springboot/3/12.jpg" alt="图片"></p>
 <p>pom.xml（已删除test测试模块的自动配置包以及build下的maven插件）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">project</span> <span class="attr">xmlns</span>=<span class="string">"http://maven.apache.org/POM/4.0.0"</span> <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">   <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">modelVersion</span>&gt;</span>4.0.0<span class="tag">&lt;/<span class="name">modelVersion</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.seagetech.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>helloworld-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">name</span>&gt;</span>helloworld-spring-boot-starter-autoconfigure<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">description</span>&gt;</span>Demo project for Spring Boot<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">parent</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-parent<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.1.0.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">relativePath</span>/&gt;</span> <span class="comment">&lt;!-- lookup parent from repository --&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">parent</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">project.reporting.outputEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.reporting.outputEncoding</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">project</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -240,12 +234,9 @@
 <h1 id="3-元数据的配置"><a href="#3-元数据的配置" class="headerlink" title="3 元数据的配置"></a>3 元数据的配置</h1><p>到目前为止，helloworld的自动配置功能已实现，并且正确使用了，但还有一点不够完美，如果你也按上面步骤实现了自己的helloworld自动配置，在application.properties中配置hello.msg属性时，你会发现并没有提示你有关该配置的信息，但是如果你想配置tomcat端口时，输入server.port是有提示的：</p>
 <p><img src="/images/springboot/3/14.jpg" alt="图片"></p>
 <pre><code>这种功能我们如何做呢，我们打开﻿一、SpringBoot入门﻿ 章节下载的《spring-boot-reference.pdf》文件，在目录中找到“Appendix B. Configuration Metadata（附录B.配置元数据）”，下面我们使用谷歌来翻译下相关原文：</code></pre><blockquote>
-<p>  Spring Boot jars include metadata files that provide details of all supported configuration properties.The files are designed to let IDE developers offer contextual help and “code completion” as users are working with application.properties or application.yml files.
-   Spring Boot jar包含元数据文件，提供所有支持的配置属性的详细信息。这些文件旨在让IDE开发人员使用application.properties或application.yml文件像用户一样提供上下文帮助和“代码完成”</p>
+<p>  Spring Boot jars include metadata files that provide details of all supported configuration properties.The files are designed to let IDE developers offer contextual help and “code completion” as users are working with application.properties or application.yml files.<br>   Spring Boot jar包含元数据文件，提供所有支持的配置属性的详细信息。这些文件旨在让IDE开发人员使用application.properties或application.yml文件像用户一样提供上下文帮助和“代码完成”</p>
 <p>……</p>
-<p>B.1 Metadata Format
-     Configuration metadata files are located inside jars under META-INF/spring-configurationmetadata.json They use a simple JSON format with items categorized under either “groups” or “properties” and additional values hints categorized under “hints”, as shown in the following example:<br>B.1 元数据格式
-      配置元数据文件位于META-INF / spring-configuration-metadata.json下的jar中。它们使用简单的JSON格式，其中的项目分类为“groups”或“properties”和其他值提示分类在“hints”下。</p>
+<p>B.1 Metadata Format<br>     Configuration metadata files are located inside jars under META-INF/spring-configurationmetadata.json They use a simple JSON format with items categorized under either “groups” or “properties” and additional values hints categorized under “hints”, as shown in the following example:<br>B.1 元数据格式<br>      配置元数据文件位于META-INF / spring-configuration-metadata.json下的jar中。它们使用简单的JSON格式，其中的项目分类为“groups”或“properties”和其他值提示分类在“hints”下。</p>
 <p> ….</p>
 </blockquote>
 <p>看看它的例子：</p>
@@ -262,8 +253,7 @@
 <p><img src="/images/springboot/3/20.jpg" alt></p>
 <p>每个”hints”元素的providers属性中的JSON对象可以包含下表中描述的属性:</p>
 <p><img src="/images/springboot/3/21.jpg" alt></p>
-<h2 id="3-4-配置元数据"><a href="#3-4-配置元数据" class="headerlink" title="3.4 配置元数据"></a>3.4 配置元数据</h2><p>所以如果想有更好的用户体验，可以为我们自定义的starter配置元数据，下面就为HelloWorld配置元数据。
-   在META-INF下创建spring-configuration-metadata.json文件：</p>
+<h2 id="3-4-配置元数据"><a href="#3-4-配置元数据" class="headerlink" title="3.4 配置元数据"></a>3.4 配置元数据</h2><p>所以如果想有更好的用户体验，可以为我们自定义的starter配置元数据，下面就为HelloWorld配置元数据。<br>   在META-INF下创建spring-configuration-metadata.json文件：</p>
 <p><img src="/images/springboot/3/15.jpg" alt="图片"></p>
 <p>在文件中输入如下内容：</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"hints"</span>:[&#123;</span><br><span class="line">    <span class="attr">"name"</span>:<span class="string">"hello.msg"</span>,</span><br><span class="line">    <span class="attr">"values"</span>:[&#123;</span><br><span class="line">      <span class="attr">"value"</span>:<span class="string">"你好"</span>,</span><br><span class="line">      <span class="attr">"description"</span>:<span class="string">"中文方式打招呼"</span></span><br><span class="line">    &#125;,&#123;</span><br><span class="line">      <span class="attr">"value"</span>:<span class="string">"Hi"</span>,</span><br><span class="line">      <span class="attr">"description"</span>:<span class="string">"英文方式打招呼"</span></span><br><span class="line">    &#125;]</span><br><span class="line">  &#125;],</span><br><span class="line">  <span class="attr">"groups"</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"com.seagetech.spring.boot.helloworld.HelloWorldProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"hello"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"com.seagetech.spring.boot.helloworld.HelloWorldProperties"</span></span><br><span class="line">    &#125;],</span><br><span class="line">  <span class="attr">"properties"</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"sourceType"</span>: <span class="string">"com.seagetech.spring.boot.helloworld.HelloWorldProperties"</span>,</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"hello.msg"</span>,</span><br><span class="line">      <span class="attr">"type"</span>: <span class="string">"java.lang.String"</span>,</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"打招呼的内容"</span>,</span><br><span class="line">      <span class="attr">"defaultValue"</span>: <span class="string">"Worlds"</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -399,19 +389,19 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          SpringBoot（系列二）、SpringBoot自动配置原理
+          SpringBoot（系列五）、自定义Starter实战-统一异常处理
         
       </span>
     </a>
   
   
-    <a href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数</span>
+    <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringBoot（系列二）、SpringBoot自动配置原理</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

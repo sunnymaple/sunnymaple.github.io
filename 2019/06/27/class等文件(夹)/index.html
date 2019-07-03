@@ -8,13 +8,13 @@
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。  那如何屏蔽这些文件呢？ 首先File –&amp;gt; Editor –&amp;gt;file Types：  将Ignore files and folders输入框内的内容替换成">
+  <meta name="description" content="在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。那如何屏蔽这些文件呢？首先File –&amp;gt; Editor –&amp;gt;file Types： 将Ignore files and folders输入框内的内容替换成下面的内">
 <meta name="keywords" content="Intellij idea">
 <meta property="og:type" content="article">
 <meta property="og:title" content="idea隐藏.iml&#x2F;.idea&#x2F;.class等文件(夹)">
 <meta property="og:url" content="https://www.sunnymaple.cn/2019/06/27/class等文件(夹)/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。  那如何屏蔽这些文件呢？ 首先File –&amp;gt; Editor –&amp;gt;file Types：  将Ignore files and folders输入框内的内容替换成">
+<meta property="og:description" content="在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。那如何屏蔽这些文件呢？首先File –&amp;gt; Editor –&amp;gt;file Types： 将Ignore files and folders输入框内的内容替换成下面的内">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/idea/1/1.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/idea/1/2.png">
@@ -22,7 +22,7 @@
 <meta property="og:updated_time" content="2019-06-27T01:13:43.764Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="idea隐藏.iml&#x2F;.idea&#x2F;.class等文件(夹)">
-<meta name="twitter:description" content="在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。  那如何屏蔽这些文件呢？ 首先File –&amp;gt; Editor –&amp;gt;file Types：  将Ignore files and folders输入框内的内容替换成">
+<meta name="twitter:description" content="在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。那如何屏蔽这些文件呢？首先File –&amp;gt; Editor –&amp;gt;file Types： 将Ignore files and folders输入框内的内容替换成下面的内">
 <meta name="twitter:image" content="https://www.sunnymaple.cn/images/idea/1/1.png">
   
   
@@ -147,18 +147,12 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。
-<img src="/images/idea/1/1.png" alt="图片">
-那如何屏蔽这些文件呢？
-首先File –&gt; Editor –&gt;file Types：
-<img src="/images/idea/1/2.png" alt="图片"></p>
+            <p>在使用Intellij idea时，提交代码到svn或者git时，总会出现很多.iml、.xml以及target包中的class文件，而这些文件都不需要提交到svn或者git中，甚至.iml文件提交后会造成其他开发人员的不便。<br><img src="/images/idea/1/1.png" alt="图片"><br>那如何屏蔽这些文件呢？<br>首先File –&gt; Editor –&gt;file Types：<br><img src="/images/idea/1/2.png" alt="图片"></p>
 <p>将Ignore files and folders输入框内的内容替换成下面的内容：</p>
 <blockquote>
 <p><em>.hprof;</em>.imi;<em>.iml;</em>.pyc;<em>.pyo;</em>.rbc;<em>.yarb;</em>~;.DS_Store;.git;.hg;.idea;.svn;.target;CVS;<strong>pycache</strong>;_svn;target;vssver.scc;vssver2.scc;</p>
 </blockquote>
-<p>点击OK，然后我们在打开svn或者git的提交按钮：
-<img src="/images/idea/1/3.png" alt="图片">
-这下变得很干净</p>
+<p>点击OK，然后我们在打开svn或者git的提交按钮：<br><img src="/images/idea/1/3.png" alt="图片"><br>这下变得很干净</p>
 
             <div class="post-copyright">
     <div class="content">
@@ -281,12 +275,12 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/06/28/七种JOIN图/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/06/28/RestTemplate多文件上传问题/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          七种JOIN图
+          RestTemplate多文件上传问题
         
       </span>
     </a>

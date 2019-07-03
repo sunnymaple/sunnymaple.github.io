@@ -8,19 +8,23 @@
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。 当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事s">
+  <meta name="description" content="1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事se">
 <meta name="keywords" content="MySql">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySql性能分析工具Explain">
 <meta property="og:url" content="https://www.sunnymaple.cn/2019/07/02/MySql性能分析工具Explain/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。 当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事s">
+<meta property="og:description" content="1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事se">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/1.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/2.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/id_table.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/3.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/4.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/5.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/select_type.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/table.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/type.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/6.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/7.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/8.png">
@@ -31,14 +35,15 @@
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/13.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/14.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/15.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/extra.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/16.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/17.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/18.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/4/19.png">
-<meta property="og:updated_time" content="2019-07-02T09:37:49.601Z">
+<meta property="og:updated_time" content="2019-07-03T01:39:51.644Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql性能分析工具Explain">
-<meta name="twitter:description" content="1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。 当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事s">
+<meta name="twitter:description" content="1、前提知识1.1、MySql Query Optimizermysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事se">
 <meta name="twitter:image" content="https://www.sunnymaple.cn/images/MySql/4/1.png">
   
   
@@ -163,25 +168,14 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <h1 id="1、前提知识"><a href="#1、前提知识" class="headerlink" title="1、前提知识"></a>1、前提知识</h1><h2 id="1-1、MySql-Query-Optimizer"><a href="#1-1、MySql-Query-Optimizer" class="headerlink" title="1.1、MySql Query Optimizer"></a>1.1、MySql Query Optimizer</h2><p>mysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。
-当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事select并转发给MySQL Query Optimizer时，MySQL Query Optimizer 首先会对整条Query进行优化，处理一些常量表达式的预算，直接换算成常量值。并对query中的Hint信息（如果有），看现实Hint细腻是否可以完全确定该Query的执行计划。如果没有Hint或者Hint信息还不足以完全确定执行计划，则会读取所涉及对象的统计信息，根据Query进行写相应的计算分析，然后再得出最后的执行计划。</p>
-<h2 id="1-2、MySQL性能瓶颈"><a href="#1-2、MySQL性能瓶颈" class="headerlink" title="1.2、MySQL性能瓶颈"></a>1.2、MySQL性能瓶颈</h2><p>①、CPU：CPU在饱和的时候一般发生在数据装入内存或者从磁盘读取数据的时候
-②、IO：磁盘IO瓶颈发生在装入数据远大于内存容量的时候
-③、服务器硬件的性能瓶颈：top，free，iostat，vmstat来查看系统的性能状态</p>
-<h1 id="2、Explain"><a href="#2、Explain" class="headerlink" title="2、Explain"></a>2、Explain</h1><h2 id="2-1、是什么"><a href="#2-1、是什么" class="headerlink" title="2.1、是什么"></a>2.1、是什么</h2><p>使用EXPLAIN关键字可以模拟优化器（MySql Query Optimizer
-）执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的，分析你的查询语句或者表结构的性能瓶颈。
-我们也可以从官网了解有关信息：</p>
+            <h1 id="1、前提知识"><a href="#1、前提知识" class="headerlink" title="1、前提知识"></a>1、前提知识</h1><h2 id="1-1、MySql-Query-Optimizer"><a href="#1-1、MySql-Query-Optimizer" class="headerlink" title="1.1、MySql Query Optimizer"></a>1.1、MySql Query Optimizer</h2><p>mysql中有个专门负责优化select语句的优化器模块，主要功能：通过计算分析系统中收集到的统计信息，为客户端请求的Query提供他认为最优的执行计划（他（MySQL优化器）认为最优对的数据检索方式，但不见得是DBA或者程序员认为最优的，这部分最耗时间）。<br>当客户端想MySQL请求一条Query，命令解析器模块完成请求分类，区别出事select并转发给MySQL Query Optimizer时，MySQL Query Optimizer 首先会对整条Query进行优化，处理一些常量表达式的预算，直接换算成常量值。并对query中的Hint信息（如果有），看现实Hint细腻是否可以完全确定该Query的执行计划。如果没有Hint或者Hint信息还不足以完全确定执行计划，则会读取所涉及对象的统计信息，根据Query进行写相应的计算分析，然后再得出最后的执行计划。</p>
+<h2 id="1-2、MySQL性能瓶颈"><a href="#1-2、MySQL性能瓶颈" class="headerlink" title="1.2、MySQL性能瓶颈"></a>1.2、MySQL性能瓶颈</h2><p>①、CPU：CPU在饱和的时候一般发生在数据装入内存或者从磁盘读取数据的时候<br>②、IO：磁盘IO瓶颈发生在装入数据远大于内存容量的时候<br>③、服务器硬件的性能瓶颈：top，free，iostat，vmstat来查看系统的性能状态</p>
+<h1 id="2、Explain"><a href="#2、Explain" class="headerlink" title="2、Explain"></a>2、Explain</h1><h2 id="2-1、是什么"><a href="#2-1、是什么" class="headerlink" title="2.1、是什么"></a>2.1、是什么</h2><p>使用EXPLAIN关键字可以模拟优化器（MySql Query Optimizer<br>）执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的，分析你的查询语句或者表结构的性能瓶颈。<br>我们也可以从官网了解有关信息：</p>
 <blockquote>
 <p><a href="https://dev.mysql.com/doc/refman/8.0/en/using-explain.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/8.0/en/using-explain.html</a></p>
 </blockquote>
-<p>我使用谷歌翻译下：
-<img src="/images/MySql/4/1.png" alt="图片"></p>
-<h2 id="2-2、能做什么"><a href="#2-2、能做什么" class="headerlink" title="2.2、能做什么"></a>2.2、能做什么</h2><p>①、表的读取顺序；
-②、数据读取操作的类型；
-③、哪些索引可以使用；
-④、哪些索引被实际使用；
-⑤、表之间的引用；
-⑥、每张表有多少行被优化器查询。</p>
+<p>我使用谷歌翻译下：<br><img src="/images/MySql/4/1.png" alt="图片"></p>
+<h2 id="2-2、能做什么"><a href="#2-2、能做什么" class="headerlink" title="2.2、能做什么"></a>2.2、能做什么</h2><p>①、表的读取顺序；<br>②、数据读取操作的类型；<br>③、哪些索引可以使用；<br>④、哪些索引被实际使用；<br>⑤、表之间的引用；<br>⑥、每张表有多少行被优化器查询。</p>
 <h2 id="2-3、如何使用"><a href="#2-3、如何使用" class="headerlink" title="2.3、如何使用"></a>2.3、如何使用</h2><p>使用方式：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN  &lt;查询语句&gt;</span><br></pre></td></tr></table></figure>
 
@@ -192,12 +186,8 @@
 <p>id,select_type,table,type,possible_keys,key,key_len,ref,rows,extra</p>
 </blockquote>
 <p>下面我们将一一分析每个列的作用</p>
-<h2 id="2-4、id"><a href="#2-4、id" class="headerlink" title="2.4、id"></a>2.4、id</h2><p>select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序。它有三种情况，分别是：
-| <strong>情况</strong>   | <strong>执行顺序</strong>   |
-|:—-:|:—-:|:—-:|:—-:|
-| id相同   | 执行顺序由上至下   |
-| id不同   | 如果是子查询，id的序列号会递增，id值越大优先级越高，越先被执行   |
-| id相同不同，同时存在   | id如果相同，可以认为是一组，从上往下执行，在所以的组中，id值越大，优先级越高，越先执行   |</p>
+<h2 id="2-4、id"><a href="#2-4、id" class="headerlink" title="2.4、id"></a>2.4、id</h2><p>select查询的序列号，包含一组数字，表示查询中执行select子句或操作表的顺序。它有三种情况，分别是：</p>
+<p><img src="/images/MySql/4/id_table.png" alt="图片"></p>
 <p>我们假设有三张表t1,t2和t3，每个表的注解都为id，下面我们来分析下这三种情况。</p>
 <h3 id="2-4-1、id相同"><a href="#2-4-1、id相同" class="headerlink" title="2.4.1、id相同"></a>2.4.1、id相同</h3><p><strong>sql语句：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">exlpain select t2.*</span><br><span class="line">from t1,t2,t3</span><br><span class="line">where t1.id = t2.id </span><br><span class="line">and t1.id = t3.id</span><br></pre></td></tr></table></figure>
@@ -217,33 +207,13 @@
 <p><strong>执行结果：</strong></p>
 <p><img src="/images/MySql/4/5.png" alt="图片"></p>
 <p><strong>分析：</strong>id为1的看作一组，id为2的看作一组，那么id不同的话，越大越先执行，所以先执行t3，而id相同的1，是先上而下的执行，所以先执行t2表，然后再执行<derived2>，他是一个衍生表，就是s1，这个我们后面讲table列的时候具体说明。</derived2></p>
-<h2 id="2-5、select-type"><a href="#2-5、select-type" class="headerlink" title="2.5、select_type"></a>2.5、select_type</h2><p>查询的类型，主要是用于区别普通查询，联合查询，子查询等复杂查询，它有如下值：
-| <strong>序号</strong>   | <strong>select_type</strong>   | <strong>用途</strong>   |
-|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|
-| 1   | SIMPLE   | 简单查询：简单的select查询，查询中不包含子查询或者UNION   |
-| 2   | PRIMARY   | 主查询：查询中若包含任何复杂的子部分，最外层查询则被标记为PRIMARY   |
-| 3   | SUBQUERY   | 子查询：在DELECT或者WHERE列中包含了子查询   |
-| 4   | DERIVED   | 在FROM列表中包含的子查询被标记为DERIVED(衍生)，MySQL会递归执行这些查询，把结果放在临时表里。如：3.4.3sql语句中的t3表就在FROM表里，被标记为DERIVED   |
-| 5   | UNION   | 若第二个SELECT出现在UNION之后，则会被标记为UNION，如果UNION包含在from子句的子查询中，外层select将被标记为DERIVED   |
-| 6   | UNION RESULT   | 从UNION表获取结果的SELECT   |</p>
-<h2 id="2-6、table"><a href="#2-6、table" class="headerlink" title="2.6、table"></a>2.6、table</h2><p>显示这一行数据是关于哪张表，除了显示我们数据库中具体的表，他可能还有以下几种情况：
-| <strong>序号</strong>   | <strong>值</strong>   | <strong>作用</strong>   |
-|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|
-| 1   | &lt;union<strong><em>M</em></strong>,<strong><em>N</em></strong>&gt;   | 该行指的是id值为M和N的行的并集   |
-| 2   | &lt;derived<strong><em>N</em></strong>&gt;   | 该行引用id值为N的行的派生表结果。例如，派生表可能来自FROM子句中的子查询   |
-| 3   | &lt;subquery<strong><em>N</em></strong>&gt;   | 该行指的是id值为N的行的具体化子查询的结果   |</p>
-<h2 id="2-7、type"><a href="#2-7、type" class="headerlink" title="2.7、type"></a>2.7、type</h2><p>显示查询使用了何种类型，主要有以下几种情况：
-| <strong>序号</strong>   | <strong>类型</strong>   | <strong>描述</strong>   |
-|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|
-| 1   | system   | 表只有一行记录（等于系统表）,这是const类型的特例，平时一般不会出现，这个也可以忽略不计   |
-| 2   | const   | 表示通过索引一次就找到了，const用于比较primary key或者unique索引，因为只匹配一行数据，所以很快，如将主键至于where列表中，MySQL就能将查询转换为一个常量   |
-| 3   | eq_ref   | 唯一性索引扫描，对于每一个索引建，表中只有一条记录与之匹配。常见于主键或唯一索引扫描   |
-| 4   | ref   | 非唯一性索引扫描，返回匹配某个单独的索引行，本质上也是一种索引访问，他返回索引匹配某个单独值的行，然而，它可能会找到多个符合条件的行，所以他应该属于查找和扫描的混合体   |
-| 5   | range   | 只检索给定范围的行，使用索引来选择行。key列显示使用了哪个索引，一般就是在你的where语句中出现了between、&lt;、&gt;、in等查询。这种范围扫描索引比全表扫描要好，因为它只需要开始于索引的某一点，而结束于另一点，不用扫描全部索引   |
-| 6   | index   | Full Index Scan,index与all区别：index类型只便利索引数，这通常比ALL快，因为索引文件通常比数据文件小（也就是说虽然all和index都是读全表，但是index是从索引中读取的，而all是冲硬盘中读取）   |
-| 7   | all   | Full Tbale Scan，将便利全表找到匹配的行   |</p>
-<p>当然，还有其他的类型，如：fulltext、ref_or_null index_merage unique_subquery index_subquery 等。
-类型排序(执行效率)如下：</p>
+<h2 id="2-5、select-type"><a href="#2-5、select-type" class="headerlink" title="2.5、select_type"></a>2.5、select_type</h2><p>查询的类型，主要是用于区别普通查询，联合查询，子查询等复杂查询，它有如下值：</p>
+<p><img src="/images/MySql/4/select_type.png" alt="图片"></p>
+<h2 id="2-6、table"><a href="#2-6、table" class="headerlink" title="2.6、table"></a>2.6、table</h2><p>显示这一行数据是关于哪张表，除了显示我们数据库中具体的表，他可能还有以下几种情况：</p>
+<p><img src="/images/MySql/4/table.png" alt="图片"></p>
+<h2 id="2-7、type"><a href="#2-7、type" class="headerlink" title="2.7、type"></a>2.7、type</h2><p>显示查询使用了何种类型，主要有以下几种情况：</p>
+<p><img src="/images/MySql/4/type.png" alt="图片"></p>
+<p>当然，还有其他的类型，如：fulltext、ref_or_null index_merage unique_subquery index_subquery 等。<br>类型排序(执行效率)如下：</p>
 <blockquote>
 <p>system&gt;const&gt;eq_ref&gt;ref&gt;fulltext&gt;ref_or_null&gt;index_merage&gt;unique_subquery &gt;range&gt;index&gt;all</p>
 </blockquote>
@@ -285,33 +255,16 @@
 <p><strong>执行结果：</strong></p>
 <p><img src="/images/MySql/4/11.png" alt="图片"></p>
 <h2 id="2-8、possible-key"><a href="#2-8、possible-key" class="headerlink" title="2.8、possible_key"></a>2.8、possible_key</h2><p>显示可能应用在该张表中的索引，一个或者多个，查询设计到的字段上若存在索引，则索引将被列出，但不一定被查询实际使用</p>
-<h2 id="2-9、key"><a href="#2-9、key" class="headerlink" title="2.9、key"></a>2.9、key</h2><p>查询实际使用的索引，如果为null，则没有使用索引（没有建索引或者索引失效）
-注意：并不是一定要possible_key中出现的索引，才会在key中出现，如下这种情况，possible_key为null，但实际确使用了索引：</p>
+<h2 id="2-9、key"><a href="#2-9、key" class="headerlink" title="2.9、key"></a>2.9、key</h2><p>查询实际使用的索引，如果为null，则没有使用索引（没有建索引或者索引失效）<br>注意：并不是一定要possible_key中出现的索引，才会在key中出现，如下这种情况，possible_key为null，但实际确使用了索引：</p>
 <p><img src="/images/MySql/4/12.png" alt="图片"></p>
 <h2 id="2-10、key-len"><a href="#2-10、key-len" class="headerlink" title="2.10、key_len"></a>2.10、key_len</h2><p>表示索引中使用的字节数，可以通过该列计算查询中使用索引的长度，在不损失精确性情况下，长度越短越好。key_len显示的值为索引字段的最大可能长度，并非实际使用的长度，即key_len是根据表定义计算而得，不是通过内检索出的。</p>
-<h2 id="2-11、ref"><a href="#2-11、ref" class="headerlink" title="2.11、ref"></a>2.11、ref</h2><p>显示索引的哪一列被使用了，如果可能的话，是一个常数，哪些列或者常量被用于查找索引的列上的值
-<img src="/images/MySql/4/13.png" alt="图片">
-其中：const是常量，我们看到sql中，t2.name指定了一个值，而该列是被建立唯一索引的，所以只有一行会被匹配，即被指定为常量。db02.t2.id表示db02这个数据库中t2这张表的id属性，也就是t1这张表查询使用了t2表id主键索引查询。</p>
-<h2 id="2-12、rows"><a href="#2-12、rows" class="headerlink" title="2.12、rows"></a>2.12、rows</h2><p>根据表统计信息以及索引选用情况，大致估算出找到所需的记录所需要读取的行数，该值越小越好。
-我们分析下下面的sql语句：</p>
+<h2 id="2-11、ref"><a href="#2-11、ref" class="headerlink" title="2.11、ref"></a>2.11、ref</h2><p>显示索引的哪一列被使用了，如果可能的话，是一个常数，哪些列或者常量被用于查找索引的列上的值<br><img src="/images/MySql/4/13.png" alt="图片"><br>其中：const是常量，我们看到sql中，t2.name指定了一个值，而该列是被建立唯一索引的，所以只有一行会被匹配，即被指定为常量。db02.t2.id表示db02这个数据库中t2这张表的id属性，也就是t1这张表查询使用了t2表id主键索引查询。</p>
+<h2 id="2-12、rows"><a href="#2-12、rows" class="headerlink" title="2.12、rows"></a>2.12、rows</h2><p>根据表统计信息以及索引选用情况，大致估算出找到所需的记录所需要读取的行数，该值越小越好。<br>我们分析下下面的sql语句：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select * from t1,t2 where t1.id = t2.id and t2.name=&apos;t2Name1&apos;</span><br></pre></td></tr></table></figure>
 
-<p>在为给t2表建立索引idx_t2_nameDetail时的结果：
-<img src="/images/MySql/4/14.png" alt="图片">
-我们看到t1这张表有13行数据被优化器检索到，现在我们给t2建立一个复合索引idx_t2_nameDetail（表示name字段和detail的复合索引，建索引语句省略）：
-<img src="/images/MySql/4/15.png" alt="图片">
-此时，t2表被检索的行数变成了一行。</p>
-<h2 id="2-13、Extra"><a href="#2-13、Extra" class="headerlink" title="2.13、Extra"></a>2.13、Extra</h2><p>Extra的定义为包含不适合在其他列显示但<strong>十分重要</strong>的额外信息。注意是十分重要的信息，它有这些内容：
-| <strong>序号</strong>   | <strong>属性（值）</strong>   | <strong>描述</strong>   |
-|:—-:|:—-:|:—-:|:—-:|:—-|
-| 1   | Using filesort   | 说明MySQL会对数据使用一个外部的索引排序，而不是按照表内的索引顺序读取。MySQL中无法利用索引完成的排序操作称为“文件排序”   |
-| 2   | Using temporary   | 使用了临时表保持中间结果，MySQL在对查询结果时使用临时表，常见于排序order by和分组查询group by中。   |
-| 3   | Using index   | 表示相应的select操作中使用了<strong>覆盖索引（Covering Index）</strong>避免访问了表的数据行，<strong>效率不错</strong>。  ①、如果同时出现了using where，表明索引被用来执行索引键值的查找  ②、如果没有同时出现using where，表明索引用来读取数据而非执行查找动作   |
-| 4   | Using where   | 表明使用了where过滤查询   |
-| 5   | Using join buffer   | 使用了连接缓存   |
-| 6   | impossible where   | where子句的值是false,不能使用来获取任何元祖。例如：select * from t1 where name=’a’ and name=’b’。查询name属性同时为a且为b的值，这是不可能的   |
-| 7   | select tables optimized away   | 在没有GROUP BY子句的情况下，基于索引优化MIN/MAX操作或者对于MyISAM存储引擎优化COUNT(*)操作，不必等到执行阶段再进行计算   |
-| 8   | distinct   | 优化distinct操作，在找到第一匹配的元组后即停止找同样值的动作   |</p>
+<p>在为给t2表建立索引idx_t2_nameDetail时的结果：<br><img src="/images/MySql/4/14.png" alt="图片"><br>我们看到t1这张表有13行数据被优化器检索到，现在我们给t2建立一个复合索引idx_t2_nameDetail（表示name字段和detail的复合索引，建索引语句省略）：<br><img src="/images/MySql/4/15.png" alt="图片"><br>此时，t2表被检索的行数变成了一行。</p>
+<h2 id="2-13、Extra"><a href="#2-13、Extra" class="headerlink" title="2.13、Extra"></a>2.13、Extra</h2><p>Extra的定义为包含不适合在其他列显示但<strong>十分重要</strong>的额外信息。注意是十分重要的信息，它有这些内容：</p>
+<p><img src="/images/MySql/4/extra.png" alt="图片"></p>
 <p>在第3个using index是，提到了覆盖索引（Covering Index）,在2.9节中我们也提到了覆盖索引，它的理解方式为：</p>
 <blockquote>
 <p>就是select的数据列只用从索引中就能够取得，不必读取数据行，MySQL可以利用索引返回select列表中的字段，而不必根据索引再次读取数据文件，换句话说查询列要被所建的索引覆盖</p>
@@ -335,35 +288,18 @@
 
 <p><img src="/images/MySql/4/18.png" alt="图片"></p>
 <p><strong>分析：</strong>恭喜，这是一个非常好的查询，效率不错。</p>
-<h1 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h1><p>Explain：使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的，分析你的查询语句或者表结构的性能瓶颈。
-<strong>一、使用方式：</strong></p>
+<h1 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h1><p>Explain：使用EXPLAIN关键字可以模拟优化器执行SQL查询语句，从而知道MySQL是如何处理你的SQL语句的，分析你的查询语句或者表结构的性能瓶颈。<br><strong>一、使用方式：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">EXPLAIN  &lt;查询语句&gt;</span><br></pre></td></tr></table></figure>
 
-<p><strong>二、结果列如下：</strong>
-<img src="/images/MySql/4/19.png" alt="图片">
-<strong>三、它的作用（能做什么）：</strong>
-<strong>①、表的读取顺序</strong>
-读表的顺序由id值决定，id的值有三种情况，分别是：id相同、id不同以及id相同不同，同时存在。表被执行的顺序是：id值越大执行越先执行，id相同由上而下顺序执行。
-<strong>②、数据读取操作的类型</strong>
-它也是sql查询优化的一个重要的指标，结果值从最好到最坏依次是：</p>
+<p><strong>二、结果列如下：</strong><br><img src="/images/MySql/4/19.png" alt="图片"><br><strong>三、它的作用（能做什么）：</strong><br><strong>①、表的读取顺序</strong><br>读表的顺序由id值决定，id的值有三种情况，分别是：id相同、id不同以及id相同不同，同时存在。表被执行的顺序是：id值越大执行越先执行，id相同由上而下顺序执行。<br><strong>②、数据读取操作的类型</strong><br>它也是sql查询优化的一个重要的指标，结果值从最好到最坏依次是：</p>
 <blockquote>
 <p>system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;all</p>
 </blockquote>
-<p>一般来说：<strong>得保证查询至少达到了range的级别，最好达到ref。</strong>
-<strong>③、哪些索引可以使用</strong>
-哪些索引可以使用是通过列possible_key决定。
-<strong>④、哪些索引被实际使用</strong>
-哪些索引被实际使用是由列key决定。
-<strong>⑤、表之间的引用</strong>
-表之间的引用是由列ref决定，如果可能的话，是一个常数，哪些列或者常量被用于查找索引的列上的值。
-<strong>⑥、每张表有多少行被优化器查询</strong>
-这个当然是列rows，它的值越小，代表效率越高。
-<strong>四、Extra</strong>
-在对sql优化分析还有一个重要的指标是Extra，如果出现Using filesort和Using temporary，那么就需要考虑优化sql语句了，如果出现了Using Index就表示sql效率不错，建议使用覆盖索引。</p>
+<p>一般来说：<strong>得保证查询至少达到了range的级别，最好达到ref。</strong><br><strong>③、哪些索引可以使用</strong><br>哪些索引可以使用是通过列possible_key决定。<br><strong>④、哪些索引被实际使用</strong><br>哪些索引被实际使用是由列key决定。<br><strong>⑤、表之间的引用</strong><br>表之间的引用是由列ref决定，如果可能的话，是一个常数，哪些列或者常量被用于查找索引的列上的值。<br><strong>⑥、每张表有多少行被优化器查询</strong><br>这个当然是列rows，它的值越小，代表效率越高。<br><strong>四、Extra</strong><br>在对sql优化分析还有一个重要的指标是Extra，如果出现Using filesort和Using temporary，那么就需要考虑优化sql语句了，如果出现了Using Index就表示sql效率不错，建议使用覆盖索引。</p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年07月02日 17:37</p>
+        <p>最后更新： 2019年07月03日 09:39</p>
         <p>原始链接： <a class="post-url" href="/2019/07/02/MySql性能分析工具Explain/" title="MySql性能分析工具Explain">https://www.sunnymaple.cn/2019/07/02/MySql性能分析工具Explain/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">

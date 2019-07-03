@@ -154,8 +154,7 @@
 <p>那么在其他应用中，使用RestTemplate将前端（安卓或者iOS等客户端）传递过来的参数传到文件服务器，代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping</span>(<span class="string">"/clientFilesUploads"</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">clientFilesUploads</span><span class="params">(String detail,@RequestParam(<span class="string">"files"</span>)</span> MultipartFile[] files) <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">    MultiValueMap&lt;String, Object&gt; map = <span class="keyword">new</span> LinkedMultiValueMap&lt;&gt;();</span><br><span class="line">    List&lt;Object&gt; fileList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">for</span>(MultipartFile file : files) &#123;</span><br><span class="line">        ByteArrayResource byteArrayResource = <span class="keyword">new</span> ByteArrayResource(file.getBytes());</span><br><span class="line">        fileList.add(byteArrayResource);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//使用files上传文件</span></span><br><span class="line">    map.put(<span class="string">"files"</span>, fileList);</span><br><span class="line">    map.add(<span class="string">"detail"</span>,detail);</span><br><span class="line">    HttpHeaders httpHeaders = <span class="keyword">new</span> HttpHeaders();</span><br><span class="line">    httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);</span><br><span class="line">    HttpEntity&lt;MultiValueMap&lt;String, Object&gt;&gt; request = <span class="keyword">new</span> HttpEntity&lt;&gt;(map, httpHeaders);</span><br><span class="line">    String url = <span class="string">"http://localhost:8081/group/uploads"</span>;</span><br><span class="line">    ResponseEntity&lt;String&gt; response = restTemplate.exchange(url, HttpMethod.POST, request, String.class);</span><br><span class="line">    System.out.println(response.getBody());</span><br><span class="line">    <span class="keyword">return</span> <span class="string">"上传成功！"</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>但是意外的是，在文件服务器接收文件的接口中，并没有获取到任何文件，files的size为0.
-<img src="/images/spring/restTemplate/1.png" alt="图片"></p>
+<p>但是意外的是，在文件服务器接收文件的接口中，并没有获取到任何文件，files的size为0.<br><img src="/images/spring/restTemplate/1.png" alt="图片"></p>
 <p>这时，我们需要对ByteArrayResource 对象重写getFilename()方法问题才得以解决，将上面代码中的第六行代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ByteArrayResource byteArrayResource = <span class="keyword">new</span>                        </span><br><span class="line">ByteArrayResource(file.getBytes());</span><br></pre></td></tr></table></figure>
 
@@ -287,19 +286,19 @@
 
 <nav id="article-nav">
   
-    <a href="/2019/06/28/MySql索引简介/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/06/28/七种JOIN图/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          MySql索引简介
+          七种JOIN图
         
       </span>
     </a>
   
   
-    <a href="/2019/06/28/MySql中Sql语句的执行顺序/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">MySql中Sql语句的执行顺序</span>
+    <a href="/2019/06/27/class等文件(夹)/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">idea隐藏.iml/.idea/.class等文件(夹)</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

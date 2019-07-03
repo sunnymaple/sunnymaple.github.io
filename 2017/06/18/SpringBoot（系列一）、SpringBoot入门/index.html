@@ -173,8 +173,7 @@
 <blockquote>
 <p>Hello,wangzb</p>
 </blockquote>
-<h3 id="1-3-5-Creating-an-Executable-Jar-（创建一个可执行的Jar）"><a href="#1-3-5-Creating-an-Executable-Jar-（创建一个可执行的Jar）" class="headerlink" title="1.3.5 Creating an Executable Jar （创建一个可执行的Jar）"></a>1.3.5 Creating an Executable Jar （创建一个可执行的Jar）</h3><p>​        要创建一个可执行jar，我们需要将spring-boot-maven-plugin添加到我们的pom.xml中。来
-这样做，在dependencies部分下面插入以下几行:</p>
+<h3 id="1-3-5-Creating-an-Executable-Jar-（创建一个可执行的Jar）"><a href="#1-3-5-Creating-an-Executable-Jar-（创建一个可执行的Jar）" class="headerlink" title="1.3.5 Creating an Executable Jar （创建一个可执行的Jar）"></a>1.3.5 Creating an Executable Jar （创建一个可执行的Jar）</h3><p>​        要创建一个可执行jar，我们需要将spring-boot-maven-plugin添加到我们的pom.xml中。来<br>这样做，在dependencies部分下面插入以下几行:</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>​       接下来就可以打包，在idea中点击package，执行打包命令，之后我们在项目的target包下就可以看到刚打包好的springboot-helloworld-1.0.0.jar包。在包的路径下，打开CMD命令行，执行如下命令：</p>
@@ -202,8 +201,7 @@
 <p>2.2.1.2 启动器（Starter）</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>​        spring-boot-starter：spring-boot场景启动器；帮我们导入了web模块正常运行所依赖的组件；Spring Boot将所有的功能场景都抽取出来，做成一个个的starters（启动器），只需要在项目里面引入这些starter，相关场景的所有依赖都会导入进来。要用什么功能就导入什么场景的启动器。
-  （1）  以下列举SpringBoot官方提供的starter pom。更多请参考《spring-boot-reference.pdf》2.1.0.RELEASE版，第13.5节Starters</p>
+<p>​        spring-boot-starter：spring-boot场景启动器；帮我们导入了web模块正常运行所依赖的组件；Spring Boot将所有的功能场景都抽取出来，做成一个个的starters（启动器），只需要在项目里面引入这些starter，相关场景的所有依赖都会导入进来。要用什么功能就导入什么场景的启动器。<br>  （1）  以下列举SpringBoot官方提供的starter pom。更多请参考《spring-boot-reference.pdf》2.1.0.RELEASE版，第13.5节Starters</p>
 <table>
 <thead>
 <tr>
@@ -293,9 +291,7 @@
 <td><dependency><br>　<groupid>org.activiti</groupid>　<br>    <artifactid>activiti-spring-boot-starter-basic</artifactid><br>    <version>6.0.0</version><br></dependency></td>
 </tr>
 </tbody></table>
-<h3 id="2-2-2-resources文件目录结构"><a href="#2-2-2-resources文件目录结构" class="headerlink" title="2.2.2 resources文件目录结构"></a>2.2.2 resources文件目录结构</h3><p>（1）static：保存所有的静态资源，如js、css、images等。
-（2）templates：保存所有的模板文件，SpringBoot默认jar使用嵌入式的Tomcat，默认不支持JSP页面，可以使用模板引擎（thymeleaf、freemarker ）。
-（3）application.properties：SpringBoot应用配置文件，可以修改一些默认的配置，如修改Tomcat的端口，项目根路径等。</p>
+<h3 id="2-2-2-resources文件目录结构"><a href="#2-2-2-resources文件目录结构" class="headerlink" title="2.2.2 resources文件目录结构"></a>2.2.2 resources文件目录结构</h3><p>（1）static：保存所有的静态资源，如js、css、images等。<br>（2）templates：保存所有的模板文件，SpringBoot默认jar使用嵌入式的Tomcat，默认不支持JSP页面，可以使用模板引擎（thymeleaf、freemarker ）。<br>（3）application.properties：SpringBoot应用配置文件，可以修改一些默认的配置，如修改Tomcat的端口，项目根路径等。</p>
 <h3 id="2-2-3-主程序类"><a href="#2-2-3-主程序类" class="headerlink" title="2.2.3 主程序类"></a>2.2.3 主程序类</h3><p>打开2.1节创建的springboot-demo项目，找到SpringBootDemoApplication类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.seagetech.springbootdemo;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.SpringApplication;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;</span><br><span class="line"></span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringbootDemoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">      SpringApplication.run(SpringbootDemoApplication.class, args);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -431,19 +427,19 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" id="article-nav-newer" class="article-nav-link-wrap">
 
       <span class="article-nav-title">
         <i class="fa fa-hand-o-left" aria-hidden="true"></i>
         
-          SpringBoot（系列五）、自定义Starter实战-统一异常处理
+          SpringBoot（系列二）、SpringBoot自动配置原理
         
       </span>
     </a>
   
   
-    <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">SpringBoot（系列二）、SpringBoot自动配置原理</span>
+    <a href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

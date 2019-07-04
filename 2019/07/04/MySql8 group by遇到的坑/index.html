@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="晴枫慕竹">
 <meta property="og:description" content="最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：查看sql_mode状态： 1SELECT @@global.sql_mode   第一行出现了NOLY_FULL_GR">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/question/1/1.png">
-<meta property="og:updated_time" content="2019-07-04T03:45:26.266Z">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/question/mysql/1/1.png">
+<meta property="og:updated_time" content="2019-07-04T07:19:26.929Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql8 group by遇到的坑">
 <meta name="twitter:description" content="最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：查看sql_mode状态： 1SELECT @@global.sql_mode   第一行出现了NOLY_FULL_GR">
-<meta name="twitter:image" content="https://www.sunnymaple.cn/images/MySql/question/1/1.png">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/question/mysql/1/1.png">
   
   
     <link rel="icon" href="/me.ico">
@@ -124,7 +124,7 @@
               <li>
                   <i class="fa fa-book"></i>
                   
-                      <a href="/categories/MySql/">MySql</a>
+                      <a href="/categories/Question/">Question</a>
                   
               </li>
           
@@ -148,7 +148,7 @@
             <p>最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：<br>查看sql_mode状态：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @@global.sql_mode</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/MySql/question/1/1.png" alt="图片"></p>
+<p><img src="/images/question/mysql/1/1.png" alt="图片"></p>
 <p>第一行出现了NOLY_FULL_GROUP_BY，我们只要进入配置文件中修改sql_mode的值即可</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br></pre></td></tr></table></figure>
 
@@ -159,7 +159,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年07月04日 11:45</p>
+        <p>最后更新： 2019年07月04日 15:19</p>
         <p>原始链接： <a class="post-url" href="/2019/07/04/MySql8 group by遇到的坑/" title="MySql8 group by遇到的坑">https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">
@@ -279,8 +279,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2019/07/03/sql优化分析/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">sql优化分析</span>
+    <a href="/2019/07/04/lombok.Data引发的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">lombok.Data引发的问题</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   
@@ -342,10 +342,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/Tools/">Tools</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -378,7 +378,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a>
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
         </div>
     </div>
 </div>

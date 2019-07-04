@@ -3,21 +3,25 @@
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="utf-8">
   
-  <title>归档: 2017/6 | 晴枫慕竹</title>
+  <title>MySql8 group by遇到的坑 | 晴枫慕竹</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
     <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
   
-  <meta name="description" content="个人博客网站，个人学习记录">
-<meta property="og:type" content="website">
-<meta property="og:title" content="晴枫慕竹">
-<meta property="og:url" content="https://www.sunnymaple.cn/archives/2017/06/index.html">
+  <meta name="description" content="最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：查看sql_mode状态： 1SELECT @@global.sql_mode   第一行出现了NOLY_FULL_GR">
+<meta name="keywords" content="MySql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySql8 group by遇到的坑">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/index.html">
 <meta property="og:site_name" content="晴枫慕竹">
-<meta property="og:description" content="个人博客网站，个人学习记录">
+<meta property="og:description" content="最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：查看sql_mode状态： 1SELECT @@global.sql_mode   第一行出现了NOLY_FULL_GR">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/MySql/question/1/1.png">
+<meta property="og:updated_time" content="2019-07-04T03:45:26.266Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="晴枫慕竹">
-<meta name="twitter:description" content="个人博客网站，个人学习记录">
+<meta name="twitter:title" content="MySql8 group by遇到的坑">
+<meta name="twitter:description" content="最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：查看sql_mode状态： 1SELECT @@global.sql_mode   第一行出现了NOLY_FULL_GR">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/MySql/question/1/1.png">
   
   
     <link rel="icon" href="/me.ico">
@@ -105,181 +109,186 @@
     </div>
 </header>
       <div class="outer">
-        <section id="main" class="body-wrap">
-  
-  
+        <section id="main" class="body-wrap"><article id="post-MySql8 group by遇到的坑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/" class="archive-article-date">
-  <time datetime="2017-06-19T16:00:00.000Z" itemprop="datePublished">06-20</time>
-</a>
-      
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/20/SpringBoot（系列五）、自定义Starter实战-统一异常处理/">SpringBoot（系列五）、自定义Starter实战-统一异常处理</a>
+    <h1 class="post-title" itemprop="name">
+      MySql8 group by遇到的坑
     </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/MySql/">MySql</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-07-04
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
   
 
-    </header>
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
       
-        <div class="archive-post-footer">
+            
+            <p>最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：<br>查看sql_mode状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SELECT @@global.sql_mode</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/MySql/question/1/1.png" alt="图片"></p>
+<p>第一行出现了NOLY_FULL_GROUP_BY，我们只要进入配置文件中修改sql_mode的值即可</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/my.cnf</span><br></pre></td></tr></table></figure>
+
+<p>在[mysqld]中找到sql_mode，如果注释，请将注释去掉，然后重启mysql即可。如果重启失败，找找sql_mode中是否有NO_AUTO_CREATE_USER项，如果有，请删除，因为mysql8已经将这个去掉了。最终sql_mode值为：</p>
+<blockquote>
+<p>sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</p>
+</blockquote>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年07月04日 11:45</p>
+        <p>原始链接： <a class="post-url" href="/2019/07/04/MySql8 group by遇到的坑/" title="MySql8 group by遇到的坑">https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/&title=《MySql8 group by遇到的坑》 — 晴枫慕竹&pic=/images/MySql/MySql.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/&title=《MySql8 group by遇到的坑》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《MySql8 group by遇到的坑》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/07/04/MySql8 group by遇到的坑/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+    <a href="/tags/MySql/" class="color1">MySql</a>
       
   </li>
 
-        </div>
-      
+        </ul>
+        
+    </footer>
   </div>
 </article>
 
+
+
+<nav id="article-nav">
   
+  
+    <a href="/2019/07/03/sql优化分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">sql优化分析</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/" class="archive-article-date">
-  <time datetime="2017-06-17T16:00:00.000Z" itemprop="datePublished">06-18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/18/SpringBoot（系列一）、SpringBoot入门/">SpringBoot（系列一）、SpringBoot入门</a>
-    </h1>
-  
-
-    </header>
-      
-        <div class="archive-post-footer">
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
-      
-  </li>
-
-        </div>
-      
-  </div>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/" class="archive-article-date">
-  <time datetime="2017-06-17T16:00:00.000Z" itemprop="datePublished">06-18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/18/SpringBoot（系列二）、SpringBoot自动配置原理/">SpringBoot（系列二）、SpringBoot自动配置原理</a>
-    </h1>
-  
-
-    </header>
-      
-        <div class="archive-post-footer">
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
-      
-  </li>
-
-        </div>
-      
-  </div>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/" class="archive-article-date">
-  <time datetime="2017-06-17T16:00:00.000Z" itemprop="datePublished">06-18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/18/SpringBoot（系列三）、SpringBoot自定义Starter/">SpringBoot（系列三）、SpringBoot自定义Starter</a>
-    </h1>
-  
-
-    </header>
-      
-        <div class="archive-post-footer">
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
-      
-  </li>
-
-        </div>
-      
-  </div>
-</article>
-
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/" class="archive-article-date">
-  <time datetime="2017-06-17T16:00:00.000Z" itemprop="datePublished">06-18</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/18/SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数/">SpringBoot（系列四）、自定义Starter实战-统一格式的响应参数</a>
-    </h1>
-  
-
-    </header>
-      
-        <div class="archive-post-footer">
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
-      
-  </li>
-
-        </div>
-      
-  </div>
-</article>
-
-  
-  
-    </div></section>
-  
-
 </section>
         
       </div>

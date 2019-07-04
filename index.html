@@ -107,6 +107,72 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
+    <article id="post-MySql8 group by遇到的坑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/04/MySql8 group by遇到的坑/">MySql8 group by遇到的坑</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/07/04/MySql8 group by遇到的坑/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql8 group by遇到的坑" title="MySql8 group by遇到的坑">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                最近对mysql从5.7升级到mysql8之后，对于select后查询的字段（非聚合函数，如sum，count等）未出现在group by中，是会出错的，那如何解决的，linux系统修改/etc/my.cnf配置文件，windows修改my.ini文件，这里以linux系统为例：查看sql_mode状态：
+1SELECT @@global.sql_mode
+
+
+第一行出现...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-07-04</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/07/04/MySql8 group by遇到的坑/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
     <article id="post-sql优化分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -358,69 +424,6 @@
 
 
   
-    <article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/MySql中Sql语句的执行顺序/">MySql中Sql语句的执行顺序</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/MySql/">MySql</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/06/28/MySql中Sql语句的执行顺序/">
-                
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql中Sql语句的执行顺序" title="MySql中Sql语句的执行顺序">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。
-1、手写顺序1234567891011121314SELECT DISTINCT    &lt;select_list&gt;FROM    &lt;left_table&gt; &lt;join_type&gt;JOIN &...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-06-28</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/MySql/" class="color1">MySql</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/06/28/MySql中Sql语句的执行顺序/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
     <article id="post-MySql索引简介" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -485,6 +488,69 @@
         </ul>
         
             <a href="/2019/06/28/MySql索引简介/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/MySql中Sql语句的执行顺序/">MySql中Sql语句的执行顺序</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/06/28/MySql中Sql语句的执行顺序/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql中Sql语句的执行顺序" title="MySql中Sql语句的执行顺序">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。
+1、手写顺序1234567891011121314SELECT DISTINCT    &lt;select_list&gt;FROM    &lt;left_table&gt; &lt;join_type&gt;JOIN &...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-06-28</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/06/28/MySql中Sql语句的执行顺序/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -682,69 +748,6 @@
         </ul>
         
             <a href="/2019/06/27/class等文件(夹)/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article id="post-SecureCRT 7 的安装与破解" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/19/SecureCRT 7 的安装与破解/">secureCRT 7 的安装与破解</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/Tools/">Tools</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/06/19/SecureCRT 7 的安装与破解/">
-                
-                <img src="https://www.sunnymaple.cn/images/banner.jpg" alt="secureCRT 7 的安装与破解" title="secureCRT 7 的安装与破解">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                百度网盘链接：https://pan.baidu.com/s/1_sT-uvW-61Iz1B1UhBdiwQ提取码：9ye7 
-1、打开下载这两个文件；2、安装scrt7.3.4，我这里提供的是一个32位的版本，64位的机器安装之后也没问题，在安装过程中，程序会提示你是否将32位的软件安装至64的操作系统，直接点击 Continue；3、是否同意条款，选项I accept...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-06-19</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/SecureCRT/" class="color5">SecureCRT</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/06/19/SecureCRT 7 的安装与破解/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>

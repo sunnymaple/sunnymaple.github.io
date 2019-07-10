@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>SpringBoot+MongoDB+Docker实现简易的文件服务器 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="文件服务器源码已上传github，点击下载，下载后我们便可以开始来安装部署，如果已安装docker以及mongodb，则第1、2、3节可以不看，直接参考第4节。 1、Docker安装建议使用ubuntu或者centos7.0以上的发行版本的Linux系统，以官方最新安装方式为准，已下安装方式仅供参考（centos7为例）： 1.1、卸载旧版本12345678yum remove docker \">
+<meta name="keywords" content="SpringBoot,MongoDB,Docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringBoot+MongoDB+Docker实现简易的文件服务器">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="文件服务器源码已上传github，点击下载，下载后我们便可以开始来安装部署，如果已安装docker以及mongodb，则第1、2、3节可以不看，直接参考第4节。 1、Docker安装建议使用ubuntu或者centos7.0以上的发行版本的Linux系统，以官方最新安装方式为准，已下安装方式仅供参考（centos7为例）： 1.1、卸载旧版本12345678yum remove docker \">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/open/1/1.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/open/1/2.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/open/1/3.png">
+<meta property="og:updated_time" content="2019-07-10T10:13:40.915Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringBoot+MongoDB+Docker实现简易的文件服务器">
+<meta name="twitter:description" content="文件服务器源码已上传github，点击下载，下载后我们便可以开始来安装部署，如果已安装docker以及mongodb，则第1、2、3节可以不看，直接参考第4节。 1、Docker安装建议使用ubuntu或者centos7.0以上的发行版本的Linux系统，以官方最新安装方式为准，已下安装方式仅供参考（centos7为例）： 1.1、卸载旧版本12345678yum remove docker \">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/open/1/1.png">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-SpringBoot+MongoDB+Docker实现简易的文件服务器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      SpringBoot+MongoDB+Docker实现简易的文件服务器
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+                      <a href="/categories/MongoDB/">MongoDB</a>
+                  
+                      <a href="/categories/Docker/">Docker</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-07-10
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>文件服务器源码已上传github，<a href="https://github.com/sunnymaple/file-server.git" target="_blank" rel="noopener">点击下载</a>，下载后我们便可以开始来安装部署，如果已安装docker以及mongodb，则第1、2、3节可以不看，直接参考第4节。</p>
+<h1 id="1、Docker安装"><a href="#1、Docker安装" class="headerlink" title="1、Docker安装"></a>1、Docker安装</h1><p>建议使用ubuntu或者centos7.0以上的发行版本的Linux系统，<a href="https://docs.docker.com/install/linux/docker-ce/centos/" target="_blank" rel="noopener">以官方最新安装方式为准</a>，已下安装方式仅供参考（centos7为例）：</p>
+<h2 id="1-1、卸载旧版本"><a href="#1-1、卸载旧版本" class="headerlink" title="1.1、卸载旧版本"></a>1.1、卸载旧版本</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">yum remove docker \</span><br><span class="line">                  docker-client \</span><br><span class="line">                  docker-client-latest \</span><br><span class="line">                  docker-common \</span><br><span class="line">                  docker-latest \</span><br><span class="line">                  docker-latest-logrotate \</span><br><span class="line">                  docker-logrotate \</span><br><span class="line">                  docker-engine</span><br></pre></td></tr></table></figure>
+
+<p>如果yum报告没有安装这些软件包，则可以。<br>/var/lib/docker/保留包括图像，容器，卷和网络在内的内容。现在调用Docker CE包docker-ce</p>
+<h2 id="1-2、使用存储库安装"><a href="#1-2、使用存储库安装" class="headerlink" title="1.2、使用存储库安装"></a>1.2、使用存储库安装</h2><p>安装所需的包。yum-utils提供了yum-config-manager 效用，并device-mapper-persistent-data和lvm2由需要 devicemapper存储驱动程序。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils \</span><br><span class="line">  device-mapper-persistent-data \</span><br><span class="line">  lvm2</span><br></pre></td></tr></table></figure>
+
+<p>使用以下命令设置<strong>稳定</strong>存储库：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">yum-config-manager \</span><br><span class="line">    --add-repo \</span><br><span class="line">    https://download.docker.com/linux/centos/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-3、安装DOCKER-CE"><a href="#1-3、安装DOCKER-CE" class="headerlink" title="1.3、安装DOCKER CE"></a>1.3、安装DOCKER CE</h2><p>安装<em>最新版本</em>的Docker CE和containerd</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<h1 id="2、启动docker"><a href="#2、启动docker" class="headerlink" title="2、启动docker"></a>2、启动docker</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br></pre></td></tr></table></figure>
+
+<p>通过运行hello-world 映像验证是否正确安装了Docker CE</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run hello-world</span><br></pre></td></tr></table></figure>
+
+<p>在国内，由于docker hub网站在国外，下载特别的慢，上述运行hello-world可能会因为超时失败，可以配置阿里云镜像加速器，登录阿里云 -&gt;控制台-&gt;容器镜像服务-&gt;镜像加速器，然后找到对应的操作系统的配置方法即可。</p>
+<h1 id="3、安装MongoDB"><a href="#3、安装MongoDB" class="headerlink" title="3、安装MongoDB"></a>3、安装MongoDB</h1><h2 id="3-1、拉取MongoDB镜像"><a href="#3-1、拉取MongoDB镜像" class="headerlink" title="3.1、拉取MongoDB镜像"></a>3.1、拉取MongoDB镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2、查看本地镜像"><a href="#3-2、查看本地镜像" class="headerlink" title="3.2、查看本地镜像"></a>3.2、查看本地镜像</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>[root@wangzb /]# docker images<br>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE<br>mongo                       latest              785c65f61380        6 days ago          412MB</p>
+</blockquote>
+<p>记住本地镜像ID（IMAGE ID ）</p>
+<h2 id="3-3、创建本地数据文件夹"><a href="#3-3、创建本地数据文件夹" class="headerlink" title="3.3、创建本地数据文件夹"></a>3.3、创建本地数据文件夹</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data/mongodb0</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-4、创建并启动mongo容器"><a href="#3-4、创建并启动mongo容器" class="headerlink" title="3.4、创建并启动mongo容器"></a>3.4、创建并启动mongo容器</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name file-server-mongo -v /data/mongodb0:/data/db -p 27017:27017 -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-5、查看容器运行情况"><a href="#3-5、查看容器运行情况" class="headerlink" title="3.5、查看容器运行情况"></a>3.5、查看容器运行情况</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                      NAMES<br>210ecf5e7d9d        785c65f61380        “docker-entrypoint.s…”   14 minutes ago      Up 13 minutes       0.0.0.0:27017-&gt;27017/tcp   file-server-mongo</p>
+</blockquote>
+<p>说明容器mongodb容器启动成功。</p>
+<h2 id="3-6、进入mongodb控制台"><a href="#3-6、进入mongodb控制台" class="headerlink" title="3.6、进入mongodb控制台"></a>3.6、进入mongodb控制台</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it file-server-mongo mongo admin</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-7、添加用户命令"><a href="#3-7、添加用户命令" class="headerlink" title="3.7、添加用户命令"></a>3.7、添加用户命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.createUser(&#123; user: <span class="string">'1iURI'</span>, <span class="built_in">pwd</span>: <span class="string">'rootroot'</span>, roles: [ &#123; role: <span class="string">"userAdminAnyDatabase"</span>, db: <span class="string">"admin"</span> &#125; ] &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>其中：user为用户名，pwd为密码，db为数据库名。</p>
+<h2 id="3-8、退出mongodb控制台"><a href="#3-8、退出mongodb控制台" class="headerlink" title="3.8、退出mongodb控制台"></a>3.8、退出mongodb控制台</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Ctrl + P + Q</span><br></pre></td></tr></table></figure>
+
+<h1 id="4、搭建文件服务器"><a href="#4、搭建文件服务器" class="headerlink" title="4、搭建文件服务器"></a>4、搭建文件服务器</h1><h2 id="4-1、文件服务器源码下载"><a href="#4-1、文件服务器源码下载" class="headerlink" title="4.1、文件服务器源码下载"></a>4.1、文件服务器源码下载</h2><p>文件服务器源码已上传github，<a href="https://github.com/sunnymaple/file-server.git" target="_blank" rel="noopener">点击下载</a>。</p>
+<h2 id="4-2、文件服务器本地测试"><a href="#4-2、文件服务器本地测试" class="headerlink" title="4.2、文件服务器本地测试"></a>4.2、文件服务器本地测试</h2><h3 id="4-2-1、配置文件"><a href="#4-2-1、配置文件" class="headerlink" title="4.2.1、配置文件"></a>4.2.1、配置文件</h3><p>application.properties配置信息如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">#定义文件服务器的默认端口是2701</span><br><span class="line">server.port=2701</span><br><span class="line"></span><br><span class="line"># 定义最大能上传多大的文件</span><br><span class="line">spring.servlet.multipart.max-file-size=10240KB</span><br><span class="line">spring.servlet.multipart.max-request-size=10240KB</span><br><span class="line"></span><br><span class="line"># independent MongoDB server</span><br><span class="line">#格式为：mongodb://userName:password@ip:port/dbName</span><br><span class="line">#需要注意的是，如果mongodb和该文件服务都部署在docker上时，ip并不是宿主机的ip</span><br><span class="line">#可以使用docker inspect &lt;name&gt; | grep IPAddres来查询mongodb容器的ip</span><br><span class="line">spring.data.mongodb.uri=mongodb://1iURI:rootroot@192.168.199.50:27017/admin</span><br><span class="line"></span><br><span class="line">#response.handler</span><br><span class="line">#请下载或者克隆我的开源项目： rest-spring-boot-starter</span><br><span class="line">##https://github.com/sunnymaple/rest-spring-boot-starter</span><br><span class="line">##该配置主要为了响应统一格式的响应参数，并非必须，如果不需要，可以在pom注释或者删除掉有关rest-spring-boot-starter的依赖包</span><br><span class="line">#response.handler.enabled=true</span><br><span class="line">response.handler.non-response-handler=/v2/api-docs,/swagger-resources/**</span><br><span class="line"></span><br><span class="line">#file.path 文件在线查看路径，部署后请修改localhost为实际的地址</span><br><span class="line">file.path =http://localhost:$&#123;server.port&#125;/online/</span><br><span class="line"></span><br><span class="line">#swagger</span><br><span class="line">#swagger.title = 文件服务器</span><br><span class="line">#swagger.description = SpringBoot集成MongoDB做文件服务器，更多请关注:https://www.sunnymaple.cn</span><br><span class="line">#swagger.version=1.0.0</span><br><span class="line">#swagger.name=SunnyMaple</span><br><span class="line">#swagger.url=https://www.sunnymaple.cn</span><br><span class="line">#swagger.email=wzb0127@163.com</span><br><span class="line">#swagger.basePackage=cn.sunnymaple.file.server</span><br></pre></td></tr></table></figure>
+
+<p>只需要修改配置：spring.data.mongodb.uri，根据具体情况修改对应自己刚安装的mongodb的用户名密码以及docker宿主机ip即可。</p>
+<h3 id="4-2-2、文件服务器测试"><a href="#4-2-2、文件服务器测试" class="headerlink" title="4.2.2、文件服务器测试"></a>4.2.2、文件服务器测试</h3><p>将项目导入到idea中，启动项目。在浏览器中输入：</p>
+<blockquote>
+<p><a href="http://localhost:2701/swagger-ui.html#!/" target="_blank" rel="noopener">http://localhost:2701/swagger-ui.html#!/</a></p>
+</blockquote>
+<p>浏览器成功显示swagger2的api接口页面说明启动成功，大家测试下文件上传和在线查看等功能。<br><img src="/images/open/1/1.png" alt="图片"></p>
+<h2 id="4-3、文件服务器的部署"><a href="#4-3、文件服务器的部署" class="headerlink" title="4.3、文件服务器的部署"></a>4.3、文件服务器的部署</h2><h3 id="4-3-1、修改配置文件"><a href="#4-3-1、修改配置文件" class="headerlink" title="4.3.1、修改配置文件"></a>4.3.1、修改配置文件</h3><p>注意，如果将文件服务器部署到docker容器中，4.2.1中配置的属性spring.data.mongodb.uri中的ip就不能再使用宿主机的ip了，使用下面命令查看mongodb容器在docker中的ip：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker inspect 210ecf5e7d9d | grep IPAddres</span><br></pre></td></tr></table></figure>
+
+<p>其中210ecf5e7d9d 为容器id,对应3.5节docker ps命令查询的CONTAINER ID：</p>
+<blockquote>
+<p>docker inspect 210ecf5e7d9d | grep IPAddres<br>           “SecondaryIPAddresses”: null,<br>           “IPAddress”: “172.17.0.2”,<br>                   “IPAddress”: “172.17.0.2”,</p>
+</blockquote>
+<p>修改spring.data.mongodb.uri为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.data.mongodb.uri=mongodb://1iURI:rootroot@172.17.0.2:27017/admin</span><br></pre></td></tr></table></figure>
+
+<p>修改配置属性file.path：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file.path =http://192.168.199.50:$&#123;server.port&#125;/online/</span><br></pre></td></tr></table></figure>
+
+<p>注意，这里的ip是宿主机的ip</p>
+<h3 id="4-3-2、项目打包"><a href="#4-3-2、项目打包" class="headerlink" title="4.3.2、项目打包"></a>4.3.2、项目打包</h3><p>使用maven的package命令将文件服务器项目打包成jar文件：file-server-1.0.0.jar</p>
+<h3 id="4-3-3、上传jar包"><a href="#4-3-3、上传jar包" class="headerlink" title="4.3.3、上传jar包"></a>4.3.3、上传jar包</h3><p>将4.3.2节打包好的jar包上传到docker所在的服务器，我这边是/etc/daocker/dockerfiles。</p>
+<h3 id="4-3-4、创建DockerFile"><a href="#4-3-4、创建DockerFile" class="headerlink" title="4.3.4、创建DockerFile"></a>4.3.4、创建DockerFile</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /etc/docker/dockerfiles</span><br><span class="line">vi Dockerfile</span><br></pre></td></tr></table></figure>
+
+<p>键入如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM java:8</span><br><span class="line">MAINTAINER SunnyMaple</span><br><span class="line">ADD file-server-1.0.0.jar file-server.jar</span><br><span class="line">ENTRYPOINT [&quot;java&quot;,&quot;-Djava.security.egd=file:/dev/./urandom&quot;,&quot;-jar&quot;,&quot;file-server.jar&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>然后退出保存。</p>
+<h3 id="4-3-5、使用DockerFile构建镜像"><a href="#4-3-5、使用DockerFile构建镜像" class="headerlink" title="4.3.5、使用DockerFile构建镜像"></a>4.3.5、使用DockerFile构建镜像</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t file/server:v1 .</span><br></pre></td></tr></table></figure>
+
+<p>注意一定要在DockerFile文件所在的目录下执行上面的命令。查看镜像是否成功构建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/open/1/2.png" alt="图片"></p>
+<h3 id="4-3-6、创建并运行容器"><a href="#4-3-6、创建并运行容器" class="headerlink" title="4.3.6、创建并运行容器"></a>4.3.6、创建并运行容器</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name fileserver -p 2701:2701 -d file/server:v1</span><br></pre></td></tr></table></figure>
+
+<p>启动成功后，在浏览器中输入：</p>
+<blockquote>
+<p><a href="http://192.168.199.50/2701/swagger-ui.html" target="_blank" rel="noopener">http://192.168.199.50/2701/swagger-ui.html</a></p>
+</blockquote>
+<p>如果能正常访问并显示swagger2 api界面说明部署成功，一个文件服务器就搭建完成。</p>
+<h1 id="5、使用文件服务器"><a href="#5、使用文件服务器" class="headerlink" title="5、使用文件服务器"></a>5、使用文件服务器</h1><h2 id="5-1、服务器api"><a href="#5-1、服务器api" class="headerlink" title="5.1、服务器api"></a>5.1、服务器api</h2><p><img src="/images/open/1/3.png" alt="图片"></p>
+<h2 id="5-2、RestTemplate上传文件"><a href="#5-2、RestTemplate上传文件" class="headerlink" title="5.2、RestTemplate上传文件"></a>5.2、RestTemplate上传文件</h2><p>如我们要在自己写项目中上传文件到文件服务器，而这个文件来自客户端（安卓、iOS以及小程序等客户端）。<br>controller层接收文件：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">upload</span><span class="params">(String detail, @RequestParam(<span class="string">"file"</span>)</span> MultipartFile file) <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    FileServer fileServer = <span class="keyword">new</span> FileServer(restTemplate);</span><br><span class="line">    <span class="keyword">return</span> fileServer.postFile(detail,file);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>工具类FileService ：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FileService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String fileServicePath = <span class="string">"http://192.168.199.50:2701/"</span>;</span><br><span class="line">    </span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="title">FileService</span><span class="params">(RestTemplate restTemplate)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.restTemplate = restTemplate;</span><br><span class="line">   &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">postFile</span><span class="params">(String detail, @NotNull MultipartFile... files)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> post(<span class="string">"upload"</span>,detail,<span class="keyword">null</span>,files);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">post</span><span class="params">(String uri,String detail, String groupId, @NotNull MultipartFile... files)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (SeageUtils.isEmpty(files))&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ParamException(<span class="string">"请至少上传一个文件！"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        List&lt;Object&gt; fileList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">for</span> (MultipartFile file : files)&#123;</span><br><span class="line">            FileByteArrayResource byteArrayResource = <span class="keyword">new</span> FileByteArrayResource(file.getBytes(),file.getOriginalFilename());</span><br><span class="line">            fileList.add(byteArrayResource);</span><br><span class="line">        &#125;</span><br><span class="line">        LinkedMultiValueMap&lt;String, Object&gt; param = <span class="keyword">new</span> LinkedMultiValueMap&lt;&gt;();</span><br><span class="line">        param.put(<span class="string">"files"</span>, fileList);</span><br><span class="line">        <span class="keyword">if</span> (!SeageUtils.isEmpty(detail))&#123;</span><br><span class="line">            param.add(<span class="string">"detail"</span>,detail);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!SeageUtils.isEmpty(groupId))&#123;</span><br><span class="line">            param.add(<span class="string">"groupId"</span>,groupId);</span><br><span class="line">        &#125;</span><br><span class="line">        HttpHeaders httpHeaders = <span class="keyword">new</span> HttpHeaders();</span><br><span class="line">        httpHeaders.setContentType(MediaType.MULTIPART_FORM_DATA);</span><br><span class="line">        HttpEntity&lt;MultiValueMap&lt;String, Object&gt;&gt; request = <span class="keyword">new</span> HttpEntity&lt;&gt;(param, httpHeaders);</span><br><span class="line">        ResponseEntity&lt;String&gt; response = restTemplate.exchange(fileServicePath  + uri,</span><br><span class="line">                HttpMethod.POST, request, String.class);</span><br><span class="line">        <span class="keyword">return</span> response.getBody();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年07月10日 18:13</p>
+        <p>原始链接： <a class="post-url" href="/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/" title="SpringBoot+MongoDB+Docker实现简易的文件服务器">https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/&title=《SpringBoot+MongoDB+Docker实现简易的文件服务器》 — 晴枫慕竹&pic=https://www.sunnymaple.cnimages/130_130.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/&title=《SpringBoot+MongoDB+Docker实现简易的文件服务器》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《SpringBoot+MongoDB+Docker实现简易的文件服务器》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+    <a href="/tags/MongoDB/" class="color3">MongoDB</a>
+      
+    <a href="/tags/Docker/" class="color2">Docker</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、Docker安装"><span class="post-toc-text">1、Docker安装</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1、卸载旧版本"><span class="post-toc-text">1.1、卸载旧版本</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2、使用存储库安装"><span class="post-toc-text">1.2、使用存储库安装</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3、安装DOCKER-CE"><span class="post-toc-text">1.3、安装DOCKER CE</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、启动docker"><span class="post-toc-text">2、启动docker</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、安装MongoDB"><span class="post-toc-text">3、安装MongoDB</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1、拉取MongoDB镜像"><span class="post-toc-text">3.1、拉取MongoDB镜像</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2、查看本地镜像"><span class="post-toc-text">3.2、查看本地镜像</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3、创建本地数据文件夹"><span class="post-toc-text">3.3、创建本地数据文件夹</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-4、创建并启动mongo容器"><span class="post-toc-text">3.4、创建并启动mongo容器</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-5、查看容器运行情况"><span class="post-toc-text">3.5、查看容器运行情况</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-6、进入mongodb控制台"><span class="post-toc-text">3.6、进入mongodb控制台</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-7、添加用户命令"><span class="post-toc-text">3.7、添加用户命令</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-8、退出mongodb控制台"><span class="post-toc-text">3.8、退出mongodb控制台</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4、搭建文件服务器"><span class="post-toc-text">4、搭建文件服务器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-1、文件服务器源码下载"><span class="post-toc-text">4.1、文件服务器源码下载</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-2、文件服务器本地测试"><span class="post-toc-text">4.2、文件服务器本地测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-2-1、配置文件"><span class="post-toc-text">4.2.1、配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-2-2、文件服务器测试"><span class="post-toc-text">4.2.2、文件服务器测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#4-3、文件服务器的部署"><span class="post-toc-text">4.3、文件服务器的部署</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-1、修改配置文件"><span class="post-toc-text">4.3.1、修改配置文件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-2、项目打包"><span class="post-toc-text">4.3.2、项目打包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-3、上传jar包"><span class="post-toc-text">4.3.3、上传jar包</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-4、创建DockerFile"><span class="post-toc-text">4.3.4、创建DockerFile</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-5、使用DockerFile构建镜像"><span class="post-toc-text">4.3.5、使用DockerFile构建镜像</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#4-3-6、创建并运行容器"><span class="post-toc-text">4.3.6、创建并运行容器</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#5、使用文件服务器"><span class="post-toc-text">5、使用文件服务器</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-1、服务器api"><span class="post-toc-text">5.1、服务器api</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#5-2、RestTemplate上传文件"><span class="post-toc-text">5.2、RestTemplate上传文件</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/07/08/MySql基础/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">MySql基础</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

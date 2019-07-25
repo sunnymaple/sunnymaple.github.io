@@ -107,14 +107,14 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
-    <article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-如何避免索引失效？" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/MySql中Sql语句的执行顺序/">MySql中Sql语句的执行顺序</a>
+      <a class="article-title" href="/2019/07/02/如何避免索引失效？/">如何避免索引失效？</a>
     </h1>
   
 
@@ -131,16 +131,87 @@
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2019/06/28/MySql中Sql语句的执行顺序/">
+            <a href="/2019/07/02/如何避免索引失效？/">
                 
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql中Sql语句的执行顺序" title="MySql中Sql语句的执行顺序">
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="如何避免索引失效？" title="如何避免索引失效？">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。
-1、手写顺序1234567891011121314SELECT DISTINCT    &lt;select_list&gt;FROM    &lt;left_table&gt; &lt;join_type&gt;JOIN &...
+                本文讲解的例子使用的sql：
+123456789101112131415CREATE TABLE staffs(  id INT PRIMARY KEY AUTO_INCREMENT,  NAME VARCHAR(24) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;姓名&apos;,  age INT NOT NULL DEFA...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-07-02</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/07/02/如何避免索引失效？/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-MySql索引简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/06/28/MySql索引简介/">MySql索引简介</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/06/28/MySql索引简介/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql索引简介" title="MySql索引简介">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、索引是什么官方对索引的定义：
+
+索引（Index）是帮助MySql高效获取数据的数据结构
+
+索引的目的在于提高查询效率，可以类比字典，例如要查询“mysql”这个单词，我们肯定需要定位到m字母，然后从上往下找到y字母，再找到剩余的sql，如果没有索引，那么每次查找可能都需要从a~z之上而下的查找，查找次数多，效率低。
+个人理解：
+
+索引是排好序的快速查找的数据结构
+
+...
             </p>
         </div>
       
@@ -162,7 +233,7 @@
 
         </ul>
         
-            <a href="/2019/06/28/MySql中Sql语句的执行顺序/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2019/06/28/MySql索引简介/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -237,14 +308,14 @@
 
 
   
-    <article id="post-MySql索引简介" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/MySql索引简介/">MySql索引简介</a>
+      <a class="article-title" href="/2019/06/28/MySql中Sql语句的执行顺序/">MySql中Sql语句的执行顺序</a>
     </h1>
   
 
@@ -261,24 +332,16 @@
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2019/06/28/MySql索引简介/">
+            <a href="/2019/06/28/MySql中Sql语句的执行顺序/">
                 
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql索引简介" title="MySql索引简介">
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql中Sql语句的执行顺序" title="MySql中Sql语句的执行顺序">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                1、索引是什么官方对索引的定义：
-
-索引（Index）是帮助MySql高效获取数据的数据结构
-
-索引的目的在于提高查询效率，可以类比字典，例如要查询“mysql”这个单词，我们肯定需要定位到m字母，然后从上往下找到y字母，再找到剩余的sql，如果没有索引，那么每次查找可能都需要从a~z之上而下的查找，查找次数多，效率低。
-个人理解：
-
-索引是排好序的快速查找的数据结构
-
-...
+                虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。
+1、手写顺序1234567891011121314SELECT DISTINCT    &lt;select_list&gt;FROM    &lt;left_table&gt; &lt;join_type&gt;JOIN &...
             </p>
         </div>
       
@@ -300,7 +363,7 @@
 
         </ul>
         
-            <a href="/2019/06/28/MySql索引简介/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2019/06/28/MySql中Sql语句的执行顺序/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -501,84 +564,6 @@
 
 
   
-    <article id="post-三步解决centos7无法连接外网" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/10/三步解决centos7无法连接外网/">三步解决centos7无法连接外网</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/Centos7/">Centos7</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/06/10/三步解决centos7无法连接外网/">
-                
-                <img src="https://www.sunnymaple.cn//images/Linux/centos7.png" alt="三步解决centos7无法连接外网" title="三步解决centos7无法连接外网">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而
-
-ping www.baidu.com 
-
-却无法ping通，这里记录解决办法：
-1、检查dns输入：
-
-route -n
-
-若不存在第一条0.0.00的则无法访问外网。
-2、添加dns在命令行中输入：
-
-vi /etc/resolv.conf
-
-并添加8.8.8.8,然后wq保...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-06-10</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/Linux/" class="color1">Linux</a>
-      
-    <a href="/tags/Centos7/" class="color3">Centos7</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/06/10/三步解决centos7无法连接外网/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
     <article id="post-用U盘安装centOS7系统出现dracut的解决方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -650,14 +635,14 @@ initrd=initrd.imginst.stage2*=hd:...
 
 
   
-    <article id="post-Git本地基本操作（二）" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-三步解决centos7无法连接外网" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/08/06/Git本地基本操作（二）/">Git本地基本操作（二）</a>
+      <a class="article-title" href="/2019/06/10/三步解决centos7无法连接外网/">三步解决centos7无法连接外网</a>
     </h1>
   
 
@@ -665,7 +650,7 @@ initrd=initrd.imginst.stage2*=hd:...
               <span class="header-cate">
                 <i class="fa fa-map-marker"></i>
                   
-                  <a href="/categories/Git/">Git</a>
+                  <a href="/categories/Centos7/">Centos7</a>
                   
               </span>
           
@@ -674,20 +659,29 @@ initrd=initrd.imginst.stage2*=hd:...
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2018/08/06/Git本地基本操作（二）/">
+            <a href="/2019/06/10/三步解决centos7无法连接外网/">
                 
-                <img src="https://www.sunnymaple.cn//images/git/git.jpg" alt="Git本地基本操作（二）" title="Git本地基本操作（二）">
+                <img src="https://www.sunnymaple.cn//images/Linux/centos7.png" alt="三步解决centos7无法连接外网" title="三步解决centos7无法连接外网">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                1、查看本地库历史版本为了方便查看日志，且日志看起来比较多，这里我不断往test.txt文件中添加一行内容，每添加一行后都使用commit命令提交到本地库，现在test.txt文件内容如下：
-使用下面命令查看本地库的版本记录：
-1git log
+                使用U盘安装完成centos7后，使用以太网连接网络后，发现内网ip地址是可以ping通，而
 
+ping www.baidu.com 
 
-由于提交的内容有点多，一页显示不全，使用上下箭头依次向上向下翻一行，或者使用b向上翻一页，空格建向下翻一页，q退出。我们看到...
+却无法ping通，这里记录解决办法：
+1、检查dns输入：
+
+route -n
+
+若不存在第一条0.0.00的则无法访问外网。
+2、添加dns在命令行中输入：
+
+vi /etc/resolv.conf
+
+并添加8.8.8.8,然后wq保...
             </p>
         </div>
       
@@ -697,19 +691,21 @@ initrd=initrd.imginst.stage2*=hd:...
         
         <ul class="article-footer-menu">
             
-                <li><i class="fa fa-calendar"></i>2018-08-06</li>
+                <li><i class="fa fa-calendar"></i>2019-06-10</li>
             
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/Git/" class="color4">Git</a>
+    <a href="/tags/Linux/" class="color1">Linux</a>
+      
+    <a href="/tags/Centos7/" class="color3">Centos7</a>
       
   </li>
 
         </ul>
         
-            <a href="/2018/08/06/Git本地基本操作（二）/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2019/06/10/三步解决centos7无法连接外网/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -843,10 +839,10 @@ initrd=initrd.imginst.stage2*=hd:...
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a>
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -879,7 +875,7 @@ initrd=initrd.imginst.stage2*=hd:...
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
+            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
         </div>
     </div>
 </div>

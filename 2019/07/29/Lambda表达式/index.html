@@ -16,7 +16,7 @@
 <meta property="og:site_name" content="晴枫慕竹">
 <meta property="og:description" content="1、为什么使用Lambda表达式Lambda是一个匿名函数，我们可以把 Lambda表达式理解为是一段可以传递的代码（将代码像数据一样进行传递）。可以写出更简洁、更灵活的代码。作为一种更紧凑的代码风格，使Java的语言表达能力得到了提升。它也是Java的一种语法糖（Java语法糖有：增强的for循环、自动拆/封箱、泛型擦除、类型推断）。 1.1、从匿名类到Lambda的转换举个例子，之前我们在创建">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-07-29T05:51:06.084Z">
+<meta property="og:updated_time" content="2019-07-31T07:33:34.892Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Lambda表达式">
 <meta name="twitter:description" content="1、为什么使用Lambda表达式Lambda是一个匿名函数，我们可以把 Lambda表达式理解为是一段可以传递的代码（将代码像数据一样进行传递）。可以写出更简洁、更灵活的代码。作为一种更紧凑的代码风格，使Java的语言表达能力得到了提升。它也是Java的一种语法糖（Java语法糖有：增强的for循环、自动拆/封箱、泛型擦除、类型推断）。 1.1、从匿名类到Lambda的转换举个例子，之前我们在创建">
@@ -239,7 +239,59 @@
 </blockquote>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test4</span><span class="params">()</span></span>&#123;</span><br><span class="line">   List&lt;String&gt; list = Arrays.asList(<span class="string">"Hello"</span>, <span class="string">"Java"</span>, <span class="string">"Lambda"</span>, <span class="string">"www"</span>, <span class="string">"ok"</span>);</span><br><span class="line">   List&lt;String&gt; strList = filterStr(list, (s) -&gt; s.length() &gt; <span class="number">3</span>);</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span> (String str : strList) &#123;</span><br><span class="line">      System.out.println(str);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//需求：将满足条件的字符串，放入集合中</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">filterStr</span><span class="params">(List&lt;String&gt; list, Predicate&lt;String&gt; pre)</span></span>&#123;</span><br><span class="line">   List&lt;String&gt; strList = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span> (String str : list) &#123;</span><br><span class="line">      <span class="keyword">if</span>(pre.test(str))&#123;</span><br><span class="line">         strList.add(str);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> strList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-2-5、其他接口"><a href="#3-2-5、其他接口" class="headerlink" title="3.2.5、其他接口"></a>3.2.5、其他接口</h3><p>| <strong>函数式接口</strong>   | <strong>参数类型</strong>   | <strong>返回类型</strong>   | <strong>用途</strong>   | <strong>方法</strong>   |<br>|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|:—-:|<br>| BiFunction&lt;T,U,R&gt;   | T,U   | R   | 对类型为T,U参数应用操作，返回R类型的结果   | R apply(T t,U u)   |<br>| UnaryOperator<t>  (Function子接口)   | T   | T   | 对类型为T的对象进行一元运算，并返回T类型的结果   | T apply(T t)   |<br>| BinaryOperator<t>  (BiFunction 子接口)   | T,T   | T   | 对类型为T的对象进行二  元运算， 并返回T类型的  结果   | T apply(T t1, T t2)   |<br>| BiConsumer&lt;T, U&gt;   | T, U   | void   | 对类型为T, U 参数应用  操作   | void accept(T t, U u)   |<br>| ToIntFunction<t>  ToLongFunction<t>  ToDoubleFunction<t>   | T   | int  long  double   | 分 别 计 算 int 、 long 、  double、 值的函数   |    |<br>| IntFunction<r>  LongFunction<r>  DoubleFunction<r>   | int  long  double   | R   | 参数分别为int、 long、  double 类型的函数   |    |</r></r></r></t></t></t></t></t></p>
+<h3 id="3-2-5、其他接口"><a href="#3-2-5、其他接口" class="headerlink" title="3.2.5、其他接口"></a>3.2.5、其他接口</h3><table>
+<thead>
+<tr>
+<th align="center"><strong>函数式接口</strong></th>
+<th align="center"><strong>参数类型</strong></th>
+<th align="center"><strong>返回类型</strong></th>
+<th align="center"><strong>用途</strong></th>
+<th align="center"><strong>方法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">BiFunction&lt;T,U,R&gt;</td>
+<td align="center">T,U</td>
+<td align="center">R</td>
+<td align="center">对类型为T,U参数应用操作，返回R类型的结果</td>
+<td align="center">R apply(T t,U u)</td>
+</tr>
+<tr>
+<td align="center">UnaryOperator<t>  (Function子接口)</t></td>
+<td align="center">T</td>
+<td align="center">T</td>
+<td align="center">对类型为T的对象进行一元运算，并返回T类型的结果</td>
+<td align="center">T apply(T t)</td>
+</tr>
+<tr>
+<td align="center">BinaryOperator<t>  (BiFunction 子接口)</t></td>
+<td align="center">T,T</td>
+<td align="center">T</td>
+<td align="center">对类型为T的对象进行二  元运算， 并返回T类型的  结果</td>
+<td align="center">T apply(T t1, T t2)</td>
+</tr>
+<tr>
+<td align="center">BiConsumer&lt;T, U&gt;</td>
+<td align="center">T, U</td>
+<td align="center">void</td>
+<td align="center">对类型为T, U 参数应用  操作</td>
+<td align="center">void accept(T t, U u)</td>
+</tr>
+<tr>
+<td align="center">ToIntFunction<t>  ToLongFunction<t>  ToDoubleFunction<t></t></t></t></td>
+<td align="center">T</td>
+<td align="center">int  long  double</td>
+<td align="center">分 别 计 算 int 、 long 、  double、 值的函数</td>
+<td align="center"></td>
+</tr>
+<tr>
+<td align="center">IntFunction<r>  LongFunction<r>  DoubleFunction<r></r></r></r></td>
+<td align="center">int  long  double</td>
+<td align="center">R</td>
+<td align="center">参数分别为int、 long、  double 类型的函数</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
 <h1 id="4、引用操作符“-”"><a href="#4、引用操作符“-”" class="headerlink" title="4、引用操作符“::”"></a>4、引用操作符“::”</h1><h2 id="4-1、方法引用"><a href="#4-1、方法引用" class="headerlink" title="4.1、方法引用"></a>4.1、方法引用</h2><p>当要传递给Lambda体的操作，已经有实现的方法了，可以使用方法引用！<br>（实现抽象方法的参数列表，必须与方法引用方法的参数列表保持一致！ ）<br>方法引用：使用操作符 “::” 将方法名和对象或类的名字分隔开来。如下三种主要使用情况：</p>
 <blockquote>
 <p>对象::实例方法<br>类::静态方法<br>类::实例方法</p>
@@ -286,7 +338,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年07月29日 13:51</p>
+        <p>最后更新： 2019年07月31日 15:33</p>
         <p>原始链接： <a class="post-url" href="/2019/07/29/Lambda表达式/" title="Lambda表达式">https://www.sunnymaple.cn/2019/07/29/Lambda表达式/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">
@@ -411,6 +463,16 @@
 
 <nav id="article-nav">
   
+    <a href="/2019/09/15/线程通信/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          线程通信
+        
+      </span>
+    </a>
+  
   
     <a href="/2019/07/25/线程安全之可见性的根本原因/" id="article-nav-older" class="article-nav-link-wrap">
       <span class="article-nav-title">线程安全之可见性的根本原因</span>
@@ -475,10 +537,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a>
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/多线程/">多线程</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -511,7 +573,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 12.5px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 15px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12.5px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 17.5px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a>
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
         </div>
     </div>
 </div>

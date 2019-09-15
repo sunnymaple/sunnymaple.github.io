@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>线程通信 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="要实现多个线程之间的协同，如：线程执行先后顺序、获取某个线程执行的结果等等。涉及到线程之间互相通信，分为下面四类：①、文件共享②、网络共享③、共享变量④、jdk提供的线程协调API，细分为suspend/resume、wait/notify、park/unpark前三种都相对比较简单，本文主要是讲解第④种，jdk提供的API方式。 1、线程协作-JDK APIJDK中对于需要多线程协作完成任务的场">
+<meta name="keywords" content="多线程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程通信">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/09/15/线程通信/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="要实现多个线程之间的协同，如：线程执行先后顺序、获取某个线程执行的结果等等。涉及到线程之间互相通信，分为下面四类：①、文件共享②、网络共享③、共享变量④、jdk提供的线程协调API，细分为suspend/resume、wait/notify、park/unpark前三种都相对比较简单，本文主要是讲解第④种，jdk提供的API方式。 1、线程协作-JDK APIJDK中对于需要多线程协作完成任务的场">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/java/3/1.png">
+<meta property="og:updated_time" content="2019-09-15T09:07:47.820Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="线程通信">
+<meta name="twitter:description" content="要实现多个线程之间的协同，如：线程执行先后顺序、获取某个线程执行的结果等等。涉及到线程之间互相通信，分为下面四类：①、文件共享②、网络共享③、共享变量④、jdk提供的线程协调API，细分为suspend/resume、wait/notify、park/unpark前三种都相对比较简单，本文主要是讲解第④种，jdk提供的API方式。 1、线程协作-JDK APIJDK中对于需要多线程协作完成任务的场">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/java/3/1.png">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-线程通信" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      线程通信
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/多线程/">多线程</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-09-15
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>要实现多个线程之间的协同，如：线程执行先后顺序、获取某个线程执行的结果等等。涉及到线程之间互相通信，分为下面四类：<br>①、文件共享<br>②、网络共享<br>③、共享变量<br>④、jdk提供的线程协调API，细分为<del>suspend/resume</del>、wait/notify、park/unpark<br>前三种都相对比较简单，本文主要是讲解第④种，jdk提供的API方式。</p>
+<h1 id="1、线程协作-JDK-API"><a href="#1、线程协作-JDK-API" class="headerlink" title="1、线程协作-JDK API"></a>1、线程协作-JDK API</h1><p>JDK中对于需要多线程协作完成任务的场景，提供了对应API支持。多线程协作的典型场景是：生产者-消费者模式。下面我们以买包子的场景来举例：</p>
+<blockquote>
+<p>线程1去买包子，如果没有包子，则阻塞等待，不再执行。线程2生产出包子后，通知线程1可以继续执行，并购买包子。</p>
+</blockquote>
+<p>示例流程如下：<br><img src="/images/java/3/1.png" alt="图片"></p>
+<h2 id="1-1、suspend-resume"><a href="#1-1、suspend-resume" class="headerlink" title="1.1、suspend/resume"></a>1.1、<del>suspend/resume</del></h2><p>调用suspend挂起目标线程，通过resume可以恢复线程执行。但此种方式已被JDK弃用，原因是因为如果使用不当，很容易照成线程死锁，后面会着重讲解导致死锁的情况。</p>
+<h3 id="1-1-1、正常执行"><a href="#1-1-1、正常执行" class="headerlink" title="1.1.1、正常执行"></a>1.1.1、正常执行</h3><p>下面这段代码是通过suspend/resume来演示买包子的场景：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuspendResumeTest</span> </span>&#123;</span><br><span class="line">    <span class="comment">//定义一个空的包子店，表示包子店暂时没有任何包子</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object baozidian = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">        Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">                Thread.currentThread().suspend();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">        <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">        <span class="comment">//通知消费者买包子</span></span><br><span class="line">        consumerThread.resume();</span><br><span class="line">        System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>程序执行结果：</p>
+<blockquote>
+<p>1、没有包子，进入等待<br>3、通知消费者<br>2、买到包子，回家</p>
+</blockquote>
+<p>消费者成功买到包子，似乎没有什么问题。那如果在suspend/resume都在同步代码块（synchronized）中被执行，或者它们的执行顺序被调换（即先执行resume，再执行suspend）后结果又会如何，下面修改下上面代码，分别来看看这两种情况。</p>
+<h3 id="1-1-2、在synchronized中执行"><a href="#1-1-2、在synchronized中执行" class="headerlink" title="1.1.2、在synchronized中执行"></a>1.1.2、在synchronized中执行</h3><p>修改后的代码如下（注意suspend和resume必须锁的时同一把锁）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuspendResumeTestWithSynch</span> </span>&#123;</span><br><span class="line">    <span class="comment">//定义一个空的包子店，表示包子店暂时没有任何包子</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object baozidian = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">        Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">                <span class="keyword">synchronized</span> (SuspendResumeTestWithSynch.class)&#123;</span><br><span class="line">                    Thread.currentThread().suspend();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">        <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">        <span class="comment">//通知消费者买包子</span></span><br><span class="line">        <span class="keyword">synchronized</span> (SuspendResumeTestWithSynch.class)&#123;</span><br><span class="line">            consumerThread.resume();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行上面代码，输出的结果只有：</p>
+<blockquote>
+<p>1、没有包子，进入等待</p>
+</blockquote>
+<p>且程序一直处于阻塞状态，并不能执行结束，结论便是suspend/resume都在同步代码块（synchronized）中被执行时会照成死锁。原因是代码第10行，consumerThread 线程先获得锁后，执行suspend方法，该线程处于阻塞状态状态，但是它并没有释放锁，而在主线程执行到代码第21行时，主线程一直等待consumerThread 线程释放锁，而获取不到锁，所以线程就一直卡死了。</p>
+<h3 id="1-1-3、调换执行顺序"><a href="#1-1-3、调换执行顺序" class="headerlink" title="1.1.3、调换执行顺序"></a>1.1.3、调换执行顺序</h3><p>正常情况下，应该是先执行suspend阻塞线程，然后执行resume唤醒线程，而如果程序写的不当，刚好将两者执行的顺序调换下，我们下面来模拟这种场景：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SuspendResumeTestWithOrder</span> </span>&#123;</span><br><span class="line">    <span class="comment">//定义一个空的包子店，表示包子店暂时没有任何包子</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object baozidian = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">        Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="comment">//让线程延迟一会儿，保证resume先执行</span></span><br><span class="line">                    Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">                Thread.currentThread().suspend();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">        <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">        <span class="comment">//通知消费者买包子</span></span><br><span class="line">        consumerThread.resume();</span><br><span class="line">        System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码第12行中，先让线程consumerThread 延迟10秒，保证25行的resume先执行，程序执行的结果为：</p>
+<blockquote>
+<p>1、没有包子，进入等待<br>3、通知消费者</p>
+</blockquote>
+<p>虽然通知了消费者，但是提前通知了消费者，后面消费者调用suspend后，仍然会被阻塞，导致程序死锁。就好比我们要远行，如果选择火车或者高铁出行，一般是我们在要车开之前购票进站、上车，但是如果你路途中耽搁了没有及时赶到，等你到达车站，你再怎么等都是没有用的，错过了就错过了，这辆车不再会等你，你只能原路返回或者等待下一辆（如果还有，就相当于还有其他线程调用resume唤醒该线程）。</p>
+<h2 id="1-2、wait-notify"><a href="#1-2、wait-notify" class="headerlink" title="1.2、wait/notify"></a>1.2、wait/notify</h2><p>wait/notify方法只能由同一对象锁的持有者线程调用，也就是写在同步块里面，否则会抛出IllegalMonitorStateException异常。<br>特点：</p>
+<blockquote>
+<p>1）、必须在同步代码块中执行，调用wait方法时会释放锁<br>2）、wait/notify执行顺序不能被调换，否则线程永远处于WAITING状态，导致死锁</p>
+</blockquote>
+<h3 id="1-2-1、正常执行"><a href="#1-2-1、正常执行" class="headerlink" title="1.2.1、正常执行"></a>1.2.1、正常执行</h3><p>wait/notify正常执行即在同步代码块synchronized中执行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WaitNotifyTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个空的包子店，表示包子店暂时没有任何包子</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object baozidian = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">        Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">                    <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">                        <span class="comment">//线程进入等待状态，同时释放锁</span></span><br><span class="line">                        <span class="keyword">this</span>.wait();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">        <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">        <span class="comment">//通知消费者买包子</span></span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.notify();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>执行结果：</p>
+<blockquote>
+<p>1、没有包子，进入等待<br>3、通知消费者<br>2、买到包子，回家</p>
+</blockquote>
+<p>消费者能够正常买到包子，且程序正常结束。</p>
+<h3 id="1-2-2、调换执行顺序"><a href="#1-2-2、调换执行顺序" class="headerlink" title="1.2.2、调换执行顺序"></a>1.2.2、调换执行顺序</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WaitNotifyTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个空的包子店，表示包子店暂时没有任何包子</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object baozidian = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">        Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">                    <span class="comment">//延迟线程，使得notify先执行</span></span><br><span class="line">                    Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">                    <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">                        <span class="comment">//线程进入等待状态，同时释放锁</span></span><br><span class="line">                        <span class="keyword">this</span>.wait();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">        <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">        <span class="comment">//通知消费者买包子</span></span><br><span class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">            <span class="keyword">this</span>.notify();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">        System.out.println(<span class="string">"consumerThread状态："</span> + consumerThread.getState().toString());</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>上述代码第14行，使消费者线程休眠10秒，保证31行的notify先执行。执行结果：</p>
+<blockquote>
+<p>1、没有包子，进入等待<br>3、通知消费者<br>consumerThread状态：TIMED_WAITING</p>
+</blockquote>
+<p>主线程结束后，获取consumerThread为TIMED_WAITING，且没有买到包子，线程consumerThread将永远处于consumerThread状态。</p>
+<h2 id="1-3、park-unpark"><a href="#1-3、park-unpark" class="headerlink" title="1.3、park/unpark"></a>1.3、park/unpark</h2><p>线程调用park则等待“许可”，unpark方法为指定线程提供“许可（permit）”。<br>特点：</p>
+<blockquote>
+<p>1）、不要求park和unpark的调用顺序，多次调用unpark之后，再调用park，线程会直接运行，但是不会叠加，也就是说，多次调用unpark后，再多次调用park方法，第一次会拿到许可直接运行，后续还是会进入等待；<br>2）、在同步代码块中执行会造成死锁。</p>
+</blockquote>
+<h3 id="1-3-1、正常执行"><a href="#1-3-1、正常执行" class="headerlink" title="1.3.1、正常执行"></a>1.3.1、正常执行</h3><p>park/unpark不需要在同步代码块中执行，直接通过LockSupport的API。测试代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ParkUnParkTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个空的包子店，表示包子店暂时没有任何包子</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Object baozidian = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">        Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">            <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">                System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">                <span class="comment">//线程进入等待状态</span></span><br><span class="line">                LockSupport.park();</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">        &#125;);</span><br><span class="line">        consumerThread.start();</span><br><span class="line">        <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">        Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">        baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">        <span class="comment">//通知消费者买包子</span></span><br><span class="line">        LockSupport.unpark(consumerThread);</span><br><span class="line">        System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">        System.out.println(<span class="string">"consumerThread状态："</span> + consumerThread.getState().toString());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码13行LockSupport.park()，等待许可，代码第22行LockSupport.unpark(consumerThread)，为线程consumerThread提供许可。测试结果如下：</p>
+<blockquote>
+<p>1、没有包子，进入等待<br>3、通知消费者<br>2、买到包子，回家<br>consumerThread状态：RUNNABLE</p>
+</blockquote>
+<p>成功买到包子回家。</p>
+<h3 id="1-3-2、调换执行顺序"><a href="#1-3-2、调换执行顺序" class="headerlink" title="1.3.2、调换执行顺序"></a>1.3.2、调换执行顺序</h3><p>由于park/unpark不能在同步代码块中执行，因为park同样不会释放锁，这里不再做演示，我们直接演示一下调换执行顺序的。调整后的test方法如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">    <span class="comment">//启动消费者，买包子的人</span></span><br><span class="line">    Thread consumerThread = <span class="keyword">new</span> Thread(()-&gt;&#123;</span><br><span class="line">        <span class="keyword">if</span> (baozidian == <span class="keyword">null</span>)&#123;</span><br><span class="line">            System.out.println(<span class="string">"1、没有包子，进入等待"</span>);</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">//延迟，目的是让unpark先执行</span></span><br><span class="line">                Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//线程进入等待状态</span></span><br><span class="line">            LockSupport.park();</span><br><span class="line">        &#125;</span><br><span class="line">        System.out.println(<span class="string">"2、买到包子，回家"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    consumerThread.start();</span><br><span class="line">    <span class="comment">//3秒之后生产第一个包子</span></span><br><span class="line">    Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">    baozidian = <span class="keyword">new</span> Object();</span><br><span class="line">    <span class="comment">//通知消费者买包子</span></span><br><span class="line">    LockSupport.unpark(consumerThread);</span><br><span class="line">    System.out.println(<span class="string">"3、通知消费者"</span>);</span><br><span class="line">    System.out.println(<span class="string">"consumerThread状态："</span> + consumerThread.getState().toString());</span><br><span class="line">    <span class="keyword">while</span>(consumerThread.isAlive())&#123;</span><br><span class="line">        <span class="comment">//保证子线程执行结束程序再结束</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>测试结果：</p>
+<blockquote>
+<p>1、没有包子，进入等待<br>3、通知消费者<br>consumerThread状态：TIMED_WAITING<br>2、买到包子，回家</p>
+</blockquote>
+<p>也能够成功买到包子，程序结束，所以park/unpark可以先获取许可，再请求许可，且许可不能叠加，这里不做演示，感兴趣的话可以自行演示。</p>
+<h1 id="2、伪唤醒"><a href="#2、伪唤醒" class="headerlink" title="2、伪唤醒"></a>2、伪唤醒</h1><blockquote>
+<p>伪唤醒是指线程并非因为notify、notifyAll、unpark等api调用而唤醒，是更底层原因导致的</p>
+</blockquote>
+<p>如果细心的同学应该注意到，我们在第1节演示的代码中，使用到notify或者unpark的地方，都是使用if条件语句来判断，是否进入等待状态，是错误的！<br>官方建议应该在循环中检查等待条件，原因是处于等待状态的线程肯能会收到错误警报和伪唤醒，如果不在循环中检查等待条件，程序就会在没有满足约束条件的情况下推出，容易造成错误。所以正确的代码应该是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//wait</span></span><br><span class="line"><span class="keyword">synchronized</span> (obj)&#123;</span><br><span class="line">    <span class="keyword">while</span> (&lt;条件判断&gt;)&#123;</span><br><span class="line">        obj.wait();</span><br><span class="line">        <span class="comment">//其他操作</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//park</span></span><br><span class="line"><span class="keyword">while</span> (&lt;条件判断&gt;)&#123;</span><br><span class="line">    LockSupport.park();</span><br><span class="line">    <span class="comment">//其他操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="3、总结"><a href="#3、总结" class="headerlink" title="3、总结"></a>3、总结</h1><h2 id="3-1、suspend-resume、wait-notify、park-unpark的区别"><a href="#3-1、suspend-resume、wait-notify、park-unpark的区别" class="headerlink" title="3.1、suspend/resume、wait/notify、park/unpark的区别"></a>3.1、<del>suspend/resume</del>、wait/notify、park/unpark的区别</h2><p>①、<del>suspend/resume</del><br><del>suspend/resume</del>是直接由线程本身提供的方法，suspend阻塞线程，等待唤醒。而resume方法是唤醒当前线程。已被JDK-API弃用，原因是它们在同步代码块以及顺序使用不当时，很容易造成程序死锁。<br>②、wait/notify<br>wait和notify/notifiAll是Object对象提供的方法，也就是所有对象都有wait和notify/notifiAll方法，wait方法阻塞当前线程，等待被唤醒，它还可以指定阻塞的超时时间，时间超时后未被其他线程唤醒的话，会自动唤醒。notify是随机唤醒作用在当前对象上的其中一个线程，而notifiAll是唤醒所以的线程。<br>特点：</p>
+<blockquote>
+<p>1）必须在同步代码块synchronized中执行，否则会抛出IllegalMonitorStateException异常；<br>2）执行顺序不能调换，也就是说如果先执行notify/notifyAll，再执行wait的话，会很容易造成死锁。</p>
+</blockquote>
+<p>③、park/unpark<br>LockSupport.park()和LockSupport.unpark(Thread thread)调用的是Unsafe中的native。park/unpark强调的是许可，park阻塞当前线程，等待许可被唤醒，unpark为指定的线程提供许可。<br>特点：</p>
+<blockquote>
+<p>1）在同步代码块synchronized中执行，容易造成死锁；<br>2）不要求park和unpark的执行顺序，但是不可以叠加的。</p>
+</blockquote>
+<p>不可以叠加，是说unpark提供的许可是不可以叠加，比如线程A调用了unpark方法3次，都是给线程B添加许可，线程B第一次调用park后就消费了该许可，第二次以后还是会进入阻塞，等待许可。</p>
+<h2 id="3-2、伪唤醒"><a href="#3-2、伪唤醒" class="headerlink" title="3.2、伪唤醒"></a>3.2、伪唤醒</h2><blockquote>
+<p>伪唤醒是指线程并非因为notify、notifyAll、unpark等api调用而唤醒，是更底层原因导致的</p>
+</blockquote>
+<p>官方建议notify/notifyAll、unpark等进入阻塞的条件判断使用while语句，切不可使用if判断。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年09月15日 17:07</p>
+        <p>原始链接： <a class="post-url" href="/2019/09/15/线程通信/" title="线程通信">https://www.sunnymaple.cn/2019/09/15/线程通信/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/09/15/线程通信/&title=《线程通信》 — 晴枫慕竹&pic=/images/java/java.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/09/15/线程通信/&title=《线程通信》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/09/15/线程通信/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《线程通信》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/09/15/线程通信/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/09/15/线程通信/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/09/15/线程通信/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/多线程/" class="color4">多线程</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、线程协作-JDK-API"><span class="post-toc-text">1、线程协作-JDK API</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1、suspend-resume"><span class="post-toc-text">1.1、suspend/resume</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-1、正常执行"><span class="post-toc-text">1.1.1、正常执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-2、在synchronized中执行"><span class="post-toc-text">1.1.2、在synchronized中执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-1-3、调换执行顺序"><span class="post-toc-text">1.1.3、调换执行顺序</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2、wait-notify"><span class="post-toc-text">1.2、wait/notify</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-1、正常执行"><span class="post-toc-text">1.2.1、正常执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-2-2、调换执行顺序"><span class="post-toc-text">1.2.2、调换执行顺序</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3、park-unpark"><span class="post-toc-text">1.3、park/unpark</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-1、正常执行"><span class="post-toc-text">1.3.1、正常执行</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#1-3-2、调换执行顺序"><span class="post-toc-text">1.3.2、调换执行顺序</span></a></li></ol></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、伪唤醒"><span class="post-toc-text">2、伪唤醒</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、总结"><span class="post-toc-text">3、总结</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1、suspend-resume、wait-notify、park-unpark的区别"><span class="post-toc-text">3.1、suspend/resume、wait/notify、park/unpark的区别</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2、伪唤醒"><span class="post-toc-text">3.2、伪唤醒</span></a></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+    <a href="/2019/09/15/线程状态/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          线程状态
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/07/29/Lambda表达式/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Lambda表达式</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/多线程/">多线程</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

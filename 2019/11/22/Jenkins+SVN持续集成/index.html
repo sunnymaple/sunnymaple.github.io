@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>Jenkins+SVN持续集成 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="1、持续部署、持续集成、持续交互在讲svn和jenkins持续集成之前，必须先了解下持续部署、持续集成以及持续交互的概念。 1.1、持续部署关注点：在于项目功能部署至服务器后可以运行，为下一步测试环节或者最终用户正式使用做好准备工作。 1.2、持续集成关注点：在于尽早发现项目整体运行问题， 尽早解决。 在项目的开发过程中，每个人（团队）都需要负责不同的模块，单个人（团队）开发测试能够通过，并不代表">
+<meta name="keywords" content="jenkins,svn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins+SVN持续集成">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="1、持续部署、持续集成、持续交互在讲svn和jenkins持续集成之前，必须先了解下持续部署、持续集成以及持续交互的概念。 1.1、持续部署关注点：在于项目功能部署至服务器后可以运行，为下一步测试环节或者最终用户正式使用做好准备工作。 1.2、持续集成关注点：在于尽早发现项目整体运行问题， 尽早解决。 在项目的开发过程中，每个人（团队）都需要负责不同的模块，单个人（团队）开发测试能够通过，并不代表">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://uploader.shimo.im/f/T9XlbTQNg5cEnA9D.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/k0TIquffwP4iqgue.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/afrZGneY7tYOuYWs.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/CPu6VqlMWcYnFwIQ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/bgBMSCGIHNERs2Rc.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/owe9Pck4UtoddhX0.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/g7RM4UTAciMvY8iG.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/aGrS9vEt9aU3XNsu.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Viin5lmtYE8NsaNS.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/B4MZFSWHseUMzIce.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/UwQFD0RYx7wsT2sN.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/1XdKrk8uWbADcu7O.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/oPe2s4ht1qMhPncF.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Ri9Bqu1hWzUmFykn.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/pI4V1P6zbTwuYhKH.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/wAxLBJAxPPQzErKc.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/7e0VTdo45yUmNwfu.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/W0ehkp06BLoaBPNY.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/ncFCQ031GYo1sgEr.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/dmF0jfdyXfIBXyhI.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/SIdkoFPxzoUWQ0Oh.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/LigYQCUSR0UhrwKF.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/MU4fuBSUl4kz6TOM.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/SOIlLBx9xEEmm1My.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/3xLMOfEpXao5b8O1.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/5MUx4UHJJ30ZZpWN.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Tqd34Vh31MIypAWW.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/I6RUbBwy9rYccmHo.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/GNjNJtK1af0C1DZE.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/42j8LGDj1qgEIaGn.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/SZa1du0YvHEGQkw5.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/2JnCovhZvvcDc7N4.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/qQNJ0IDrTCwJL7br.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/VtHuOa3J9TUwxjj5.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/9RK9Ew8SZMQXE0zq.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Fv6FEfN2CgsOxeJd.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/lahiAzkGZ4sCrmWv.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/qTM0KRdOMRUuzuri.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/IXs8SILGZPYoon03.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/KoZzJPCvo5QpNB9G.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/XkrR29OaBB4BVdcj.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/RaCU0KKizo0v8V4G.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/mptSLPcThMkgfapH.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Ig3mXgHAVU4gVUni.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/rz6yHYAg6nkwkB1U.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/YaEGu6u0SKobXldt.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/UmDOuhGyu7cJTBSZ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/H95EjE8XpFE0GEiZ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/9DiVHSyHuT0VGNjR.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/dCH3GiqanWczWCZv.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/emeLaRhGUasHKX1U.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/NGbBSNROOfQuGXWZ.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/FTvYFbGijiker30g.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/8N4WAItfNd8JCWT5.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/8F2C9IEW5iUI31bo.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/2usNi0xxFTI1o7yD.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/7qVozcaJ3IE56GNV.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/2H6HGH2JM6EwZSaW.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/Ch9LowQLthQI8pcj.png!thumbnail">
+<meta property="og:image" content="https://uploader.shimo.im/f/zXV2890fdMkMmXNt.png!thumbnail">
+<meta property="og:updated_time" content="2019-11-25T09:59:36.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins+SVN持续集成">
+<meta name="twitter:description" content="1、持续部署、持续集成、持续交互在讲svn和jenkins持续集成之前，必须先了解下持续部署、持续集成以及持续交互的概念。 1.1、持续部署关注点：在于项目功能部署至服务器后可以运行，为下一步测试环节或者最终用户正式使用做好准备工作。 1.2、持续集成关注点：在于尽早发现项目整体运行问题， 尽早解决。 在项目的开发过程中，每个人（团队）都需要负责不同的模块，单个人（团队）开发测试能够通过，并不代表">
+<meta name="twitter:image" content="https://uploader.shimo.im/f/T9XlbTQNg5cEnA9D.png!thumbnail">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-Jenkins+SVN持续集成" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      Jenkins+SVN持续集成
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/jenkins/">jenkins</a>
+                  
+                      <a href="/categories/svn/">svn</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-22
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="1、持续部署、持续集成、持续交互"><a href="#1、持续部署、持续集成、持续交互" class="headerlink" title="1、持续部署、持续集成、持续交互"></a>1、持续部署、持续集成、持续交互</h1><p>在讲svn和jenkins持续集成之前，必须先了解下持续部署、持续集成以及持续交互的概念。</p>
+<h2 id="1-1、持续部署"><a href="#1-1、持续部署" class="headerlink" title="1.1、持续部署"></a>1.1、持续部署</h2><p><strong>关注点：</strong>在于项目功能部署至服务器后可以运行，为下一步测试环节或者最终用户正式使用做好准备工作。</p>
+<h2 id="1-2、持续集成"><a href="#1-2、持续集成" class="headerlink" title="1.2、持续集成"></a>1.2、持续集成</h2><p><strong>关注点：</strong>在于尽早发现项目整体运行问题， 尽早解决。</p>
+<p>在项目的开发过程中，每个人（团队）都需要负责不同的模块，单个人（团队）开发测试能够通过，并不代表把所有模块整合测试能够通过，因为各个模块之间虽然可以独立完成，独立测试也是可以通过，但是上线整合在一起总会遇到各种问题，因为各个模块虽然可以独立开发或者运行，但避免不了相互调用或者数据的依赖问题。</p>
+<p>经常性、 频繁的把所有模块集成在一起进行测试， 有问题尽早发现， 这就是持续集成。</p>
+<h2 id="1-3、持续交互"><a href="#1-3、持续交互" class="headerlink" title="1.3、持续交互"></a>1.3、持续交互</h2><p><strong>关注点：</strong>在于研发团队的最新代码（功能）能够尽快让最终用户体验到。</p>
+<p>程序员开发的新功能，也通过了测试人员的测试，但是并不代表用户就一定喜欢。等开发人员把所有功能都开发完成后，再交给客户体验或者验收，但客户不喜欢或者不满意某个功能的时候，需要返工，不仅照成项目的大量改动，延期工期，用户体验也不佳。</p>
+<p>如果用小版本不断进行快速迭代，不断收集用户反馈信息，用最快的速度改进优化。</p>
+<h2 id="1-4、总体目标"><a href="#1-4、总体目标" class="headerlink" title="1.4、总体目标"></a>1.4、总体目标</h2><p><strong>①、降低风险</strong></p>
+<p>一天中进行多次的集成， 并做了相应的测试， 这样有利于检查缺陷， 了解软件的健康状况， 减少假定。</p>
+<p><strong>②、减少重复过程</strong></p>
+<p>产生重复过程有两个方面的原因：</p>
+<p>一个是编译、 测试、 打包、 部署等等固定操作都必须要做， 无法省略任何一个环节；</p>
+<p>另一个是一个缺陷如果没有及时发现， 有可能导致后续代码的开发方向是错误的，要修复问题需要重新编写受影响的所有代码。</p>
+<p>……</p>
+<h1 id="2、项目部署方式的对比"><a href="#2、项目部署方式的对比" class="headerlink" title="2、项目部署方式的对比"></a>2、项目部署方式的对比</h1><h2 id="2-1、手动部署"><a href="#2-1、手动部署" class="headerlink" title="2.1、手动部署"></a>2.1、手动部署</h2><p><img src="https://uploader.shimo.im/f/T9XlbTQNg5cEnA9D.png!thumbnail" alt="图片"></p>
+<h2 id="2-2、自动化部署"><a href="#2-2、自动化部署" class="headerlink" title="2.2、自动化部署"></a>2.2、自动化部署</h2><p>“自动化”的具体体现：向版本库中提交代码后，应用服务器上自动（自动、定时或者一键）部署，用户或者测试人员使用的立马是就是最新的应用程序或者功能。</p>
+<p><img src="https://uploader.shimo.im/f/k0TIquffwP4iqgue.png!thumbnail" alt="图片"></p>
+<h1 id="3、Jenkins-SVN持续集成环境搭建"><a href="#3、Jenkins-SVN持续集成环境搭建" class="headerlink" title="3、Jenkins+SVN持续集成环境搭建"></a>3、Jenkins+SVN持续集成环境搭建</h1><p>搭建上述持续集成环境可以把整个构建、部署的过程自动化，减轻了开发人员的工作量，把自己的代码提交上去之后，服务器哈桑运行的马上就是最新版本。</p>
+<p>要能够成功搭建或成功使用整套持续集成环境，这个操作过程过程虽然繁琐，但总体也没有什么难道，但是需要以下前提知识：</p>
+<ul>
+<li><p>Linux系统基本命令操作和编辑器vim的使用</p>
+</li>
+<li><p>Maven的使用和Maven项目的构建</p>
+</li>
+<li><p>SVN的使用</p>
+<h2 id="3-1、系统结构"><a href="#3-1、系统结构" class="headerlink" title="3.1、系统结构"></a>3.1、系统结构</h2><h3 id="3-1-1、版本控制子系统"><a href="#3-1-1、版本控制子系统" class="headerlink" title="3.1.1、版本控制子系统"></a>3.1.1、版本控制子系统</h3><p>也就是Subversion所在的服务器，它包括：</p>
+</li>
+<li><p>Subversion服务</p>
+</li>
+<li><p>项目对应的版本库</p>
+</li>
+<li><p>版本库钩子程序</p>
+<h3 id="3-1-2、持续集成子系统"><a href="#3-1-2、持续集成子系统" class="headerlink" title="3.1.2、持续集成子系统"></a>3.1.2、持续集成子系统</h3><p>Jenkins所在的服务器，它包括：</p>
+</li>
+<li><p>JDK</p>
+</li>
+<li><p>Maven</p>
+</li>
+<li><p>Tomcat</p>
+</li>
+<li><p>Jenkins </p>
+</li>
+</ul>
+<p>其中Jenkins中包含：</p>
+<ul>
+<li><p>主体程序（jenkins的war包）</p>
+</li>
+<li><p>SVN插件</p>
+</li>
+<li><p>Maven插件</p>
+</li>
+<li><p>Deploy to web container插件</p>
+<h3 id="3-1-3、应用发布子系统"><a href="#3-1-3、应用发布子系统" class="headerlink" title="3.1.3、应用发布子系统"></a>3.1.3、应用发布子系统</h3><p>也就是部署项目（测试或者生产环境）的服务器，它包括：</p>
+</li>
+<li><p>JDK</p>
+</li>
+<li><p>Tomcat</p>
+<h2 id="3-2、环境的搭建"><a href="#3-2、环境的搭建" class="headerlink" title="3.2、环境的搭建"></a>3.2、环境的搭建</h2><h3 id="3-2-1、版本控制子系统"><a href="#3-2-1、版本控制子系统" class="headerlink" title="3.2.1、版本控制子系统"></a>3.2.1、版本控制子系统</h3><p>Subversion所在的服务器，我这里是192.168.199.242。安装过程省略，请参考<a href="https://shimo.im/docs/KhJCHW8vKvj9R3cY" target="_blank" rel="noopener">《centos7安装svn》</a>。这里记录下我的svn的账户密码：</p>
+</li>
+</ul>
+<p><img src="https://uploader.shimo.im/f/afrZGneY7tYOuYWs.png!thumbnail" alt="图片"></p>
+<p>svnserve.conf文件中的anon-access一定要打开注释并设置为none：</p>
+<p><img src="https://uploader.shimo.im/f/CPu6VqlMWcYnFwIQ.png!thumbnail" alt="图片"></p>
+<p>版本控制子系统服务器（242）：</p>
+<p>svn://192.168.199.242:3690/test_project</p>
+<h3 id="3-2-2、应用发布子系统"><a href="#3-2-2、应用发布子系统" class="headerlink" title="3.2.2、应用发布子系统"></a>3.2.2、应用发布子系统</h3><p>按3.1.3节内容，应用发布子系统需要安装JDK和tomcat，由于JDK和tomcat安装部署的过程相对比较简单，这边就省略安装过程，只记录下tomcat下tomcat-users.xml。</p>
+<p>文件路径：</p>
+<blockquote>
+<p>tomcat/config/tomcat-users.xml</p>
+<ul>
+<li>对tomcat添加角色和用户：</li>
+</ul>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-gui"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-script"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-jmx"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">role</span> <span class="attr">rolename</span>=<span class="string">"manager-status"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">user</span> <span class="attr">username</span>=<span class="string">"seage"</span> <span class="attr">password</span>=<span class="string">"seagetech"</span> <span class="attr">roles</span>=<span class="string">"manager-gui,manager-script,manager-jmx,manager-status"</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中user标签的username=”seage”，表示用户名为seage；password=”seagetech”，表示密码为seagetech</p>
+<ul>
+<li>修改访问权限</li>
+</ul>
+<p>至少启动一次tomcat，在webapps/manager/META-INF/context.xml下，将allow值替换为”^.*$：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span> <span class="attr">antiResourceLocking</span>=<span class="string">"false"</span> <span class="attr">privileged</span>=<span class="string">"true"</span> &gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Valve</span> <span class="attr">className</span>=<span class="string">"org.apache.catalina.valves.RemoteAddrValve"</span></span></span><br><span class="line"><span class="tag">         <span class="attr">allow</span>=<span class="string">"^.*$"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Context</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>应用发布子系统服务器：</p>
+<p>内网：<a href="http://192.168.199.242/" target="_blank" rel="noopener">http://192.168.199.242/</a></p>
+<h3 id="3-2-3、持续集成子系统"><a href="#3-2-3、持续集成子系统" class="headerlink" title="3.2.3、持续集成子系统"></a>3.2.3、持续集成子系统</h3><p>①、maven的配置</p>
+<p>官网下载：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">wget https://archive.apache.org/dist/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>解压：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-maven-3.5.3-bin.tar.gz</span><br></pre></td></tr></table></figure>
+
+<p>复制到/usr/local下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -rf apache-maven-3.5.3/ /usr/local/maven3.5.3/</span><br></pre></td></tr></table></figure>
+
+<p>在maven3.5.3创建创库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/local/maven3.5.3/</span><br><span class="line">mkdir repository</span><br></pre></td></tr></table></figure>
+
+<p>修改settings.xml文件，指定创库地址</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd conf/</span><br><span class="line">vi settings.xml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://uploader.shimo.im/f/bgBMSCGIHNERs2Rc.png!thumbnail" alt="图片"></p>
+<p>配置环境变量</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>在profile文件最后一行键入如下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MAVEN_HOME=/usr/local/maven3.5.3</span><br><span class="line">export PATH=$&#123;MAVEN_HOME&#125;/bin:$&#123;PATH&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重启配置文件，使改生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">source /etc/profile</span><br></pre></td></tr></table></figure>
+
+<p>测试maven配置是否成功</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn -v</span><br></pre></td></tr></table></figure>
+
+<p>结果如下说明配置成功<br><img src="https://uploader.shimo.im/f/owe9Pck4UtoddhX0.png!thumbnail" alt="图片"></p>
+<p>②、安装Jenkins</p>
+<p>官网下载</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /opt</span><br><span class="line">wget http://mirrors.jenkins.io/war-stable/latest/jenkins.war</span><br></pre></td></tr></table></figure>
+
+<p>将下载后的war包复制到tomcat下的webapps下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -rf jenkins.war /usr/local/tomcat8.5.47/webapps/jenkins.war</span><br></pre></td></tr></table></figure>
+
+<p>启动tomcat，访问Jenkins地址：</p>
+<p>内网：<a href="http://192.168.199.242/jenkins/" target="_blank" rel="noopener">http://192.168.199.242/jenkins/</a></p>
+<p><img src="https://uploader.shimo.im/f/g7RM4UTAciMvY8iG.png!thumbnail" alt="图片"></p>
+<p>解锁Jenkins，按登录界面提示，从/root/.jenkins/secrets/initialAdminPassword文档中获取admin用户的密码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /root/.jenkins/secrets/initialAdminPassword</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://uploader.shimo.im/f/aGrS9vEt9aU3XNsu.png!thumbnail" alt="图片"></p>
+<p>在管理员密码输入框输入获取的密码，然后点击右下角的继续，但是界面可能会出现这个离线的界面</p>
+<p><img src="https://uploader.shimo.im/f/Viin5lmtYE8NsaNS.png!thumbnail" alt="图片"></p>
+<p>修改hudson.model.UpdateCenter.xml文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /root/.jenkins/hudson.model.UpdateCenter.xml</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://uploader.shimo.im/f/B4MZFSWHseUMzIce.png!thumbnail" alt="图片"></p>
+<p>将url中的地址https改成http，保存退出即可，然后再重启tomcat或者Jenkins。重新登录Jenkins后，则进入到新手入门界面</p>
+<p><img src="https://uploader.shimo.im/f/UwQFD0RYx7wsT2sN.png!thumbnail" alt="图片"></p>
+<p>两种选择：安装推荐的插件、选择插件来安装，两种方式都可以选择，不管选择哪一种都没有什么影响，因为插件安装的话在后续还是可以安装的，这里我们选择安装推荐的插件，进入安装页面</p>
+<p><img src="https://uploader.shimo.im/f/1XdKrk8uWbADcu7O.png!thumbnail" alt="图片"></p>
+<p>这一步骤可能有点慢，请耐心等待，安装完成后，会提示重启jenkins,重启后，重新登录，后面几个页面只有按照导向来完成即可，没有什么复杂的，这里省略，最终Jenkins的主页面如下：</p>
+<p><img src="https://uploader.shimo.im/f/oPe2s4ht1qMhPncF.png!thumbnail" alt="图片"></p>
+<p>表示Jenkins已完成安装</p>
+<h2 id="3-3、Jenkins的使用"><a href="#3-3、Jenkins的使用" class="headerlink" title="3.3、Jenkins的使用"></a>3.3、Jenkins的使用</h2><h3 id="3-3-1、全局配置"><a href="#3-3-1、全局配置" class="headerlink" title="3.3.1、全局配置"></a>3.3.1、全局配置</h3><ul>
+<li>全局maven配置：maven Configuration</li>
+</ul>
+<p>在主页面选择Manager Jenkins</p>
+<p><img src="https://uploader.shimo.im/f/Ri9Bqu1hWzUmFykn.png!thumbnail" alt="图片"></p>
+<p>全局工具配置Global Tool Configuration</p>
+<p><img src="https://uploader.shimo.im/f/pI4V1P6zbTwuYhKH.png!thumbnail" alt="图片"></p>
+<p>找到第一个maven配置，默认settings和全局的settings。都选择Settings file in filesystem。然后输入文件路径/usr/local/maven3.5.3/conf/settings.xml（即3.2.3节搭建的maven下的settings.xml文件）</p>
+<p><img src="https://uploader.shimo.im/f/wAxLBJAxPPQzErKc.png!thumbnail" alt="图片"></p>
+<ul>
+<li>JDK配置</li>
+</ul>
+<p>在Maven配置同界面，找到JDK安装位置</p>
+<p><img src="https://uploader.shimo.im/f/7e0VTdo45yUmNwfu.png!thumbnail" alt="图片"></p>
+<p>点击新增JDK</p>
+<p><img src="https://uploader.shimo.im/f/W0ehkp06BLoaBPNY.png!thumbnail" alt="图片"></p>
+<p>取消Install automatically的勾选</p>
+<p><img src="https://uploader.shimo.im/f/ncFCQ031GYo1sgEr.png!thumbnail" alt="图片"></p>
+<p>输入别名，随意填写，JAVA_HOME,即jdk的安装位置</p>
+<p><img src="https://uploader.shimo.im/f/dmF0jfdyXfIBXyhI.png!thumbnail" alt="图片"></p>
+<ul>
+<li>maven配置</li>
+</ul>
+<p>在JDK同页面，找到Maven安装界面</p>
+<p><img src="https://uploader.shimo.im/f/SIdkoFPxzoUWQ0Oh.png!thumbnail" alt="图片"></p>
+<p>点击新增Maven</p>
+<p><img src="https://uploader.shimo.im/f/LigYQCUSR0UhrwKF.png!thumbnail" alt="图片"></p>
+<p>去掉Install automatically的勾选</p>
+<p><img src="https://uploader.shimo.im/f/MU4fuBSUl4kz6TOM.png!thumbnail" alt="图片"></p>
+<p>输入Name名称，随便输入，MAVEN_HOME即3.2.3节安装的maven路径</p>
+<p><img src="https://uploader.shimo.im/f/SOIlLBx9xEEmm1My.png!thumbnail" alt="图片"></p>
+<p>最后点击保存，全局配置完成。</p>
+<h3 id="3-3-2、安装插件"><a href="#3-3-2、安装插件" class="headerlink" title="3.3.2、安装插件"></a>3.3.2、安装插件</h3><p>在3.2.2节中，Jenkins中还需要Deploy to web container插件，该插件用于发布war包到自定的tomcat中，即应用发布子系统中。</p>
+<p>Manage Jenkins -&gt; Manage Plugins</p>
+<p><img src="https://uploader.shimo.im/f/3xLMOfEpXao5b8O1.png!thumbnail" alt="图片"></p>
+<p>选择可选插件</p>
+<p><img src="https://uploader.shimo.im/f/5MUx4UHJJ30ZZpWN.png!thumbnail" alt="图片"></p>
+<p>找到Deploy to container，并勾选</p>
+<p><img src="https://uploader.shimo.im/f/Tqd34Vh31MIypAWW.png!thumbnail" alt="图片"></p>
+<p>然后点击直接安装</p>
+<p><img src="https://uploader.shimo.im/f/I6RUbBwy9rYccmHo.png!thumbnail" alt="图片"></p>
+<p>安装等待中，安装完Jenkins后重启</p>
+<p><img src="https://uploader.shimo.im/f/GNjNJtK1af0C1DZE.png!thumbnail" alt="图片"></p>
+<h3 id="3-3-3、创建工程"><a href="#3-3-3、创建工程" class="headerlink" title="3.3.3、创建工程"></a>3.3.3、创建工程</h3><ul>
+<li>创建工程</li>
+</ul>
+<p>首先应该有个web工程项目，使用idea创建一个测试的springboot项目，创建过程省略，这里记录主要代码。</p>
+<p>项目结构：</p>
+<p><img src="https://uploader.shimo.im/f/42j8LGDj1qgEIaGn.png!thumbnail" alt="图片"></p>
+<p>其中JenkinsController类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.seagetech.jenkins.test;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.GetMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.RestController;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> wangzb</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2019/11/17 15:15</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JenkinsController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/sayHello"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello Jenkins!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将项目部署到应用发布子系统中，访问/sayHello接口：</p>
+<p>内网：<a href="http://192.168.199.242" target="_blank" rel="noopener">http://192.168.199.242</a><a href="http://yun1.seagetech.com:50131/jenkinsTest/sayHello" target="_blank" rel="noopener">/jenkinsTest/sayHello</a></p>
+<p>页面显示：</p>
+<p><img src="https://uploader.shimo.im/f/SZa1du0YvHEGQkw5.png!thumbnail" alt="图片"></p>
+<ul>
+<li>将项目提交到svn</li>
+</ul>
+<p>svn最终结构如下：</p>
+<p><img src="https://uploader.shimo.im/f/2JnCovhZvvcDc7N4.png!thumbnail" alt="图片"></p>
+<h3 id="3-3-4、创建任务"><a href="#3-3-4、创建任务" class="headerlink" title="3.3.4、创建任务"></a>3.3.4、创建任务</h3><p>一切准备就绪，最后一步就是在jenkins上创建持续集成任务。</p>
+<ul>
+<li>新建任务</li>
+</ul>
+<p>jenkins主页面，选择新建Item</p>
+<p><img src="https://uploader.shimo.im/f/qQNJ0IDrTCwJL7br.png!thumbnail" alt="图片"></p>
+<p>输入一个任务名称，并选择Freestyle project</p>
+<p><img src="https://uploader.shimo.im/f/VtHuOa3J9TUwxjj5.png!thumbnail" alt="图片"></p>
+<ul>
+<li>源码管理</li>
+</ul>
+<p><img src="https://uploader.shimo.im/f/9RK9Ew8SZMQXE0zq.png!thumbnail" alt="图片"></p>
+<p>选择Subversion</p>
+<p><img src="https://uploader.shimo.im/f/Fv6FEfN2CgsOxeJd.png!thumbnail" alt="图片"></p>
+<p>Repository URL：代码创库地址，注意一点，创库地址必须到项目的根目录，也就是所填写的地址是pom文件所在目录，按3.3.3节创建的项目，本输入框填写地址：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn://192.168.199.242/test_project/jenkins-test</span><br></pre></td></tr></table></figure>
+
+<p>Credentials：证书，也就是用户名密码，我们在3.2.1节在conf下的passwd文件中设置的密码，此处为seage/seagetech。点击添加，然后在选择框中选择刚刚添加的账户密码。<br><img src="https://uploader.shimo.im/f/lahiAzkGZ4sCrmWv.png!thumbnail" alt="图片"></p>
+<p>最终如下：</p>
+<p><img src="https://uploader.shimo.im/f/qTM0KRdOMRUuzuri.png!thumbnail" alt="图片"></p>
+<ul>
+<li>构建</li>
+</ul>
+<p>新增构建步骤，选择Invoke top-level Maven targets</p>
+<p><img src="https://uploader.shimo.im/f/IXs8SILGZPYoon03.png!thumbnail" alt="图片"></p>
+<p>在Maven版本中选择3.3.1节中配置的maven，目标填写clean和install，即清理和安装命令</p>
+<p><img src="https://uploader.shimo.im/f/KoZzJPCvo5QpNB9G.png!thumbnail" alt="图片"></p>
+<ul>
+<li>构建后操作</li>
+</ul>
+<p>构建后的操作就是将构建后的war包发布到应用发布子系统中，点击增加构建后操作步骤，然后选择Deploy war/ear to a container。即我们在3.3.2节安装的插件</p>
+<p><img src="https://uploader.shimo.im/f/XkrR29OaBB4BVdcj.png!thumbnail" alt="图片"></p>
+<p>WAR/EAR files ：war、ear包的名字，即我们平常打包后war包所在的路径（相对路径）和war包的名字，我们测试项目是在target/jenkins-test-0.0.1.war；</p>
+<p>Context path：项目的Context path，即部署到应用发布子系统中的tomcat下的war包名，按3.3.3节部署到tomcat下的名字是jenkinsTest。</p>
+<p><img src="https://uploader.shimo.im/f/RaCU0KKizo0v8V4G.png!thumbnail" alt="图片"></p>
+<p>Containers：容器，点击Add Container，我们使用的是tomcat8，选择Tomcat 8.x Remot</p>
+<p><img src="https://uploader.shimo.im/f/mptSLPcThMkgfapH.png!thumbnail" alt="图片"></p>
+<p><img src="https://uploader.shimo.im/f/Ig3mXgHAVU4gVUni.png!thumbnail" alt="图片"></p>
+<p>添加Credentials（认证），即3.3.2节设置的tomcat的用户名和密码，点击添加</p>
+<p><img src="https://uploader.shimo.im/f/rz6yHYAg6nkwkB1U.png!thumbnail" alt="图片"></p>
+<p>Tomcat的地址，按3.2.2节，tomcat的地址为：<a href="http://192.168.199.242/" target="_blank" rel="noopener">http://192.168.199.242/</a></p>
+<p>最终如下：</p>
+<p><img src="https://uploader.shimo.im/f/YaEGu6u0SKobXldt.png!thumbnail" alt="图片"></p>
+<ul>
+<li>保存</li>
+</ul>
+<p>最后一步，别忘记保存刚刚的设置，点击保存后，进入到该任务的主页面</p>
+<p><img src="https://uploader.shimo.im/f/UmDOuhGyu7cJTBSZ.png!thumbnail" alt="图片"></p>
+<ul>
+<li>Build Now（立即构建）</li>
+</ul>
+<p>点击Build Now,立即构建，点击构建后，jenkins就按2.2节自动化部署那张图的流程开始工作“”</p>
+<p>第一：jenkins调用svn插件从svn中获取源码；</p>
+<p>第二：调用maven插件对项目源码进行clean和install操作，并获得war包；</p>
+<p>第三：调用deploy to web container插件将war包部署到tomcat中。</p>
+<p><img src="https://uploader.shimo.im/f/H95EjE8XpFE0GEiZ.png!thumbnail" alt="图片"></p>
+<p>之后可以在左下角看到构建历史，每个构建历史可以查看控制台构建情况</p>
+<p><img src="https://uploader.shimo.im/f/9DiVHSyHuT0VGNjR.png!thumbnail" alt="图片"></p>
+<p>如果在控制台能够看到success，表示此时构建成功</p>
+<p><img src="https://uploader.shimo.im/f/dCH3GiqanWczWCZv.png!thumbnail" alt="图片"></p>
+<h3 id="3-3-5、构建触发器"><a href="#3-3-5、构建触发器" class="headerlink" title="3.3.5、构建触发器"></a>3.3.5、构建触发器</h3><p>在上一节中，我们成功的完成了jenkins的一次构建流程，需要点击立即构建才能部署最新代码到tomcat下，那如果有这样的需求，程序员将代码提交到svn上时，自动触发jenkins的构建项目。</p>
+<p>这就需要3.1.1节提到的SVN的钩子程序和jenkins的构建触发器。</p>
+<ul>
+<li>jenkins的构建触发器</li>
+</ul>
+<p>在jenkins_test任务主界面，选择配置</p>
+<p><img src="https://uploader.shimo.im/f/emeLaRhGUasHKX1U.png!thumbnail" alt="图片"></p>
+<p>进入配置页面，然后找到构建触发器</p>
+<p><img src="https://uploader.shimo.im/f/NGbBSNROOfQuGXWZ.png!thumbnail" alt="图片"></p>
+<p>需要输入的是身份证令牌，远程触发的基本原理是 SVN 服务器给 Jenkins 项目特定的 URL 地址发送请求，但必须以请求参数的形式携带一个特定值，这个特定值就是这里的“身份验证令牌”</p>
+<p>比如我们这里jenkins中jenkins_test任务配置地址是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.199.242/jenkins/job/jenkins_test</span><br></pre></td></tr></table></figure>
+
+<p>而且配置的token为：JENKINS_TEST，那么全路径便是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://192.168.199.242/jenkins/job/jenkins_test/build?token=JENKINS_TEST</span><br></pre></td></tr></table></figure>
+
+<p>所以访问上述地址，就会触发jenkins_test任务的构建操作</p>
+<p>最终如下：</p>
+<p><img src="https://uploader.shimo.im/f/FTvYFbGijiker30g.png!thumbnail" alt="图片"></p>
+<ul>
+<li>SVN的钩子程序</li>
+</ul>
+<p>按3.2.1节，test_project创库的路径是：/var/svn/repository/test_project/</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /var/svn/repository/test_project/</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://uploader.shimo.im/f/8N4WAItfNd8JCWT5.png!thumbnail" alt="图片"></p>
+<p>hooks目录下就是钩子程序所存放的目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd hooks</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://uploader.shimo.im/f/8F2C9IEW5iUI31bo.png!thumbnail" alt="图片"></p>
+<p>其中post-commit提交后出触发，pre-commit提交前触发等等，这里我们需要pre-commit.tmpl。注意最终svn调用的文件是不带任何后缀的，即文件名称为pre-commit。复制pre-commit.tmpl并指定文件名称为pre-commit</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp post-commit.tmpl post-commit</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://uploader.shimo.im/f/2usNi0xxFTI1o7yD.png!thumbnail" alt="图片"></p>
+<p>编辑post-commit文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi post-commit</span><br></pre></td></tr></table></figure>
+
+<p>文件内容如下<br><img src="https://uploader.shimo.im/f/7qVozcaJ3IE56GNV.png!thumbnail" alt="图片"></p>
+<p>将最后三行代码都注释掉</p>
+<p><img src="https://uploader.shimo.im/f/2H6HGH2JM6EwZSaW.png!thumbnail" alt="图片"></p>
+<p>并在最后一行输入如下内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -X post -v -u admin:33345ba68a214e238f73ab635dde930c http://192.168.199.242/jenkins/job/jenkins_test/build?token=JENKINS_TEST</span><br></pre></td></tr></table></figure>
+
+<p>保存退出，curl命令解析：</p>
+<p>-X：指定请求方式，这里指定为post请求</p>
+<p>-v：显示响应结果</p>
+<p>-u：携带用户名密码，即Jenkins的用户名（admin）和密码（在3.2.3节中提到，使用 cat /root/.jenkins/secrets/initialAdminPassword命令获取）</p>
+<p>最后在修改post-commit文件的权限，要不然svn没有权限执行post-commit文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 555 post-commit</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-6、测试"><a href="#3-5-6、测试" class="headerlink" title="3.5.6、测试"></a>3.5.6、测试</h3><p>到3.5.5节我们所有的事情都做完了，接下来就是测试，我们在idea工作区，修改3.3.3节创建的工程中的JenkinsController的代码，修改后的部分代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JenkinsController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GetMapping</span>(<span class="string">"/sayHello"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"Hello Jenkins hoots! dd  gg dd"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后提交到svn，如果jenkins的jenkins_test工程下多了一次构建，并且构建成功</p>
+<p><img src="https://uploader.shimo.im/f/Ch9LowQLthQI8pcj.png!thumbnail" alt="图片"></p>
+<p>那么我们通过下面的地址<a href="http://yun1.seagetech.com:50131/jenkinsTest/sayHello" target="_blank" rel="noopener">http://192.168.199.242/jenkinsTest/sayHello</a>就可以看到新的内容</p>
+<p><img src="https://uploader.shimo.im/f/zXV2890fdMkMmXNt.png!thumbnail" alt="图片"></p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月25日 17:59</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/22/Jenkins+SVN持续集成/" title="Jenkins+SVN持续集成">https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/&title=《Jenkins+SVN持续集成》 — 晴枫慕竹&pic=/images/jenkins/jenkins.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/&title=《Jenkins+SVN持续集成》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Jenkins+SVN持续集成》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/11/22/Jenkins+SVN持续集成/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/jenkins/" class="color3">jenkins</a>
+      
+    <a href="/tags/svn/" class="color4">svn</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、持续部署、持续集成、持续交互"><span class="post-toc-text">1、持续部署、持续集成、持续交互</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1、持续部署"><span class="post-toc-text">1.1、持续部署</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2、持续集成"><span class="post-toc-text">1.2、持续集成</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-3、持续交互"><span class="post-toc-text">1.3、持续交互</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-4、总体目标"><span class="post-toc-text">1.4、总体目标</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、项目部署方式的对比"><span class="post-toc-text">2、项目部署方式的对比</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1、手动部署"><span class="post-toc-text">2.1、手动部署</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2、自动化部署"><span class="post-toc-text">2.2、自动化部署</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、Jenkins-SVN持续集成环境搭建"><span class="post-toc-text">3、Jenkins+SVN持续集成环境搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1、系统结构"><span class="post-toc-text">3.1、系统结构</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-1、版本控制子系统"><span class="post-toc-text">3.1.1、版本控制子系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-2、持续集成子系统"><span class="post-toc-text">3.1.2、持续集成子系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-3、应用发布子系统"><span class="post-toc-text">3.1.3、应用发布子系统</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2、环境的搭建"><span class="post-toc-text">3.2、环境的搭建</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-1、版本控制子系统"><span class="post-toc-text">3.2.1、版本控制子系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-2、应用发布子系统"><span class="post-toc-text">3.2.2、应用发布子系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-2-3、持续集成子系统"><span class="post-toc-text">3.2.3、持续集成子系统</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-3、Jenkins的使用"><span class="post-toc-text">3.3、Jenkins的使用</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-1、全局配置"><span class="post-toc-text">3.3.1、全局配置</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-2、安装插件"><span class="post-toc-text">3.3.2、安装插件</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-3、创建工程"><span class="post-toc-text">3.3.3、创建工程</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-4、创建任务"><span class="post-toc-text">3.3.4、创建任务</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-3-5、构建触发器"><span class="post-toc-text">3.3.5、构建触发器</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-5-6、测试"><span class="post-toc-text">3.5.6、测试</span></a></li></ol></li></ol></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/22/centos7安装svn/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">centos7安装svn</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/多线程/">多线程</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

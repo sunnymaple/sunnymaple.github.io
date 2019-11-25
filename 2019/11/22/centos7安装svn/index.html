@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>centos7安装svn | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="①、使用yum安装 1yum install -y subversion  安装完毕结果如下：  ②、验证并查看安装的svn版本 1svn --version   ③、创建版本库目录 1mkdir -p /var/svn/repository  ④、在版本库目录下创建具体项目(test_project)目录 12cd /var/svn/repositorymkdir test_project  ⑤">
+<meta name="keywords" content="svn,centos">
+<meta property="og:type" content="article">
+<meta property="og:title" content="centos7安装svn">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/11/22/centos7安装svn/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="①、使用yum安装 1yum install -y subversion  安装完毕结果如下：  ②、验证并查看安装的svn版本 1svn --version   ③、创建版本库目录 1mkdir -p /var/svn/repository  ④、在版本库目录下创建具体项目(test_project)目录 12cd /var/svn/repositorymkdir test_project  ⑤">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/1.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/2.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/3.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/4.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/5.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/6.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/7.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/svn/1/8.png">
+<meta property="og:updated_time" content="2019-11-22T10:02:34.823Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="centos7安装svn">
+<meta name="twitter:description" content="①、使用yum安装 1yum install -y subversion  安装完毕结果如下：  ②、验证并查看安装的svn版本 1svn --version   ③、创建版本库目录 1mkdir -p /var/svn/repository  ④、在版本库目录下创建具体项目(test_project)目录 12cd /var/svn/repositorymkdir test_project  ⑤">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/svn/1/1.png">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-centos7安装svn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      centos7安装svn
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/svn/">svn</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-11-22
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <p>①、使用yum安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y subversion</span><br></pre></td></tr></table></figure>
+
+<p>安装完毕结果如下：</p>
+<p><img src="/images/svn/1/1.png" alt="图片"></p>
+<p>②、验证并查看安装的svn版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn --version</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/svn/1/2.png" alt="图片"></p>
+<p>③、创建版本库目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /var/svn/repository</span><br></pre></td></tr></table></figure>
+
+<p>④、在版本库目录下创建具体项目(test_project)目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /var/svn/repository</span><br><span class="line">mkdir test_project</span><br></pre></td></tr></table></figure>
+
+<p>⑤、创建svn版本库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svnadmin create /var/svn/repository/test_project</span><br></pre></td></tr></table></figure>
+
+<p>⑥、版本库内容</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd test_project/</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+<p>内容如下：</p>
+<p><img src="/images/svn/1/3.png" alt="图片"></p>
+<p>其中：</p>
+<ul>
+<li>conf 版本库配置文件</li>
+<li>db 数据库目录</li>
+<li>hooks 钩子程序</li>
+</ul>
+<p>⑥、配置信息</p>
+<p>进入 conf 目录下，并查看目录结构</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd conf</span><br><span class="line">ll</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/svn/1/4.png" alt="图片"></p>
+<p>其中：</p>
+<ul>
+<li>authz 权限管理</li>
+<li>paswd 账号密码管理</li>
+<li>svnserve.conf svn 服务配置</li>
+</ul>
+<p>⑦、创建svn账户，并设置密码</p>
+<p>编辑 password 文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi passwd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/svn/1/5.png" alt="图片"></p>
+<p>seage 用户名，“=”号后面 seagetech 即为密码。</p>
+<p>⑧、给seage用户分配权限</p>
+<p>编辑 authz 文件，给 seage 分配权限：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi authz</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/svn/1/6.png" alt="图片"></p>
+<p>最后两行：</p>
+<ul>
+<li>[/]  SVN 更目录，需要为哪个用户分配哪个目录下的权限，直接使用[]中加目录（相对目录）即可</li>
+<li>seage=rw  “=”左边即是用户，“=”号右边 r 为可读权限，w 为可写权限</li>
+</ul>
+<p>⑨、编辑 svnserve.conf文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi svnserve.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/svn/1/7.png" alt="图片"></p>
+<p>打开上图中红色框中的配置，需要注意几点：</p>
+<ul>
+<li>配置属性必须顶格写，不能有空格</li>
+<li>ann-access 出产默认值是 read，请改成 none</li>
+<li>realm 认证域，即第③步创建的版本库目录/var/svn/repository</li>
+</ul>
+<p>⑩、启动svn</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svnserve -d -r /var/svn/repository/</span><br></pre></td></tr></table></figure>
+
+<p>启动成功后，查看启动效果：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -ef | grep 'svnserve'</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/svn/1/8.png" alt="图片"></p>
+<p>在客户端使用如下地址，即可访问刚才创建的创库：</p>
+<blockquote>
+<p>svn://ip:3690/test_project</p>
+</blockquote>
+<p>其中 3690 为 svn 默认的端口，也可以省略：</p>
+<blockquote>
+<p>svn://ip/test_project</p>
+</blockquote>
+<p>如果能够正常访问说明 svn 安装并配置成功，如果连接不成功，请查看防火墙等原因。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年11月22日 18:02</p>
+        <p>原始链接： <a class="post-url" href="/2019/11/22/centos7安装svn/" title="centos7安装svn">https://www.sunnymaple.cn/2019/11/22/centos7安装svn/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/11/22/centos7安装svn/&title=《centos7安装svn》 — 晴枫慕竹&pic=https://www.sunnymaple.cnimages/130_130.png" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/11/22/centos7安装svn/&title=《centos7安装svn》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/11/22/centos7安装svn/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《centos7安装svn》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/11/22/centos7安装svn/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/11/22/centos7安装svn/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/11/22/centos7安装svn/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/svn/" class="color4">svn</a>
+      
+    <a href="/tags/centos/" class="color2">centos</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2019/11/22/Jenkins+SVN持续集成/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Jenkins+SVN持续集成
+        
+      </span>
+    </a>
+  
+  
+    <a href="/2019/09/15/线程中止/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">线程中止</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/多线程/">多线程</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

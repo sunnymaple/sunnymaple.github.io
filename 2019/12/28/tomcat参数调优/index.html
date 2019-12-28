@@ -22,13 +22,13 @@
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/5.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/6.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/7.png">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/8.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/8.gif">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/9.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/10.gif">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/11.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/12.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/13.png">
-<meta property="og:updated_time" content="2019-12-28T14:14:31.893Z">
+<meta property="og:updated_time" content="2019-12-28T14:19:44.520Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat调优">
 <meta name="twitter:description" content="1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。 1.1、线程池配置12&amp;lt;Executor name=&amp;quot;tomcatThreadPool&amp;quot; namePrefix=&amp;quot;catalina-exec-&amp;quo">
@@ -207,7 +207,7 @@
 <p><img src="/images/tomcat/1/7.png" alt="图片"></p>
 <p>即配置了一秒钟请求10个线程，循环执行一次</p>
 <p>参数配置好后，右击“数量测试”-&gt;启动，然后点击“查看结果树”，查看执行结果：</p>
-<p><img src="/images/tomcat/1/8.png" alt="图片"></p>
+<p><img src="/images/tomcat/1/8.gif" alt="图片"></p>
 <p>可以看到10个线程都请求成功了，原则是应该只有5个线程被处理，其他5个线程执行失败，这是因为第2节讲的Linux的不仅在tcp握手成功后可以堆积请求，在握手的过程也可以堆积请求（这是操作系统方面决定的，不必纠结太多）。</p>
 <h3 id="3-1-2、Windows系统"><a href="#3-1-2、Windows系统" class="headerlink" title="3.1.2、Windows系统"></a>3.1.2、Windows系统</h3><p>同样的代码，我们在Windows系统中也执行上述jar命令：</p>
 <p><img src="/images/tomcat/1/9.png" alt="图片"></p>
@@ -244,7 +244,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年12月28日 22:14</p>
+        <p>最后更新： 2019年12月28日 22:19</p>
         <p>原始链接： <a class="post-url" href="/2019/12/28/tomcat参数调优/" title="tomcat调优">https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">
@@ -370,8 +370,8 @@
 <nav id="article-nav">
   
   
-    <a href="/2019/11/22/centos7安装svn/" id="article-nav-older" class="article-nav-link-wrap">
-      <span class="article-nav-title">centos7安装svn</span>
+    <a href="/2019/11/22/Jenkins+SVN持续集成/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">Jenkins+SVN持续集成</span>
       <i class="fa fa-hand-o-right" aria-hidden="true"></i>
     </a>
   

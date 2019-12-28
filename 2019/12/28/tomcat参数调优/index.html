@@ -27,8 +27,8 @@
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/10.gif">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/11.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/12.png">
-<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/13.png">
-<meta property="og:updated_time" content="2019-12-28T15:29:09.506Z">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/14.png">
+<meta property="og:updated_time" content="2019-12-28T15:37:03.927Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat调优">
 <meta name="twitter:description" content="1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。 1.1、线程池配置12&amp;lt;Executor name=&amp;quot;tomcatThreadPool&amp;quot; namePrefix=&amp;quot;catalina-exec-&amp;quo">
@@ -228,7 +228,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-threads=8</span><br></pre></td></tr></table></figure>
 
 <p>并发线程数设置为8（我这里测试的Linux系统是4核的cpu）,按2.3节计算，大概需要8个线程为最佳（实际情况可以多次车上调整）。<br>启动jmeter测试案例（执行过程截图）：</p>
-<p><img src="/images/tomcat/1/13.png" alt="图片"></p>
+<p><img src="/images/tomcat/1/14.png" alt="图片"></p>
 <ul>
 <li>聚合报告</li>
 </ul>
@@ -244,7 +244,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年12月28日 23:29</p>
+        <p>最后更新： 2019年12月28日 23:37</p>
         <p>原始链接： <a class="post-url" href="/2019/12/28/tomcat参数调优/" title="tomcat调优">https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">

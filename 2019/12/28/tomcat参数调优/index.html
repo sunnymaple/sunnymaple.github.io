@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/11.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/12.png">
 <meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/13.png">
-<meta property="og:updated_time" content="2019-12-28T14:19:44.520Z">
+<meta property="og:updated_time" content="2019-12-28T15:29:09.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat调优">
 <meta name="twitter:description" content="1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。 1.1、线程池配置12&amp;lt;Executor name=&amp;quot;tomcatThreadPool&amp;quot; namePrefix=&amp;quot;catalina-exec-&amp;quo">
@@ -196,7 +196,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 假设该方法需要执行3s</span><br><span class="line"> * 用于测试连接数的控制</span><br><span class="line"> * @return</span><br><span class="line"> * @throws InterruptedException</span><br><span class="line"> */</span><br><span class="line">@RequestMapping(&quot;/testCount&quot;)</span><br><span class="line">public String testCount() throws InterruptedException &#123;</span><br><span class="line">    Thread.sleep(3 * 1000);</span><br><span class="line">    return &quot;success&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>将项目打成jar文件后，执行如下命令启动程序：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-connections=2 --server.tomcat.max-thread=10 --server.tomcat.acceptCount=3</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-connections=2 --server.tomcat.max-threads=10 --server.tomcat.acceptCount=3</span><br></pre></td></tr></table></figure>
 
 <p>即acceptCount的数量为3个、maxConnections的数量为2个，最大并发数maxThread为10个，按第2节的能处理的最大请求数应该是3+2=5个，那么下面就来验证这个值。</p>
 <h3 id="3-1-1、linux系统"><a href="#3-1-1、linux系统" class="headerlink" title="3.1.1、linux系统"></a>3.1.1、linux系统</h3><p>将jar文件上传到Linux系统中，然后执行上述命令启动程序</p>
@@ -225,7 +225,7 @@
 <p><img src="/images/tomcat/1/12.png" alt="图片"></p>
 <p>1秒钟发送1000个请求线程，连续发生10次，即10s钟内发生1万次请求。</p>
 <p>停止3.1节执行的jar包，修改参数如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-thread=8</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-threads=8</span><br></pre></td></tr></table></figure>
 
 <p>并发线程数设置为8（我这里测试的Linux系统是4核的cpu）,按2.3节计算，大概需要8个线程为最佳（实际情况可以多次车上调整）。<br>启动jmeter测试案例（执行过程截图）：</p>
 <p><img src="/images/tomcat/1/13.png" alt="图片"></p>
@@ -244,7 +244,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2019年12月28日 22:19</p>
+        <p>最后更新： 2019年12月28日 23:29</p>
         <p>原始链接： <a class="post-url" href="/2019/12/28/tomcat参数调优/" title="tomcat调优">https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/</a></p>
         <footer>
             <a href="https://www.sunnymaple.cn">

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+  <title>tomcat调优 | 晴枫慕竹</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  
+    <meta name="keywords" content="晴枫,晴枫慕竹,晴枫慕竹的博客">
+  
+  <meta name="description" content="1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。 1.1、线程池配置12&amp;lt;Executor name=&amp;quot;tomcatThreadPool&amp;quot; namePrefix=&amp;quot;catalina-exec-&amp;quo">
+<meta name="keywords" content="tomcat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tomcat调优">
+<meta property="og:url" content="https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/index.html">
+<meta property="og:site_name" content="晴枫慕竹">
+<meta property="og:description" content="1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。 1.1、线程池配置12&amp;lt;Executor name=&amp;quot;tomcatThreadPool&amp;quot; namePrefix=&amp;quot;catalina-exec-&amp;quo">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/1.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/2.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/4.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/5.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/6.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/7.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/8.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/9.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/10.gif">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/11.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/12.png">
+<meta property="og:image" content="https://www.sunnymaple.cn/images/tomcat/1/13.png">
+<meta property="og:updated_time" content="2019-12-28T14:14:31.893Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="tomcat调优">
+<meta name="twitter:description" content="1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。 1.1、线程池配置12&amp;lt;Executor name=&amp;quot;tomcatThreadPool&amp;quot; namePrefix=&amp;quot;catalina-exec-&amp;quo">
+<meta name="twitter:image" content="https://www.sunnymaple.cn/images/tomcat/1/1.png">
+  
+  
+    <link rel="icon" href="/me.ico">
+  
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/pace.min.js"></script>
+  
+
+  
+  
+
+</head>
+</html>
+<body>
+  <div id="container">
+      <header id="header">
+    <div id="banner"></div>
+    <div id="header-outer">
+        <div id="header-menu" class="header-menu-pos animated">
+            <div class="header-menu-container">
+                <a href="/" class="left">
+                    <span class="site-title">晴枫慕竹</span>
+                </a>
+                <nav id="header-menu-nav" class="right">
+                    
+                    <a href="/">
+                        <i class="fa fa-home"></i>
+                        <span>首页</span>
+                    </a>
+                    
+                    <a href="/archives">
+                        <i class="fa fa-archive"></i>
+                        <span>归档</span>
+                    </a>
+                    
+                    <a href="/book">
+                        <i class="fa fa-user"></i>
+                        <span>书籍</span>
+                    </a>
+                    
+                </nav>
+                <a class="mobile-header-menu-button">
+                    <i class="fa fa-bars"></i>
+                </a>
+            </div>
+        </div>
+        <div id="header-row">
+            <div id="logo">
+                <a href="/">
+                    <img src="/images/130_130.png" alt="logo">
+                </a>
+            </div>
+            <div class="header-info">
+                <div id="header-title">
+                    
+                    <h2>
+                        晴枫慕竹
+                    </h2>
+                    
+                </div>
+                <div id="header-description">
+                    
+                    <h3>
+                        个人技术博客网站
+                    </h3>
+                    
+                </div>
+            </div>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a title="主页" target="_blank" href="//sunnymaple.cn">
+                            <i class="fa fa-home fa-2x"></i></a>
+                    
+                        <a title="Github" target="_blank" href="//github.com/sunnymaple">
+                            <i class="fa fa-github fa-2x"></i></a>
+                    
+                        <a title="Weibo" href="//weibo.com/u/2828449400">
+                            <i class="fa fa-weibo fa-2x"></i></a>
+                    
+                </div>
+            </nav>
+        </div>
+    </div>
+</header>
+      <div class="outer">
+        <section id="main" class="body-wrap"><article id="post-tomcat参数调优" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="post-title" itemprop="name">
+      tomcat调优
+    </h1>
+    <div class="post-title-bar">
+      <ul>
+          
+              <li>
+                  <i class="fa fa-book"></i>
+                  
+                      <a href="/categories/tomcat/">tomcat</a>
+                  
+              </li>
+          
+        <li>
+          <i class="fa fa-calendar"></i>  2019-12-28
+        </li>
+        <li>
+          <i class="fa fa-eye"></i>
+          <span id="busuanzi_value_page_pv"></span>
+        </li>
+      </ul>
+    </div>
+  
+
+          
+      </header>
+    
+    <div class="article-entry post-content" itemprop="articleBody">
+      
+            
+            <h1 id="1、配置项"><a href="#1、配置项" class="headerlink" title="1、配置项"></a>1、配置项</h1><p>要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。</p>
+<h2 id="1-1、线程池配置"><a href="#1-1、线程池配置" class="headerlink" title="1.1、线程池配置"></a>1.1、线程池配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;Executor name=&quot;tomcatThreadPool&quot; namePrefix=&quot;catalina-exec-&quot;</span><br><span class="line">        maxThreads=&quot;150&quot; minSpareThreads=&quot;4&quot;/&gt;</span><br></pre></td></tr></table></figure>
+
+<p>表示可组件之间Tomcat中共享的线程池。从历史上看，每个连接器（Connector）都会创建一个线程池，但是当配置为支持执行器时，您可以在（主要）连接器之间以及其他组件之间共享线程池。<br>主要配置项（更多配置说明参考tomcat官网：<a href="http://tomcat.apache.org/tomcat-8.5-doc/config/executor.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/executor.html</a>）：</p>
+<p><img src="/images/tomcat/1/1.png" alt="图片"></p>
+<h2 id="1-2、连接器配置"><a href="#1-2、连接器配置" class="headerlink" title="1.2、连接器配置"></a>1.2、连接器配置</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector port=&quot;8080&quot; protocol=&quot;HTTP/1.1&quot;</span><br><span class="line">               connectionTimeout=&quot;20000&quot;</span><br><span class="line">               redirectPort=&quot;8443&quot; /&gt;</span><br></pre></td></tr></table></figure>
+
+<p>除以上配置之外，还有些参数配置项（更多配置说明参考tomcat官网：<a href="http://tomcat.apache.org/tomcat-8.5-doc/config/http.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/http.html</a>）：<br><img src="/images/tomcat/1/2.png" alt="图片"></p>
+<h1 id="2、参数调整"><a href="#2、参数调整" class="headerlink" title="2、参数调整"></a>2、参数调整</h1><p>tomcat的最大能接收的请求数：</p>
+<blockquote>
+<p>总数 = acceptCount + maxConnections</p>
+<ul>
+<li>maxConnections：tomcat能够接收的请求数量限制</li>
+<li>acceptCount：超过tomcat请求数量限制后，将请求堆积到操作系统中的数量限制（Linux和windows系统略有不同）</li>
+</ul>
+</blockquote>
+<p>它们的关系如下：</p>
+<p><img src="/images/tomcat/1/4.png" alt="图片"></p>
+<h2 id="2-1、maxConnections的调整"><a href="#2-1、maxConnections的调整" class="headerlink" title="2.1、maxConnections的调整"></a>2.1、maxConnections的调整</h2><blockquote>
+<p>maxConnections = （1+0.2）*  maxThreads</p>
+</blockquote>
+<p>当maxConnections（最大连接数）的值小于maxThreads的数量时，需要调大maxConnections的值，因为线程池线程数量大于最大连接数，会导致部分线程无法充分利用，浪费资源，最好的做法是调整maxConnections要比maxThreads的数量大20%，如果当前连接的线程数大于线程池线程数量时，将多余的连接堆积到tomcat的work处理线程池中（堆积占内存）。</p>
+<h2 id="2-2、acceptCount的调整"><a href="#2-2、acceptCount的调整" class="headerlink" title="2.2、acceptCount的调整"></a>2.2、acceptCount的调整</h2><p>有时候想接收更多的请求，又不想堆积在tomcat中（占内存），可以利用操作系统来做高校的堆积，可以将acceptCount的数量调整为maxConnections的值。</p>
+<p>acceptCount的值tomcat默认是100，Linux默认是128。</p>
+<h2 id="2-3、maxThreads的调整"><a href="#2-3、maxThreads的调整" class="headerlink" title="2.3、maxThreads的调整"></a>2.3、maxThreads的调整</h2><p>并发线程数的量（maxThreads）是最难控制的，因为线程数太少，CPU利用率低，程序吞吐量变小，资源浪费，容易堆积；如果线程数太多，线程上下文频繁切换，性能降低。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">理想的并发线程数量=(1+代码阻塞时间/代码执行时间)*cpu的数量</span><br></pre></td></tr></table></figure>
+
+<p>如：cpu的数量为2，收到请求，Java代码执行的时间时50ms，而等待数据返回需要50ms，那么：理想线程数=(1+50ms/50ms) * 2 = 4。<br>但是代码阻塞时间等不太好把握，实际情况需要不断的进行压测，不断调整线程数，将CPU的利用率达到80%~90%是最优的情况。</p>
+<h1 id="3、参数调优测试"><a href="#3、参数调优测试" class="headerlink" title="3、参数调优测试"></a>3、参数调优测试</h1><p>本章节测试的代码是基于springboot的，版本是2.2.1.RELEASE。使用maven工具直接打包成可执行的jar包，调优参数可以在application.properties或者yml文件中配置，可以在执行jar文件时携带参数，为了方便测试以及修改相关参数，我们使用后者的方式。</p>
+<p>其中本章所用到有关测试代码、相关工具下载地址以及学习资料：</p>
+<ul>
+<li>本章测试代码（Git地址）：<a href="https://github.com/sunnymaple/tomcat-adjust" target="_blank" rel="noopener">https://github.com/sunnymaple/tomcat-adjust</a></li>
+<li>jmeter测试工具下载地址：<a href="http://mirror.bit.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.1.zip" target="_blank" rel="noopener">http://mirror.bit.edu.cn/apache//jmeter/binaries/apache-jmeter-5.2.1.zip</a></li>
+<li>jmeter学习文档：<a href="https://www.cnblogs.com/jessicaxu/p/7501770.html" target="_blank" rel="noopener">https://www.cnblogs.com/jessicaxu/p/7501770.html</a></li>
+<li>jmeter测试用例（下载后添加到jmeter中）：<a href="https://github.com/sunnymaple/tomcat-adjust/blob/master/WebTest.jmx" target="_blank" rel="noopener">https://github.com/sunnymaple/tomcat-adjust/blob/master/WebTest.jmx</a><h2 id="3-1、数量测试"><a href="#3-1、数量测试" class="headerlink" title="3.1、数量测试"></a>3.1、数量测试</h2>本次测试连接数量的控制以及验证总连接数与maxConnections、acceptCount的关系。</li>
+</ul>
+<p>测试接口代码（部分）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 假设该方法需要执行3s</span><br><span class="line"> * 用于测试连接数的控制</span><br><span class="line"> * @return</span><br><span class="line"> * @throws InterruptedException</span><br><span class="line"> */</span><br><span class="line">@RequestMapping(&quot;/testCount&quot;)</span><br><span class="line">public String testCount() throws InterruptedException &#123;</span><br><span class="line">    Thread.sleep(3 * 1000);</span><br><span class="line">    return &quot;success&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>将项目打成jar文件后，执行如下命令启动程序：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-connections=2 --server.tomcat.max-thread=10 --server.tomcat.acceptCount=3</span><br></pre></td></tr></table></figure>
+
+<p>即acceptCount的数量为3个、maxConnections的数量为2个，最大并发数maxThread为10个，按第2节的能处理的最大请求数应该是3+2=5个，那么下面就来验证这个值。</p>
+<h3 id="3-1-1、linux系统"><a href="#3-1-1、linux系统" class="headerlink" title="3.1.1、linux系统"></a>3.1.1、linux系统</h3><p>将jar文件上传到Linux系统中，然后执行上述命令启动程序</p>
+<p><img src="/images/tomcat/1/5.png" alt="图片"></p>
+<p>下面我们将使用jMeter性能测试工具来进行测试，配置如下：</p>
+<p><img src="/images/tomcat/1/6.png" alt="图片"></p>
+<p>其中192.168.0.135为我Linux服务器地址，线程属性：</p>
+<p><img src="/images/tomcat/1/7.png" alt="图片"></p>
+<p>即配置了一秒钟请求10个线程，循环执行一次</p>
+<p>参数配置好后，右击“数量测试”-&gt;启动，然后点击“查看结果树”，查看执行结果：</p>
+<p><img src="/images/tomcat/1/8.png" alt="图片"></p>
+<p>可以看到10个线程都请求成功了，原则是应该只有5个线程被处理，其他5个线程执行失败，这是因为第2节讲的Linux的不仅在tcp握手成功后可以堆积请求，在握手的过程也可以堆积请求（这是操作系统方面决定的，不必纠结太多）。</p>
+<h3 id="3-1-2、Windows系统"><a href="#3-1-2、Windows系统" class="headerlink" title="3.1.2、Windows系统"></a>3.1.2、Windows系统</h3><p>同样的代码，我们在Windows系统中也执行上述jar命令：</p>
+<p><img src="/images/tomcat/1/9.png" alt="图片"></p>
+<p>修改jmeter测试用例上的ip地址为127.0.0.1，然后启动测试，结果如下：</p>
+<p><img src="/images/tomcat/1/10.gif" alt="图片"></p>
+<p>可以看到结果，5个请求失败，5个成功，打开其中一个失败的请求：</p>
+<p><img src="/images/tomcat/1/11.png" alt="图片"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">Thread Name:数量测试 1-6</span><br><span class="line">Sample Start:2019-12-28 18:42:27 CST</span><br><span class="line">Load time:2005</span><br><span class="line">Connect Time:2005</span><br><span class="line">Latency:0</span><br><span class="line">Size in bytes:2705</span><br><span class="line">Sent bytes:0</span><br><span class="line">Headers size in bytes:0</span><br><span class="line">Body size in bytes:2705</span><br><span class="line">Sample Count:1</span><br><span class="line">Error Count:1</span><br><span class="line">Data type (&quot;text&quot;|&quot;bin&quot;|&quot;&quot;):text</span><br><span class="line">Response code:Non HTTP response code: org.apache.http.conn.HttpHostConnectException</span><br><span class="line">Response message:Non HTTP response message: Connect to 127.0.0.1:8080 [/127.0.0.1] failed: Connection refused: connect</span><br><span class="line"></span><br><span class="line">HTTPSampleResult fields:</span><br><span class="line">ContentType: </span><br><span class="line">DataEncoding: null</span><br></pre></td></tr></table></figure>
+
+<p>错误：Connection refused: connect请求连接被拒绝。</p>
+<h2 id="3-2、参数调优测试"><a href="#3-2、参数调优测试" class="headerlink" title="3.2、参数调优测试"></a>3.2、参数调优测试</h2><p>测试代码（部分）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * 参数调优测试</span><br><span class="line"> * @return</span><br><span class="line"> * @throws InterruptedException</span><br><span class="line"> */</span><br><span class="line">@RequestMapping(&quot;/test&quot;)</span><br><span class="line">public String test() throws InterruptedException &#123;</span><br><span class="line">    System.out.println(&quot;访问test：&quot; + Thread.currentThread().getName());</span><br><span class="line">    // 这段代码，一直运算。</span><br><span class="line">    for (int i = 0; i &lt; 200000; i++) &#123;</span><br><span class="line">        new Random().nextInt();</span><br><span class="line">    &#125;</span><br><span class="line">    // 50毫秒的数据库等待，线程不干活</span><br><span class="line">    Thread.sleep(50L);</span><br><span class="line">    return &quot;success&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在jmeter上添加线程组，用于参数调优测试，配置如下：</p>
+<p><img src="/images/tomcat/1/12.png" alt="图片"></p>
+<p>1秒钟发送1000个请求线程，连续发生10次，即10s钟内发生1万次请求。</p>
+<p>停止3.1节执行的jar包，修改参数如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar tomcat-adjust-0.0.1-SNAPSHOT.jar --server.tomcat.max-thread=8</span><br></pre></td></tr></table></figure>
+
+<p>并发线程数设置为8（我这里测试的Linux系统是4核的cpu）,按2.3节计算，大概需要8个线程为最佳（实际情况可以多次车上调整）。<br>启动jmeter测试案例（执行过程截图）：</p>
+<p><img src="/images/tomcat/1/13.png" alt="图片"></p>
+<ul>
+<li>聚合报告</li>
+</ul>
+<p>异常率12.04，吞吐量54.4/sec</p>
+<ul>
+<li>top查看</li>
+</ul>
+<p>cpu使用率396.3</p>
+<p>结果分析不是很理想，异常率（即请求被拒绝<connection refused: connect>所占百分比）相对比较高，cpu使用率过高，情况不是很理想。</connection></p>
+<p>接下来可以加上acceptCount和maxConnections参数，多调试几次，已到达最优的效果，过程很繁琐，就是不断更换参数的值，不断调试。</p>
+<h1 id="4、总结"><a href="#4、总结" class="headerlink" title="4、总结"></a>4、总结</h1><p>3.2节中，原则上不管怎么调试，应该都不会好的结果，因为测试代码中，相对执行的时间比较长（模拟实际开发中代码写的烂）。</p>
+<p>最好的做法是优化代码，这些参数配置只能井上天花，真要做到高并发，高吞吐量，异常少的项目，可以考虑使用缓存中间件（redis）、消息中间件（流量消峰）、集群分流等手段。</p>
+
+            <div class="post-copyright">
+    <div class="content">
+        <p>最后更新： 2019年12月28日 22:14</p>
+        <p>原始链接： <a class="post-url" href="/2019/12/28/tomcat参数调优/" title="tomcat调优">https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/</a></p>
+        <footer>
+            <a href="https://www.sunnymaple.cn">
+                <img src="/images/130_130.png" alt="汪志斌">
+                汪志斌
+            </a>
+        </footer>
+    </div>
+</div>
+
+      
+        
+            
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;">赏</a>
+</div>
+
+<div id="reward" class="post-modal reward-lay">
+    <a class="close" href="javascript:;" id="reward-close">×</a>
+    <span class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        请我吃糖~
+        <i class="icon icon-quote-right"></i>
+    </span>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/images/wechat_code.jpg" alt="打赏二维码">
+        </div>
+        <div class="reward-select">
+            
+            <label class="reward-select-item checked" data-id="wechat" data-wechat="/images/wechat_code.jpg">
+                <img class="reward-select-item-wechat" src="/images/wechat.png" alt="微信">
+            </label>
+            
+            
+            <label class="reward-select-item" data-id="alipay" data-alipay="/images/alipay_code.jpg">
+                <img class="reward-select-item-alipay" src="/images/alipay.png" alt="支付宝">
+            </label>
+            
+        </div>
+    </div>
+</div>
+
+
+        
+    </div>
+    <footer class="article-footer">
+        
+        
+<div class="post-share">
+    <a href="javascript:;" id="share-sub" class="post-share-fab">
+        <i class="fa fa-share-alt"></i>
+    </a>
+    <div class="post-share-list" id="share-list">
+        <ul class="share-icons">
+          <li>
+            <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/&title=《tomcat调优》 — 晴枫慕竹&pic=/images/tomcat/tomcat.jpg" data-title="微博">
+              <i class="fa fa-weibo"></i>
+            </a>
+          </li>
+          <li>
+            <a class="weixin share-sns" id="wxFab" href="javascript:;" data-title="微信">
+              <i class="fa fa-weixin"></i>
+            </a>
+          </li>
+          <li>
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/&title=《tomcat调优》 — 晴枫慕竹&source=个人博客网站，个人学习记录" data-title="QQ">
+              <i class="fa fa-qq"></i>
+            </a>
+          </li>
+          <li>
+            <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/" data-title="Facebook">
+              <i class="fa fa-facebook"></i>
+            </a>
+          </li>
+          <li>
+            <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《tomcat调优》 — 晴枫慕竹&url=https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/&via=https://www.sunnymaple.cn" data-title="Twitter">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+          <li>
+            <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/" data-title="Google+">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        </ul>
+     </div>
+</div>
+<div class="post-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;" id="wxShare-close">×</a>
+    <p>扫一扫，分享到微信</p>
+    <img src="//api.qrserver.com/v1/create-qr-code/?data=https://www.sunnymaple.cn/2019/12/28/tomcat参数调优/" alt="微信分享二维码">
+</div>
+
+<div class="mask"></div>
+
+        
+        <ul class="article-footer-menu">
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/tomcat/" class="color2">tomcat</a>
+      
+  </li>
+
+        </ul>
+        
+    </footer>
+  </div>
+</article>
+
+
+    <aside class="post-toc-pos post-toc-top" id="post-toc">
+        <nav class="post-toc-wrap">
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#1、配置项"><span class="post-toc-text">1、配置项</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-1、线程池配置"><span class="post-toc-text">1.1、线程池配置</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#1-2、连接器配置"><span class="post-toc-text">1.2、连接器配置</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#2、参数调整"><span class="post-toc-text">2、参数调整</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-1、maxConnections的调整"><span class="post-toc-text">2.1、maxConnections的调整</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-2、acceptCount的调整"><span class="post-toc-text">2.2、acceptCount的调整</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#2-3、maxThreads的调整"><span class="post-toc-text">2.3、maxThreads的调整</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#3、参数调优测试"><span class="post-toc-text">3、参数调优测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-1、数量测试"><span class="post-toc-text">3.1、数量测试</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-1、linux系统"><span class="post-toc-text">3.1.1、linux系统</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#3-1-2、Windows系统"><span class="post-toc-text">3.1.2、Windows系统</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#3-2、参数调优测试"><span class="post-toc-text">3.2、参数调优测试</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#4、总结"><span class="post-toc-text">4、总结</span></a></li></ol>
+        </nav>
+    </aside>
+    
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/22/centos7安装svn/" id="article-nav-older" class="article-nav-link-wrap">
+      <span class="article-nav-title">centos7安装svn</span>
+      <i class="fa fa-hand-o-right" aria-hidden="true"></i>
+    </a>
+  
+</nav>
+
+
+
+    
+</section>
+        
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+<p>
+    <span id="busuanzi_container_site_uv" style="display:none">
+        总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style="display:none">
+        总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+      <p>
+        Powered by  <a href="http://hexo.io/" target="_blank">Hexo</a>
+        Theme <a href="//github.com/wongminho/hexo-theme-miho" target="_blank">MiHo</a>
+      &copy; 2019 汪志斌<br>
+      </p>
+    </div>
+  </div>
+</footer>
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+  var mihoConfig = {
+      root: "https://www.sunnymaple.cn",
+      animate: true,
+      isHome: false,
+      share: true,
+      reward: 1
+  }
+</script>
+<div class="sidebar">
+    <div id="sidebar-search" title="Search">
+        <i class="fa fa-search"></i>
+    </div>
+    <div id="sidebar-category" title="Categories">
+        <i class="fa fa-book"></i>
+    </div>
+    <div id="sidebar-tag" title="Tags">
+        <i class="fa fa-tags"></i>
+    </div>
+    <div id="sidebar-top">
+        <span class="sidebar-top-icon"><i class="fa fa-angle-up"></i></span>
+    </div>
+</div>
+<div class="sidebar-menu-box" id="sidebar-menu-box">
+    <div class="sidebar-menu-box-container">
+        <div id="sidebar-menu-box-categories">
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/tomcat/">tomcat</a><a class="category-link" href="/categories/多线程/">多线程</a>
+        </div>
+        <div id="sidebar-menu-box-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+    <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
+</div>
+<div class="mobile-header-menu-nav" id="mobile-header-menu-nav">
+    <div class="mobile-header-menu-container">
+        <span class="title">Menus</span>
+        <ul class="mobile-header-menu-navbar">
+            
+            <li>
+                <a href="/">
+                    <i class="fa fa-home"></i><span>首页</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/archives">
+                    <i class="fa fa-archive"></i><span>归档</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="/book">
+                    <i class="fa fa-user"></i><span>书籍</span>
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+    <div class="mobile-header-tag-container">
+        <span class="title">Tags</span>
+        <div id="mobile-header-container-tags">
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+        </div>
+    </div>
+</div>
+<div class="search-wrap">
+    <span class="search-close">&times;</span>
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+            <i class="icon icon-lg icon-chevron-left"></i>
+        </a>
+        <input class="search-field" placeholder="Search..." id="keywords">
+        <a id="search-submit" href="javascript:;">
+            <i class="fa fa-search"></i>
+        </a>
+    <div class="search-container" id="search-container">
+        <ul class="search-result" id="search-result">
+        </ul>
+    </div>
+</div>
+
+<div id="search-tpl">
+    <li class="search-result-item">
+        <a href="{url}" class="search-item-li">
+            <span class="search-item-li-title" title="{title}">{title}</span>
+        </a>
+    </li>
+</div>
+<script src="/js/search.js"></script>
+<script src="/js/main.js"></script>
+
+
+  <script src="//cdn.bootcss.com/particles.js/2.0.0/particles.min.js"></script>
+  <div id="particles"></div>
+  <script src="/js/particles.js"></script>
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  <script src="//cdn.bootcss.com/scrollReveal.js/3.0.5/scrollreveal.js"></script>
+  <script src="/js/animate.js"></script>
+
+
+  <script src="/js/pop-img.js"></script>
+  <script>
+     $(".article-entry p img").popImg();
+  </script>
+
+  </div>
+</body>
+</html>

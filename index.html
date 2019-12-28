@@ -107,14 +107,14 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
-    <article id="post-Jenkins+SVN持续集成" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-tomcat参数调优" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/22/Jenkins+SVN持续集成/">Jenkins+SVN持续集成</a>
+      <a class="article-title" href="/2019/12/28/tomcat参数调优/">tomcat调优</a>
     </h1>
   
 
@@ -122,9 +122,7 @@
               <span class="header-cate">
                 <i class="fa fa-map-marker"></i>
                   
-                  <a href="/categories/jenkins/">jenkins</a>
-                  
-                  <a href="/categories/svn/">svn</a>
+                  <a href="/categories/tomcat/">tomcat</a>
                   
               </span>
           
@@ -133,18 +131,16 @@
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2019/11/22/Jenkins+SVN持续集成/">
+            <a href="/2019/12/28/tomcat参数调优/">
                 
-                <img src="https://www.sunnymaple.cn//images/jenkins/jenkins.jpg" alt="Jenkins+SVN持续集成" title="Jenkins+SVN持续集成">
+                <img src="https://www.sunnymaple.cn//images/tomcat/tomcat.jpg" alt="tomcat调优" title="tomcat调优">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                1、持续部署、持续集成、持续交互在讲svn和jenkins持续集成之前，必须先了解下持续部署、持续集成以及持续交互的概念。
-1.1、持续部署关注点：在于项目功能部署至服务器后可以运行，为下一步测试环节或者最终用户正式使用做好准备工作。
-1.2、持续集成关注点：在于尽早发现项目整体运行问题， 尽早解决。
-在项目的开发过程中，每个人（团队）都需要负责不同的模块，单个人（团队）...
+                1、配置项要对tomcat调优，必须先了解有关tomcat参数配置项。tomcat配置在${tomcat}/conf/server.xml中，主要关注线程池(Executor)和连接器（Connector）配置。
+1.1、线程池配置12&lt;Executor name=&quot;tomcatThreadPool&quot; namePrefix=&quot;catal...
             </p>
         </div>
       
@@ -154,21 +150,19 @@
         
         <ul class="article-footer-menu">
             
-                <li><i class="fa fa-calendar"></i>2019-11-22</li>
+                <li><i class="fa fa-calendar"></i>2019-12-28</li>
             
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/jenkins/" class="color3">jenkins</a>
-      
-    <a href="/tags/svn/" class="color4">svn</a>
+    <a href="/tags/tomcat/" class="color2">tomcat</a>
       
   </li>
 
         </ul>
         
-            <a href="/2019/11/22/Jenkins+SVN持续集成/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2019/12/28/tomcat参数调优/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -246,6 +240,138 @@
         </ul>
         
             <a href="/2019/11/22/centos7安装svn/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-Jenkins+SVN持续集成" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/22/Jenkins+SVN持续集成/">Jenkins+SVN持续集成</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/jenkins/">jenkins</a>
+                  
+                  <a href="/categories/svn/">svn</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/11/22/Jenkins+SVN持续集成/">
+                
+                <img src="https://www.sunnymaple.cn//images/jenkins/jenkins.jpg" alt="Jenkins+SVN持续集成" title="Jenkins+SVN持续集成">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、持续部署、持续集成、持续交互在讲svn和jenkins持续集成之前，必须先了解下持续部署、持续集成以及持续交互的概念。
+1.1、持续部署关注点：在于项目功能部署至服务器后可以运行，为下一步测试环节或者最终用户正式使用做好准备工作。
+1.2、持续集成关注点：在于尽早发现项目整体运行问题， 尽早解决。
+在项目的开发过程中，每个人（团队）都需要负责不同的模块，单个人（团队）...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-11-22</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/svn/" class="color4">svn</a>
+      
+    <a href="/tags/jenkins/" class="color3">jenkins</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/11/22/Jenkins+SVN持续集成/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-线程通信" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/09/15/线程通信/">线程通信</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/多线程/">多线程</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/09/15/线程通信/">
+                
+                <img src="https://www.sunnymaple.cn//images/java/java.jpg" alt="线程通信" title="线程通信">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                要实现多个线程之间的协同，如：线程执行先后顺序、获取某个线程执行的结果等等。涉及到线程之间互相通信，分为下面四类：①、文件共享②、网络共享③、共享变量④、jdk提供的线程协调API，细分为suspend/resume、wait/notify、park/unpark前三种都相对比较简单，本文主要是讲解第④种，jdk提供的API方式。
+1、线程协作-JDK APIJDK中对于...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-09-15</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/多线程/" class="color4">多线程</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/09/15/线程通信/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -371,69 +497,6 @@
         </ul>
         
             <a href="/2019/09/15/线程状态/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
-    <article id="post-线程通信" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/09/15/线程通信/">线程通信</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/多线程/">多线程</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/09/15/线程通信/">
-                
-                <img src="https://www.sunnymaple.cn//images/java/java.jpg" alt="线程通信" title="线程通信">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                要实现多个线程之间的协同，如：线程执行先后顺序、获取某个线程执行的结果等等。涉及到线程之间互相通信，分为下面四类：①、文件共享②、网络共享③、共享变量④、jdk提供的线程协调API，细分为suspend/resume、wait/notify、park/unpark前三种都相对比较简单，本文主要是讲解第④种，jdk提供的API方式。
-1、线程协作-JDK APIJDK中对于...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-09-15</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/多线程/" class="color4">多线程</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/09/15/线程通信/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -648,69 +711,6 @@
 
 
   
-    <article id="post-MySql数据库锁" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/08/MySql数据库锁/">MySql数据库锁</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/MySql/">MySql</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/07/08/MySql数据库锁/">
-                
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql数据库锁" title="MySql数据库锁">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                1、是什么锁是计算机协调多个进程或者线程并发访问某一资源的机制，在数据库中，除传统的计算资源（如CPU、RAM、I/O等）争用以外，数据也是一种供许多用户共享的资源，如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素，从这个角度来说，锁对数据库而言显得尤其重要。
-2、锁的分类①、从对数据的操作（读/写）分读锁...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-07-08</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/MySql/" class="color1">MySql</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/07/08/MySql数据库锁/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
     <article id="post-MySql基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -833,10 +833,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/多线程/">多线程</a>
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/tomcat/">tomcat</a><a class="category-link" href="/categories/多线程/">多线程</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -869,7 +869,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
         </div>
     </div>
 </div>

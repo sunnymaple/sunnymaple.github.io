@@ -107,14 +107,14 @@
       <div class="outer">
         <section id="main" class="body-wrap">
   
-    <article id="post-MySql数据库锁" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-SpringBoot+MongoDB+Docker实现简易的文件服务器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/08/MySql数据库锁/">MySql数据库锁</a>
+      <a class="article-title" href="/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/">SpringBoot+MongoDB+Docker实现简易的文件服务器</a>
     </h1>
   
 
@@ -122,7 +122,11 @@
               <span class="header-cate">
                 <i class="fa fa-map-marker"></i>
                   
-                  <a href="/categories/MySql/">MySql</a>
+                  <a href="/categories/SpringBoot/">SpringBoot</a>
+                  
+                  <a href="/categories/MongoDB/">MongoDB</a>
+                  
+                  <a href="/categories/Docker/">Docker</a>
                   
               </span>
           
@@ -131,16 +135,17 @@
     <div class="article-entry " itemprop="articleBody">
       
         <div class="article-img">
-            <a href="/2019/07/08/MySql数据库锁/">
+            <a href="/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/">
                 
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql数据库锁" title="MySql数据库锁">
+                <img src="https://www.sunnymaple.cn/images/banner.jpg" alt="SpringBoot+MongoDB+Docker实现简易的文件服务器" title="SpringBoot+MongoDB+Docker实现简易的文件服务器">
                 
             </a>
         </div>
         <div class="article-feed">
             <p>
-                1、是什么锁是计算机协调多个进程或者线程并发访问某一资源的机制，在数据库中，除传统的计算资源（如CPU、RAM、I/O等）争用以外，数据也是一种供许多用户共享的资源，如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素，从这个角度来说，锁对数据库而言显得尤其重要。
-2、锁的分类①、从对数据的操作（读/写）分读锁...
+                文件服务器源码已上传github，点击下载，下载后我们便可以开始来安装部署，如果已安装docker以及mongodb，则第1、2、3节可以不看，直接参考第4节。
+1、Docker安装建议使用ubuntu或者centos7.0以上的发行版本的Linux系统，以官方最新安装方式为准，已下安装方式仅供参考（centos7为例）：
+1.1、卸载旧版本12345678yum rem...
             </p>
         </div>
       
@@ -150,19 +155,23 @@
         
         <ul class="article-footer-menu">
             
-                <li><i class="fa fa-calendar"></i>2019-07-08</li>
+                <li><i class="fa fa-calendar"></i>2019-07-10</li>
             
             
   <li class="article-footer-tags">
     <i class="fa fa-tags"></i>
       
-    <a href="/tags/MySql/" class="color1">MySql</a>
+    <a href="/tags/SpringBoot/" class="color1">SpringBoot</a>
+      
+    <a href="/tags/MongoDB/" class="color3">MongoDB</a>
+      
+    <a href="/tags/Docker/" class="color2">Docker</a>
       
   </li>
 
         </ul>
         
-            <a href="/2019/07/08/MySql数据库锁/#more" class="article-more-link">更多&gt;&gt;</a>
+            <a href="/2019/07/10/SpringBoot+MongoDB+Docker实现简易的文件服务器/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -227,6 +236,69 @@
         </ul>
         
             <a href="/2019/07/08/MySql基础/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-MySql数据库锁" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/08/MySql数据库锁/">MySql数据库锁</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/07/08/MySql数据库锁/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql数据库锁" title="MySql数据库锁">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、是什么锁是计算机协调多个进程或者线程并发访问某一资源的机制，在数据库中，除传统的计算资源（如CPU、RAM、I/O等）争用以外，数据也是一种供许多用户共享的资源，如何保证数据并发访问的一致性、有效性是所有数据库必须解决的一个问题，锁冲突也是影响数据库并发访问性能的一个重要因素，从这个角度来说，锁对数据库而言显得尤其重要。
+2、锁的分类①、从对数据的操作（读/写）分读锁...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-07-08</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/07/08/MySql数据库锁/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -429,68 +501,6 @@
 
 
   
-    <article id="post-批量插入数据脚本" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/07/03/批量插入数据脚本/">批量插入数据脚本</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/MySql/">MySql</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/07/03/批量插入数据脚本/">
-                
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="批量插入数据脚本" title="批量插入数据脚本">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                1、建库见表语句12345678910111213141516171819202122CREATE DATABASE bigData;USE bigData;CREATE TABLE dept( id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, deptno MEDIUMINT UNSIGNED NOT NULL DEFAULT 0...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-07-03</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/MySql/" class="color1">MySql</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/07/03/批量插入数据脚本/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
     <article id="post-sql优化分析" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -548,6 +558,68 @@
         </ul>
         
             <a href="/2019/07/03/sql优化分析/#more" class="article-more-link">更多&gt;&gt;</a>
+        
+    </footer>
+  </div>
+</article>
+
+
+  
+    <article id="post-批量插入数据脚本" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/07/03/批量插入数据脚本/">批量插入数据脚本</a>
+    </h1>
+  
+
+          
+              <span class="header-cate">
+                <i class="fa fa-map-marker"></i>
+                  
+                  <a href="/categories/MySql/">MySql</a>
+                  
+              </span>
+          
+      </header>
+    
+    <div class="article-entry " itemprop="articleBody">
+      
+        <div class="article-img">
+            <a href="/2019/07/03/批量插入数据脚本/">
+                
+                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="批量插入数据脚本" title="批量插入数据脚本">
+                
+            </a>
+        </div>
+        <div class="article-feed">
+            <p>
+                1、建库见表语句12345678910111213141516171819202122CREATE DATABASE bigData;USE bigData;CREATE TABLE dept( id INT UNSIGNED PRIMARY KEY  AUTO_INCREMENT, deptno MEDIUMINT UNSIGNED NOT NULL DEFAULT 0...
+            </p>
+        </div>
+      
+        
+    </div>
+    <footer class="article-footer">
+        
+        <ul class="article-footer-menu">
+            
+                <li><i class="fa fa-calendar"></i>2019-07-03</li>
+            
+            
+  <li class="article-footer-tags">
+    <i class="fa fa-tags"></i>
+      
+    <a href="/tags/MySql/" class="color1">MySql</a>
+      
+  </li>
+
+        </ul>
+        
+            <a href="/2019/07/03/批量插入数据脚本/#more" class="article-more-link">更多&gt;&gt;</a>
         
     </footer>
   </div>
@@ -680,69 +752,6 @@
 
 
   
-    <article id="post-MySql中Sql语句的执行顺序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/06/28/MySql中Sql语句的执行顺序/">MySql中Sql语句的执行顺序</a>
-    </h1>
-  
-
-          
-              <span class="header-cate">
-                <i class="fa fa-map-marker"></i>
-                  
-                  <a href="/categories/MySql/">MySql</a>
-                  
-              </span>
-          
-      </header>
-    
-    <div class="article-entry " itemprop="articleBody">
-      
-        <div class="article-img">
-            <a href="/2019/06/28/MySql中Sql语句的执行顺序/">
-                
-                <img src="https://www.sunnymaple.cn//images/MySql/MySql.png" alt="MySql中Sql语句的执行顺序" title="MySql中Sql语句的执行顺序">
-                
-            </a>
-        </div>
-        <div class="article-feed">
-            <p>
-                虽然我们在写sql查询语句的时候是按照select开始的，但是对于MySQL数据库机读的顺序并不是我们所写的或者所想那样也是从select开始的。
-1、手写顺序1234567891011121314SELECT DISTINCT    &lt;select_list&gt;FROM    &lt;left_table&gt; &lt;join_type&gt;JOIN &...
-            </p>
-        </div>
-      
-        
-    </div>
-    <footer class="article-footer">
-        
-        <ul class="article-footer-menu">
-            
-                <li><i class="fa fa-calendar"></i>2019-06-28</li>
-            
-            
-  <li class="article-footer-tags">
-    <i class="fa fa-tags"></i>
-      
-    <a href="/tags/MySql/" class="color1">MySql</a>
-      
-  </li>
-
-        </ul>
-        
-            <a href="/2019/06/28/MySql中Sql语句的执行顺序/#more" class="article-more-link">更多&gt;&gt;</a>
-        
-    </footer>
-  </div>
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -801,10 +810,10 @@
 <div class="sidebar-menu-box" id="sidebar-menu-box">
     <div class="sidebar-menu-box-container">
         <div id="sidebar-menu-box-categories">
-            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/springcloud/">springcloud</a><a class="category-link" href="/categories/springcloud/Eureka/">Eureka</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/tomcat/">tomcat</a><a class="category-link" href="/categories/多线程/">多线程</a>
+            <a class="category-link" href="/categories/Centos7/">Centos7</a><a class="category-link" href="/categories/Git/">Git</a><a class="category-link" href="/categories/Intellij-idea/">Intellij idea</a><a class="category-link" href="/categories/JUC/">JUC</a><a class="category-link" href="/categories/MySql/">MySql</a><a class="category-link" href="/categories/Questing/">Questing</a><a class="category-link" href="/categories/Question/">Question</a><a class="category-link" href="/categories/RestTemplate/">RestTemplate</a><a class="category-link" href="/categories/RestTemplate/Spring/">Spring</a><a class="category-link" href="/categories/SpringBoot/">SpringBoot</a><a class="category-link" href="/categories/SpringBoot/MongoDB/">MongoDB</a><a class="category-link" href="/categories/SpringBoot/MongoDB/Docker/">Docker</a><a class="category-link" href="/categories/Tools/">Tools</a><a class="category-link" href="/categories/java8/">java8</a><a class="category-link" href="/categories/jenkins/">jenkins</a><a class="category-link" href="/categories/jenkins/svn/">svn</a><a class="category-link" href="/categories/springcloud/">springcloud</a><a class="category-link" href="/categories/springcloud/Eureka/">Eureka</a><a class="category-link" href="/categories/springcloud/Ribbon/">Ribbon</a><a class="category-link" href="/categories/svn/">svn</a><a class="category-link" href="/categories/tomcat/">tomcat</a><a class="category-link" href="/categories/多线程/">多线程</a>
         </div>
         <div id="sidebar-menu-box-tags">
-            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Eureka/" style="font-size: 10px;">Eureka</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/springcloud/" style="font-size: 10px;">springcloud</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Eureka/" style="font-size: 10px;">Eureka</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/Ribbon/" style="font-size: 10px;">Ribbon</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/springcloud/" style="font-size: 12px;">springcloud</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
         </div>
     </div>
     <a href="javascript:;" class="sidebar-menu-box-close">&times;</a>
@@ -837,7 +846,7 @@
     <div class="mobile-header-tag-container">
         <span class="title">Tags</span>
         <div id="mobile-header-container-tags">
-            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Eureka/" style="font-size: 10px;">Eureka</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/springcloud/" style="font-size: 10px;">springcloud</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
+            <a href="/tags/Centos7/" style="font-size: 12px;">Centos7</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/Eureka/" style="font-size: 10px;">Eureka</a> <a href="/tags/Git/" style="font-size: 16px;">Git</a> <a href="/tags/Intellij-idea/" style="font-size: 10px;">Intellij idea</a> <a href="/tags/JUC/" style="font-size: 10px;">JUC</a> <a href="/tags/Linux/" style="font-size: 12px;">Linux</a> <a href="/tags/MongoDB/" style="font-size: 10px;">MongoDB</a> <a href="/tags/MySql/" style="font-size: 20px;">MySql</a> <a href="/tags/RestTemplate/" style="font-size: 10px;">RestTemplate</a> <a href="/tags/Ribbon/" style="font-size: 10px;">Ribbon</a> <a href="/tags/SecureCRT/" style="font-size: 10px;">SecureCRT</a> <a href="/tags/Spring/" style="font-size: 10px;">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;">SpringBoot</a> <a href="/tags/centos/" style="font-size: 10px;">centos</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/java8/" style="font-size: 10px;">java8</a> <a href="/tags/jenkins/" style="font-size: 10px;">jenkins</a> <a href="/tags/lombok/" style="font-size: 10px;">lombok</a> <a href="/tags/springcloud/" style="font-size: 12px;">springcloud</a> <a href="/tags/svn/" style="font-size: 12px;">svn</a> <a href="/tags/tomcat/" style="font-size: 10px;">tomcat</a> <a href="/tags/多线程/" style="font-size: 14px;">多线程</a>
         </div>
     </div>
 </div>
